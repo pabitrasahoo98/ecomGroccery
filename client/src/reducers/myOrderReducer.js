@@ -31,7 +31,7 @@ export const myOrderReducer = createSlice(
             error:null
             }
           }
-        }
+      }
     })
         export const {MY_ORDERS_FAIL,MY_ORDERS_REQUEST,MY_ORDERS_SUCCESS,CLEAR_MOERRORS}=myOrderReducer.actions
         export default myOrderReducer.reducer

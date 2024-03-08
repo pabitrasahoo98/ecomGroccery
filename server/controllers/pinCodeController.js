@@ -41,3 +41,39 @@ exports.deletePincode = catchAsyncError(async (req, res, next) => {
     });
   })
 
+//update pincode--admin
+exports.updatePincode=catchAsyncError(async(req,res,next)=>{
+  let pin=await PinCode.findById(req.params.id);
+  if(!pin){
+      res.status(500).json({
+          success:false,
+          message:"Pincode not found"
+      })
+  }
+await PinCode.findByIdAndUpdate(req.params.id,req.body,{
+      new:true,
+      runValidators:true,
+      useFindAndModify:false
+  });
+  res.status(201).json({
+      success:true
+  })
+}
+)
+
+//pincode details
+
+exports.getPincode = catchAsyncError(async (req, res, next) => {
+  const pincode = await PinCode.findById(req.params.id);
+
+  if (!pincode) {
+    return next(
+      new ErrorHandler(`Pincode does not exist with Id: ${req.params.id}`)
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    pincode,
+  });
+});

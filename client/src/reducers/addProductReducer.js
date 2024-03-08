@@ -23,6 +23,13 @@ export const addProductReducer = createSlice(
             Addproduct:action.payload.product
             }
           },
+        ADD_PRODUCT_RESET(state,action){
+            return{
+              ...state,
+              success:false,
+            }
+           
+          },
         ADD_PRODUCT_FAIL(state,action){
             return{
             loading:false,
@@ -37,5 +44,5 @@ export const addProductReducer = createSlice(
           }
         }
     })
-        export const {ADD_PRODUCT_FAIL,ADD_PRODUCT_REQUEST,ADD_PRODUCT_SUCCESS,CLEAR_NPERRORS}=addProductReducer.actions
+        export const {ADD_PRODUCT_FAIL,ADD_PRODUCT_REQUEST,ADD_PRODUCT_SUCCESS,ADD_PRODUCT_RESET,CLEAR_NPERRORS}=addProductReducer.actions
         export default addProductReducer.reducer

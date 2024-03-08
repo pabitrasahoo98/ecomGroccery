@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Layout from '../Layout'
 import { Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { getAdminProducts,clearProductErrors } from '../../../actions/productAction';
+import { getAdminProducts} from '../../../actions/productAction';
 import "./Dashboard.css";
 import {Doughnut,Line} from "react-chartjs-2";
 import {
@@ -17,14 +17,22 @@ import {
   ArcElement,
 } from 'chart.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAdminOrders } from '../../../actions/orderAction';
+import { getAdminUsers } from '../../../actions/userAction';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,ArcElement);
 
 const Dashboard = ({role}) => {
   const {product,loading}=useSelector((state)=>state.products);
+  const {Orders,error:Oerror,loading:Oloading}=useSelector((state)=>state.orderList);
+  const {Users,error:uerror,loading:uloading}=useSelector((state)=>state.userList);
+  
   const dispatch=useDispatch();
+
   useEffect(() => {
   dispatch(getAdminProducts());
+  dispatch(getAdminOrders());
+  dispatch(getAdminUsers())
   }, [dispatch])
   let outoffstock=0
  product && product.forEach(element => {
@@ -89,15 +97,15 @@ const Dashboard = ({role}) => {
     <div className='dashboardSummaryBox2'>
       <Link to="/admin/products">
         <p>Products</p>
-        <p>{product.length}</p>
+        <p>{product&&product.length}</p>
       </Link>
       <Link to="/admin/orders">
         <p>Orders</p>
-        <p>5</p>
+        <p>{Orders&&Orders.length}</p>
       </Link>
       <Link to="/admin/users">
         <p>Users</p>
-        <p>1</p>
+        <p>{Users&&Users.length}</p>
       </Link>
     </div>
     <div className='lineChart'>

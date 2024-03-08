@@ -2,13 +2,13 @@ const nodeMailer=require("nodemailer");
 const sendEmail=async(options)=>{
 
     const transporter=nodeMailer.createTransport({
-        host:"smpt.gmail.com",
+        host:"smtp.zoho.in",
         port:465,
-        service:process.env.SMPT_SERVICE,
+        secure:true, 
         auth:{
             user:process.env.SMPT_MAIL,
-            pass:process.env.SMPT_PASSWORD
-        }
+            pass:process.env.SMPT_PASSWORD,
+        } 
     })
     const mailOptions={
         from:process.env.SMPT_MAIL,

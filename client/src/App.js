@@ -28,6 +28,16 @@ import Users from "./components/layout/admin/Users";
 import Catagory from "./components/layout/admin/Catagory";
 import Carousels from "./components/layout/admin/Carousels";
 import AddProduct from "./components/layout/admin/AddProduct";
+import UpdateProduct from "./components/layout/admin/UpdateProduct";
+import ProcessOrder from "./components/layout/admin/ProcessOrder";
+import UpdateUser from "./components/layout/admin/UpdateUser";
+import Pincode from "./components/layout/admin/Pincode";
+import AddCatagory from "./components/layout/admin/AddCatagory";
+import UpdateCatagory from "./components/layout/admin/UpdateCatagory";
+import AddPincode from "./components/layout/admin/AddPincode";
+import UpdatePincode from "./components/layout/admin/UpdatePincode";
+import AddCarousel from "./components/layout/admin/AddCarousel";
+import UpdateCarousel from "./components/layout/admin/UpdateCarousel";
 
 
 
@@ -47,7 +57,6 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-    
       <Route path="/" element={<Home/>} />
       <Route exact path="/products" element={<Products/>}/>
       <Route path="/productdetails" element={<ProductDetails/>}/>
@@ -67,12 +76,21 @@ function App() {
 
       {isAuthenticate&& <Route path="/admin/dashboard" element={<Dashboard role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/orders" element={<OrdersList role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/order/:id" element={<ProcessOrder role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/products" element={<AdminProducts role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/products/new" element={<AddProduct role={user.role}/>} />}
-
+      {isAuthenticate&& <Route path="/admin/product/:id" element={<UpdateProduct role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/users" element={<Users role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/user/:id" element={<UpdateUser role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/category" element={<Catagory role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/catagory/new" element={<AddCatagory role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/catagory/:id" element={<UpdateCatagory role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/pincode" element={<Pincode role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/pincode/new" element={<AddPincode role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/pincode/:id" element={<UpdatePincode role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/carousel" element={<Carousels role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/carousel/new" element={<AddCarousel role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/carousel/:id" element={<UpdateCarousel role={user.role}/>} />}
 
       <Route path="*" element={<Pagenotfound/>} />
     </Routes>

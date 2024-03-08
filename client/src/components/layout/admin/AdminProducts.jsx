@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Layout from '../Layout'
-import { getAdminProducts,clearProductErrors } from '../../../actions/productAction';
+import { getAdminProducts,clearProductErrors, deleteProduct, clearDPrrors } from '../../../actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Typography } from '@mui/material';
@@ -9,36 +9,49 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Loader from '../Loader';
 import AddIcon from '@mui/icons-material/Add';
+import { DELETE_PRODUCT_RESET } from '../../../reducers/manipulateProductReducer';
 
 
 const AdminProducts = ({role}) => {
   const navigate=useNavigate();
   const {product,error,loading}=useSelector((state)=>state.products);
+  const {isDeleted,error:dError,loading:dLoading}=useSelector((state)=>state.maniProduct);
   const dispatch=useDispatch();
   useEffect(() => {
   if(error){
     window.alert(error);
     dispatch(clearProductErrors());
   }
+  if(dError){
+    window.alert(dError);
+    dispatch(clearDPrrors());
+  }
+  if(isDeleted){
+    window.alert("Product Deleted succesfully");
+    dispatch(DELETE_PRODUCT_RESET());
+  }
   dispatch(getAdminProducts());
-  }, [dispatch,error])
+  }, [dispatch,error,dError,isDeleted])
+  const deleteProductHandle=(id)=>{
+    dispatch(deleteProduct(id));
+  }
   
  
   
 const columns = [
   { field: 'id',
    headerName: 'Product ID',
-    width: 300 ,
+    width: 280 ,
   },
   {
     field: 'name',
     headerName: 'Name',
-    width: 220,
+    width: 400,
   },
   {
     field: 'category',
     headerName: 'Category',
-    width: 220,
+    width: 160,
   },
   
   {
@@ -48,10 +61,16 @@ const columns = [
     type: 'number'
   },
   {
+    field: 'mrp',
+    headerName: 'Mrp',
+    type: 'number',
+    width: 120,
+  },
+  {
     field: 'price',
     headerName: 'Price',
     type: 'number',
-    width: 180,
+    width: 120,
   },
 
   {
@@ -60,12 +79,12 @@ const columns = [
     type:'number',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
-    width: 300,
+    width: 220,
     renderCell: (params) =>{
       return(
         <>
         <Link to={`/admin/product/${params.api.getCellValue(params.id,"id")}`}><EditIcon/></Link>
-        <Button><DeleteIcon/></Button>
+        <Button onClick={()=>deleteProductHandle(params.api.getCellValue(params.id,"id"))}><DeleteIcon/></Button>
         </>
       )
     },
@@ -77,6 +96,7 @@ const rows = [];
   product.forEach((item) => {
     rows.push({id:item._id,
     stock:item.stock,
+    mrp:item.mrp,
     price:item.price,
     name:item.name,
     category:item.catagory,

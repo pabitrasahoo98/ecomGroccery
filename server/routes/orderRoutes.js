@@ -5,7 +5,8 @@ const { createOrder,
     myOrders,
     getAllOrders,
     updateOrder,
-    deleteOrder,} = require("../controllers/orderController");
+    deleteOrder,
+    cancelOrder,} = require("../controllers/orderController");
 const router =express.Router();
 
 
@@ -14,6 +15,11 @@ router.route("/order/new").post(isAuthenticateUser,createOrder);
 router.route("/order/:id").get(isAuthenticateUser, getSingleOrder);
 
 router.route("/orders/me").get(isAuthenticateUser, myOrders);
+
+
+router
+  .route("/cancelorder/:id")
+  .delete(isAuthenticateUser, cancelOrder);
 
 router
   .route("/admin/orders")

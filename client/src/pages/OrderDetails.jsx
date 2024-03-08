@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import "./OrderDetails.css";
 import Layout from '../components/layout/Layout';
-import { Typography } from '@mui/material';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Button, Typography } from '@mui/material';
+import {  useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearODErrors, getOrderDetails } from '../actions/orderAction';
+import { cancelOrder, clearCOErrors, clearODErrors, getOrderDetails } from '../actions/orderAction';
 import Loader from '../components/layout/Loader';
+import { CANCEL_ORDER_RESET } from '../reducers/cancelOrderReducer';
 
 
 const OrderDetails = () => {
@@ -13,13 +14,32 @@ const OrderDetails = () => {
     const navigate=useNavigate();
     const {id}=useParams();
     const {order,loading,error}=useSelector((state)=>state.orderDetails);
+    const {isCanceled,loading:cloading,error:cerror}=useSelector((state)=>state.cancelOrder)
     useEffect(() => {
       if(error){
         window.alert(error);
         dispatch(clearODErrors());
       }
+      if(cerror){
+        window.alert(cerror);
+        dispatch(clearCOErrors());
+      }
+
+      if(isCanceled){
+        window.alert("Order Cancelled succesfully");
+        dispatch(CANCEL_ORDER_RESET());
+        navigate("/profile/yourorders")
+      }
       dispatch(getOrderDetails(id));
-    }, [dispatch,error])
+    }, [dispatch,error,cerror,isCanceled,navigate])
+
+    
+    const CancelOrder=(e)=>{
+      e.preventDefault();
+      dispatch(cancelOrder(id));
+
+
+    }
     
 
   return (
@@ -30,6 +50,9 @@ const OrderDetails = () => {
               <Typography component="h1">
                 Order #{order && order._id}
               </Typography>
+              {order&& (order.orderStatus==="Processing")?<><p>Cancellation Allowed Until The Shippment Of Order</p>
+              <Button variant='outlined' color='error' size='large' onClick={CancelOrder}>Cancel Order</Button></>
+              :<p>Cancellation Window Closed </p>}
               <Typography>Shipping Info</Typography>
               <div className="orderDetailsContainerBox">
                 <div>

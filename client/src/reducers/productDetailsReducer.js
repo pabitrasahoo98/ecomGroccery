@@ -8,16 +8,17 @@ export const productDetailsReducer = createSlice(
         error:null
        },
        reducers:{
-        PRODUCT_DETAILS_REQUEST(state){
+        PRODUCT_DETAILS_REQUEST:(state)=>{
             state.loading= true;
-            state.product={};
           },
-        PRODUCT_DETAILS_SUCCESS(state,action){
+        PRODUCT_DETAILS_SUCCESS:(state,action)=>{
             state.loading=false;
+            state.error=null;
             state.product=action.payload.product;
           },
-        PRODUCT_DETAILS_FAIL(state,action){
+        PRODUCT_DETAILS_FAIL:(state,action)=>{
             state.loading=false;
+            state.product=null;
             state.error=action.payload;
           },
     

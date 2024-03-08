@@ -40,3 +40,41 @@ exports.deleteCatagory = catchAsyncError(async (req, res, next) => {
       message: "Catagory Deleted Successfully",
     });
   })
+
+
+ //update catagory--admin
+exports.updateCatagory=catchAsyncError(async(req,res,next)=>{
+  let cata=await Catagory.findById(req.params.id);
+  if(!cata){
+      res.status(500).json({
+          success:false,
+          message:"Catagory not found"
+      })
+  }
+  await Catagory.findByIdAndUpdate(req.params.id,req.body,{
+      new:true,
+      runValidators:true,
+      useFindAndModify:false
+  });
+  res.status(201).json({
+      success:true
+  })
+})
+
+//catagories details
+
+exports.getCatagory = catchAsyncError(async (req, res, next) => {
+  const catagory = await Catagory.findById(req.params.id);
+
+  if (!catagory) {
+    return next(
+      new ErrorHandler(`Catagory does not exist with Id: ${req.params.id}`)
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    catagory,
+  });
+});
+

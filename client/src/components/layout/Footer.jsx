@@ -1,8 +1,11 @@
 import React from 'react'
 import "./footer.css"
+import ContactNumber from './ContactNumber'
 
 const Footer = () => {
   return (
+  <div className='contact_us'>
+    <ContactNumber/>
     <div className='footer'>
         <div className='leftFooter'>
             <h4>DOWNLOAD OUR APP</h4>
@@ -17,6 +20,7 @@ const Footer = () => {
             <h4>FOLLOW US</h4>
 
         </div>
+    </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 const express=require("express");
 const{isAuthenticateUser,authorizeRoles}=require("../middleware/auth");
-const { getAllCatagory, createCatagory, deleteCatagory } = require("../controllers/catagoryController");
+const { getAllCatagory, createCatagory, deleteCatagory, updateCatagory, getCatagory } = require("../controllers/catagoryController");
 
 const router =express.Router();
 
@@ -16,5 +16,14 @@ router
   router
   .route("/admin/manipulatecatagory/:id")
   .delete(isAuthenticateUser, authorizeRoles("admin"), deleteCatagory);
+
+  router
+  .route("/admin/manipulatecatagory/:id")
+  .put(isAuthenticateUser, authorizeRoles("admin"), updateCatagory)
+
+  
+  router
+  .route("/admin/manipulatecatagory/:id")
+  .get(isAuthenticateUser, authorizeRoles("admin"), getCatagory)
 
   module.exports = router;

@@ -9,28 +9,29 @@ import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { Button } from '@mui/material';
 import "./AddProduct.css";
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import { ADD_PRODUCT_RESET } from '../../../reducers/addProductReducer';
-import { clearNPrrors, createProduct } from '../../../actions/productAction';
-import { useNavigate } from 'react-router-dom';
+import { UPDATE_PRODUCT_RESET } from '../../../reducers/manipulateProductReducer';
+import { updateProduct,clearUPerrors, getProductDetails, clearProductErrors} from '../../../actions/productAction';
+import { useNavigate, useParams } from 'react-router-dom';
 
+const UpdateProduct = ({role}) => {
 
-const AddProduct = ({role}) => {
-
+    const {id}=useParams();
     const navigate=useNavigate();
     const dispatch = useDispatch();
     const {catalog}=useSelector((state)=>state.catagories)
-    const { loading, error, success } = useSelector((state) => state.addProduct);
-  
+    const { loading, error, isUpdate } = useSelector((state) => state.maniProduct);
+    const { product,error:pError } = useSelector((state) => state.product);
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
     const [mrp, setMrp] = useState(0);
     const [description, setDescription] = useState("");
     const [catagory, setCatagory] = useState("");
     const [stock, setStock] = useState(0);
+    const [oldImages, setOldImages] = useState([]);
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
 
-    const createProductSubmitHandler = (e) => {
+    const updateProductSubmitHandler = (e) => {
         e.preventDefault();
     
         const myForm = new FormData();
@@ -45,13 +46,14 @@ const AddProduct = ({role}) => {
         images.forEach((image) => {
           myForm.append("images", image);
         });
-        dispatch(createProduct(myForm))
+        dispatch(updateProduct(id,myForm))
         
       }
-      const createProductImagesChange = (e) => {
+      const updateProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
     
         setImages([]);
+        setOldImages([]);
         setImagesPreview([]);
     
         files.forEach((file) => {
@@ -68,28 +70,42 @@ const AddProduct = ({role}) => {
         });
       };
       useEffect(() => {
+        if (product && product._id !== id) {
+            dispatch(getProductDetails(id));
+          }else{
+            setName(product.name);
+            setDescription(product.description);
+            setMrp(product.mrp);
+            setPrice(product.price);
+            setCatagory(product.catagory);
+            setStock(product.stock);
+            setOldImages(product.images);
+        }
+        if(pError){
+            window.alert(pError);
+            dispatch(clearProductErrors());
+          }
         if(error){
           window.alert(error);
-          dispatch(clearNPrrors());
+          dispatch(clearUPerrors());
         }
-        if(success){
-          window.alert("Product added succesfully");
-          dispatch(ADD_PRODUCT_RESET());
+        if(isUpdate){
+          window.alert("Product Updated succesfully");
+          dispatch(UPDATE_PRODUCT_RESET());
           navigate("/admin/products");
         }
         
-      }, [error,success,dispatch])
-      
-  return (
-    <Layout>{(role==="admin")?<>
+      }, [product,error,isUpdate,dispatch,id,pError])
 
-<div className="newProductContainer">
+  return (
+    <Layout> {(role==="admin")?<>
+    <div className="newProductContainer">
           <form
             className="createProductForm"
             encType="multipart/form-data"
-            onSubmit={createProductSubmitHandler}
+            onSubmit={updateProductSubmitHandler}
           >
-            <h1>Create Product</h1>
+            <h1>Update Product</h1>
 
             <div>
               <SpellcheckIcon />
@@ -108,6 +124,7 @@ const AddProduct = ({role}) => {
                 type="number"
                 placeholder="MRP"
                 required
+                value={mrp}
                 onChange={(e) => setMrp(e.target.value)}
               />
             </div>
@@ -117,6 +134,7 @@ const AddProduct = ({role}) => {
                 type="number"
                 placeholder="Price"
                 required
+                value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
             </div>
@@ -135,7 +153,7 @@ const AddProduct = ({role}) => {
 
             <div>
               <AccountTreeIcon />
-              <select onChange={(e) => setCatagory(e.target.value)}>
+              <select onChange={(e) => setCatagory(e.target.value)} value={catagory}>
                 <option value="">Choose Category</option>
                 {catalog.map((cate) => (
                   <option key={cate.catagory} value={cate.catagory}>
@@ -151,6 +169,7 @@ const AddProduct = ({role}) => {
                 type="number"
                 placeholder="Stock"
                 required
+                value={stock}
                 onChange={(e) => setStock(e.target.value)}
               />
             </div>
@@ -160,9 +179,14 @@ const AddProduct = ({role}) => {
                 type="file"
                 name="avatar"
                 accept="image/*"
-                onChange={createProductImagesChange}
+                onChange={updateProductImagesChange}
                 multiple
               />
+            </div>
+            <div id="createProductFormImage">
+              {oldImages && oldImages.map((image, index) => (
+                <img key={index} src={image.url} alt=" old Product Preview" />
+              ))}
             </div>
 
             <div id="createProductFormImage">
@@ -176,15 +200,16 @@ const AddProduct = ({role}) => {
               type="submit"
               disabled={loading ? true : false}
             >
-              Create
+              Update
             </Button>
           </form>
         </div>
       
     
     
-    </>:<h3>You are not Authorised</h3>}</Layout>
+ 
+    </> :<h3>You are not Authorised</h3>}</Layout>
   )
 }
 
-export default AddProduct
+export default UpdateProduct

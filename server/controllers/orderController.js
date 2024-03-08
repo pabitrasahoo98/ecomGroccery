@@ -57,10 +57,25 @@ exports.getSingleOrder = catchAsyncError(async (req, res, next) => {
       orders,
     });
   });
+
+    // delete Order 
+    exports.cancelOrder = catchAsyncError(async (req, res, next) => {
+      const order = await Order.findById(req.params.id);
+    
+      if (!order) {
+        return next(new ErrorHandler("Order not found with this Id", 404));
+      }
+    
+      await order.deleteOne();
+    
+      res.status(200).json({
+        success: true,
+      });
+    });
   
   // get all Orders -- Admin
   exports.getAllOrders = catchAsyncError(async (req, res, next) => {
-    const orders = await Order.find();
+    const orders = await Order.find().sort('-createdAt');
   
     let totalAmount = 0;
   

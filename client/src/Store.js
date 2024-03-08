@@ -12,6 +12,18 @@ import {myOrderReducer} from './reducers/myOrderReducer';
 import {orderDetailsReducer} from './reducers/orderDetailsReducer';
 import {sameProductReducer} from './reducers/sameProductReducer';
 import { addProductReducer } from './reducers/addProductReducer';
+import {manipulateProductReducer} from './reducers/manipulateProductReducer';
+import {manipulateOrderReducer} from './reducers/manipulateOrderReducer';
+import {orderListReducer} from './reducers/orderListReducer';
+import { userListReducer } from './reducers/allUserReducer';
+import {manipulateUserReducer} from './reducers/manipulateUserReducer';
+import {userDetailsReducer} from './reducers/userDetailsReducer';
+import {allPrerequisitionReducer} from './reducers/allPrerequisitionReducer';
+import {deletePreReducer} from './reducers/deletePreReducer';
+import {addPrerequisitionReducer} from './reducers/addPrerequisitionReducer';
+import {updatePrerequisitionReducer} from './reducers/updatePrerequisitionReducer';
+import {getPrerequisitionReducer} from './reducers/getPrerequisitionReducer';
+import {cancelOrderReducer} from './reducers/cancelOrderReducer';
 
 
 const store=configureStore({
@@ -27,8 +39,21 @@ const store=configureStore({
         newOrder:newOrderReducer.reducer,
         myOrders:myOrderReducer.reducer,
         orderDetails:orderDetailsReducer.reducer,
+        cancelOrder:cancelOrderReducer.reducer,
         sameProduct:sameProductReducer.reducer,
         addProduct:addProductReducer.reducer,
+        maniProduct:manipulateProductReducer.reducer,
+        orderList:orderListReducer.reducer,
+        maniOrder:manipulateOrderReducer.reducer,
+        userList:userListReducer.reducer,
+        userDetails:userDetailsReducer.reducer,
+        maniUser:manipulateUserReducer.reducer,
+        allPre:allPrerequisitionReducer.reducer,
+        delPre:deletePreReducer.reducer,
+        addPre:addPrerequisitionReducer.reducer,
+        updatePre:updatePrerequisitionReducer.reducer,
+        getPre:getPrerequisitionReducer.reducer,
+        
     }
     
 
