@@ -34,6 +34,9 @@ const Dashboard = ({role}) => {
   dispatch(getAdminOrders());
   dispatch(getAdminUsers())
   }, [dispatch])
+
+  let totalAmount=0;
+  Orders && Orders.forEach(item=>totalAmount+=item.totalPrice)
   let outoffstock=0
  product && product.forEach(element => {
   if(element.stock===0){outoffstock+=1}
@@ -45,7 +48,7 @@ const Dashboard = ({role}) => {
       fill: true,
       backgroundColor: "rgba(75,192,192,0.2)",
       hoverBackgroundColor:"rgb(197,72,40)",
-      data:[0,4000],
+      data:[0,totalAmount],
     },],
 
   };
@@ -91,7 +94,7 @@ const Dashboard = ({role}) => {
     </div>
     <div className='dashboardSummary'>
       <div>
-      <p>Total Amount<br/>₹2000</p>
+      <p>Total Amount<br/>₹{totalAmount}</p>
       </div>
     </div>
     <div className='dashboardSummaryBox2'>

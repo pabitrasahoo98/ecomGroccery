@@ -10,6 +10,7 @@ import PublicIcon from '@mui/icons-material/Public';
 import PhoneIcon from '@mui/icons-material/Phone';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 
 const Shipping = () => {
@@ -32,7 +33,11 @@ const Shipping = () => {
     const shippingSubmit=(e)=>{
         e.preventDefault();
         if(phoneNo.length<10||phoneNo.length>10){
-            window.alert("Mobile number should be 10 Digit");
+          Swal.fire({
+            title: "Error",
+            text: "Phone number should be 10 Digits",
+            icon: "warning"
+          })
             return
         }
         dispatch(saveShippingInfo({address,city,state,country,pinCode,phoneNo}));

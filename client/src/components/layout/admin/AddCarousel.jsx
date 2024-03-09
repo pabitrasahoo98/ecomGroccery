@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { addCarousel, clearAACARErrors } from '../../../actions/catagoryAction';
 import { ADD_CAROUSEL_RESET } from '../../../reducers/addPrerequisitionReducer';
+import Swal from 'sweetalert2'
 
 const AddCarousel = ({role}) => {
 
@@ -18,16 +19,24 @@ const AddCarousel = ({role}) => {
   const [carouselName, setCarouselName] = useState("");
   useEffect(() => {
     if(carerror){
-      window.alert(carerror);
+      Swal.fire({
+        title: "Error",
+        text: carerror,
+        icon: "warning"
+      });
       dispatch(clearAACARErrors());
     }
     if(carsuccess){
-      window.alert("Carousel added succesfully");
+      Swal.fire({
+        title: "Success",
+        text: "Carousel is live now",
+        icon: "success"
+      });
       dispatch(ADD_CAROUSEL_RESET());
       navigate("/admin/carousel");
     }
     
-  }, [carerror,carsuccess,dispatch])
+  }, [carerror,carsuccess,dispatch,Swal])
   
   const addCarouselSubmitHandler=(e)=>{
     e.preventDefault();

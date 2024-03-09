@@ -61,11 +61,11 @@ function App() {
       <Route exact path="/products" element={<Products/>}/>
       <Route path="/productdetails" element={<ProductDetails/>}/>
       <Route path="/products/:keyword" element={<Products/>} />
-      <Route path="/contact" element={<Contact/>} />
+      <Route path="/contact" element={<Contact/>}/>
       <Route path="/about" element={<About/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/password/forget" element={<ForgotPassword/>} />
-      <Route path="/password/reset/:token" element={<ResetPassword/>} />
+      <Route path="/password/reset" element={<ResetPassword/>} />
       {isAuthenticate && <Route path="/profile/:activepage" element={<Profile/>} />}
       <Route path="/cart" element={<Cart/>} />
       <Route path="/search" element={<Search/>} />
@@ -73,6 +73,7 @@ function App() {
       {isAuthenticate && <Route path="/order/confirm" element={<ConfirmOrder/>} />}
       {isAuthenticate && <Route path="/success" element={<Success/>} />}
       {isAuthenticate && <Route path="/order/:id" element={<OrderDetails/>} />}
+
 
       {isAuthenticate&& <Route path="/admin/dashboard" element={<Dashboard role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/orders" element={<OrdersList role={user.role}/>} />}

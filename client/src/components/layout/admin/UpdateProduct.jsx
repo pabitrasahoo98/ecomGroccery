@@ -12,6 +12,7 @@ import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import { UPDATE_PRODUCT_RESET } from '../../../reducers/manipulateProductReducer';
 import { updateProduct,clearUPerrors, getProductDetails, clearProductErrors} from '../../../actions/productAction';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateProduct = ({role}) => {
 
@@ -82,20 +83,32 @@ const UpdateProduct = ({role}) => {
             setOldImages(product.images);
         }
         if(pError){
-            window.alert(pError);
+          Swal.fire({
+            title: "Error",
+            text: pError,
+            icon: "warning"
+          })
             dispatch(clearProductErrors());
           }
         if(error){
-          window.alert(error);
+          Swal.fire({
+            title: "Error",
+            text: error,
+            icon: "warning"
+          })
           dispatch(clearUPerrors());
         }
         if(isUpdate){
-          window.alert("Product Updated succesfully");
+          Swal.fire({
+            title: "Error",
+            text: "Product Updated successfuly",
+            icon: "warning"
+          })
           dispatch(UPDATE_PRODUCT_RESET());
           navigate("/admin/products");
         }
         
-      }, [product,error,isUpdate,dispatch,id,pError])
+      }, [product,error,isUpdate,dispatch,id,pError,Swal,navigate])
 
   return (
     <Layout> {(role==="admin")?<>

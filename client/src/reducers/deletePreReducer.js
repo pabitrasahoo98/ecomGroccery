@@ -6,20 +6,24 @@ export const deletePreReducer = createSlice(
         isCDeleted:false,
         isPDeleted:false,
         isCarDeleted:false,
-        loading:false,
-        error:null
+        cloading:false,
+        cerror:null, 
+        ploading:false,
+        perror:null,
+        carloading:false,
+        carerror:null 
        },
        reducers:{
         DELETE_CATAGORY_REQUEST(state){
         return{
             ...state,
-            loading:true
+            cloading:true
             };
           },
         DELETE_CATAGORY_SUCCESS(state,action){
             return{
             ...state,
-            loading:false,
+            cloading:false,
             isCDeleted:action.payload.success
             }
           },
@@ -32,26 +36,26 @@ export const deletePreReducer = createSlice(
           },
         DELETE_CATAGORY_FAIL(state,action){
             return{
-            loading:false,
-            error:action.payload
+            cloading:false,
+            cerror:action.payload
             }
           },
           CLEAR_DCERRORS:(state)=>{
             return{
             ...state,
-            error:null
+            cerror:null
             }
           },
           DELETE_PINCODE_REQUEST(state){
             return{
                 ...state,
-                loading:true
+                ploading:true
                 };
               },
             DELETE_PINCODE_SUCCESS(state,action){
                 return{
                 ...state,
-                loading:false,
+                ploading:false,
                 isPDeleted:action.payload.success
                 }
               },
@@ -64,47 +68,47 @@ export const deletePreReducer = createSlice(
               },
             DELETE_PINCODE_FAIL(state,action){
                 return{
-                loading:false,
+                ploading:false,
                 error:action.payload
                 }
               },
               CLEAR_DPERRORS:(state)=>{
                 return{
                 ...state,
-                error:null
+                perror:null
                 }
               },
               
           DELETE_CAROUSEL_REQUEST(state){
             return{
                 ...state,
-                loading:true
+                carloading:true
                 };
               },
             DELETE_CAROUSEL_SUCCESS(state,action){
                 return{
                 ...state,
-                loading:false,
-                isPDeleted:action.payload.success
+                carloading:false,
+                isCarDeleted:action.payload.success
                 }
               },
             DELETE_CAROUSEL_RESET(state,action){
                 return{
                   ...state,
-                  isPDeleted:false,
+                  isCarDeleted:false,
                 }
                
               },
             DELETE_CAROUSEL_FAIL(state,action){
                 return{
-                loading:false,
-                error:action.payload
+                carloading:false,
+                carerror:action.payload
                 }
               },
               CLEAR_DCARERRORS:(state)=>{
                 return{
                 ...state,
-                error:null
+                carerror:null
                 }
               }
         }

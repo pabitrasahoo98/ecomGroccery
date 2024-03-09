@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { clearMOErrors, myOrder } from '../../../actions/orderAction';
 import Loader from '../Loader';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const YourOrders = () => {
     
@@ -12,13 +13,17 @@ const YourOrders = () => {
 
     useEffect(() => {
         if(error){
-            window.alert(error);
+            Swal.fire({
+                title: "Error",
+                text: error,
+                icon: "warning"
+              })
             dispatch(clearMOErrors());
         }
         
       dispatch(myOrder());
 
-    }, [dispatch,error])
+    }, [dispatch,error,Swal])
 
     const [currentPage,setCurrentPage]=useState(1);
     const recordsPerPage=6;

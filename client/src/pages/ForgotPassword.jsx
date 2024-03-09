@@ -5,11 +5,15 @@ import "./ForgotPassword.css"
 import { useDispatch,useSelector } from 'react-redux';
 import { forgotPassword,clearFPErrors } from '../actions/userAction';
 import Loader from '../components/layout/Loader';
+import { useNavigate } from 'react-router-dom';
+import { FORGOT_PASSWORD_RESET } from '../reducers/forgotPasswordReducer';
+import Swal from 'sweetalert2'
 
 
 const ForgotPassword = () => {
     const dispatch=useDispatch();
-    const {error,message,loading}=useSelector((state)=>state.forgotPassword);
+    const navigate=useNavigate();
+    const {error,message,loading,isSent}=useSelector((state)=>state.forgotPassword);
     const [email,setEmail]=useState("");
     const forgotPasswordSubmit=(e)=>{
         e.preventDefault();
@@ -17,14 +21,26 @@ const ForgotPassword = () => {
     }
     useEffect(() => {
     if(error){
-    window.alert(error);
+      Swal.fire({
+        title: "Error",
+        text: error,
+        icon: "warning"
+      })
     dispatch(clearFPErrors());
     }
     if(message){
-    window.alert(message);
+      Swal.fire({
+        title: "Success",
+        text: message,
+        icon: "success"
+      })
+    if(isSent){
+      dispatch(FORGOT_PASSWORD_RESET());
+      navigate("/password/reset");
+    }
     }
 
-    },[dispatch,message,error])
+    },[dispatch,message,error,isSent,navigate,Swal])
     
   return (
     

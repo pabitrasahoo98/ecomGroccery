@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearProfileErrors, loadUser, updatePassword } from '../../../actions/userAction';
 import { useNavigate } from 'react-router-dom';
 import { UPDATE_PASSWORD_RESET } from '../../../reducers/userUpdateReducer';
+import Swal from 'sweetalert2';
 
 
 
@@ -15,16 +16,24 @@ const ChangePassword = () => {
     const[confirmPassword,setConfirmPassword]=useState("");
     useEffect(() => {
         if(error){
-          window.alert(error);
+            Swal.fire({
+                title: "Error",
+                text: error,
+                icon: "warning"
+              })
           dispatch(clearProfileErrors);
         }
         if(isUpdate){
-          window.alert("password Updated Successfully");
+            Swal.fire({
+                title: "Success",
+                text: "Password Update Successful",
+                icon: "success"
+              })
           dispatch(loadUser());
           navigate("/profile/changepassword");
           dispatch(UPDATE_PASSWORD_RESET());
         }
-      }, [dispatch,isUpdate,error])
+      }, [dispatch,isUpdate,error,Swal,navigate])
     const handleSaveChanges=(e)=>{
         e.preventDefault();
         dispatch(updatePassword(oldPassword,newPassword,confirmPassword))

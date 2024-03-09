@@ -12,6 +12,7 @@ import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import { ADD_PRODUCT_RESET } from '../../../reducers/addProductReducer';
 import { clearNPrrors, createProduct } from '../../../actions/productAction';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 const AddProduct = ({role}) => {
@@ -69,16 +70,24 @@ const AddProduct = ({role}) => {
       };
       useEffect(() => {
         if(error){
-          window.alert(error);
+          Swal.fire({
+            title: "Error",
+            text: error,
+            icon: "warning"
+          })
           dispatch(clearNPrrors());
         }
         if(success){
-          window.alert("Product added succesfully");
+          Swal.fire({
+            title: "Success",
+            text: "Product is live now",
+            icon: "success"
+          })
           dispatch(ADD_PRODUCT_RESET());
           navigate("/admin/products");
         }
         
-      }, [error,success,dispatch])
+      }, [error,success,dispatch,Swal,navigate])
       
   return (
     <Layout>{(role==="admin")?<>

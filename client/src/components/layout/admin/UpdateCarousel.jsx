@@ -8,6 +8,7 @@ import { Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UPDATE_CAROUSEL_RESET} from '../../../reducers/updatePrerequisitionReducer';
 import { carouselDetails, clearCARDErrors, clearUCARErrors, updateCarousel} from '../../../actions/catagoryAction';
+import Swal from 'sweetalert2';
 
 const UpdateCarousel = ({role}) => {
   const [carouselLink,setCarouselLink]=useState("");
@@ -31,22 +32,34 @@ const UpdateCarousel = ({role}) => {
         setCarouselName(Carousel.carouselName);
       }
       if (carerror) {
-        window.alert(carerror);
+        Swal.fire({
+          title: "Error",
+          text: carerror,
+          icon: "warning"
+        })
         dispatch(clearCARDErrors());
       }
   
       if (updateError) {
-        window.alert(updateError);
+        Swal.fire({
+          title: "Error",
+          text: updateError,
+          icon: "warning"
+        })
         dispatch(clearUCARErrors());
       }
   
       if (iscarupdate) {
-        window.alert("Carousel Deatails Updated Successfully");
+        Swal.fire({
+          title: "Success",
+          text: "Carousel Updated succesfully",
+          icon: "success"
+        })
         navigate("/admin/carousel");
         dispatch(UPDATE_CAROUSEL_RESET());
       }
 
-}, [Carousel,dispatch,carerror,updateError,iscarupdate,id,navigate])
+}, [Carousel,dispatch,carerror,updateError,iscarupdate,id,navigate,Swal])
 
 const updateCarouselSubmitHandler=(e)=>{
   e.preventDefault();

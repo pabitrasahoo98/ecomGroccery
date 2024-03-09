@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UPDATE_PINCODE_RESET } from '../../../reducers/updatePrerequisitionReducer';
 import { clearPDErrors, clearUPErrors, pincodeDetails, updatePincode } from '../../../actions/catagoryAction';
+import Swal from 'sweetalert2';
 
 
 const UpdatePincode = ({role}) => {
@@ -30,22 +31,34 @@ const UpdatePincode = ({role}) => {
         setPin(Pincode.pinCode);
       }
       if (perror) {
-        window.alert(perror);
+        Swal.fire({
+          title: "Error",
+          text: perror,
+          icon: "warning"
+        })
         dispatch(clearPDErrors());
       }
   
       if (updateError) {
-        window.alert(updateError);
+        Swal.fire({
+          title: "Error",
+          text: updateError,
+          icon: "warning"
+        })
         dispatch(clearUPErrors());
       }
   
       if (ispupdate) {
-        window.alert("Pincode Updated Successfully");
+        Swal.fire({
+          title: "Success",
+          text: "Update pincode successful",
+          icon: "success"
+        })
         navigate("/admin/pincode");
         dispatch(UPDATE_PINCODE_RESET());
       }
 
-}, [Pincode,dispatch,perror,updateError,ispupdate,id,navigate])
+}, [Pincode,dispatch,perror,updateError,ispupdate,id,navigate,Swal])
 
 const updatePincodeSubmitHandler=(e)=>{
   e.preventDefault();

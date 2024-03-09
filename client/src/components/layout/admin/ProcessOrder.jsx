@@ -8,6 +8,7 @@ import { clearODErrors, clearUOErrors, getOrderDetails,updateOrder} from '../../
 import Loader from '../Loader';
 import { UPDATE_ORDER_RESET } from '../../../reducers/manipulateOrderReducer';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 const ProcessOrder = ({role}) => {
@@ -19,21 +20,33 @@ const ProcessOrder = ({role}) => {
     const { error: updateError, isUpdate } = useSelector((state) => state.maniOrder);
     useEffect(() => {
         if (error) {
-            alert.error(error);
+          Swal.fire({
+            title: "Error",
+            text: error,
+            icon: "warning"
+          })
             dispatch(clearODErrors());
           }
           if (updateError) {
-            window.alert(updateError);
+            Swal.fire({
+              title: "Error",
+              text: updateError,
+              icon: "warning"
+            })
             dispatch(clearUOErrors());
           }
           if (isUpdate) {
-            window.alert("Order Updated Successfully");
+            Swal.fire({
+              title: "Success",
+              text: "Order updated Successfully",
+              icon: "success"
+            })
             dispatch(UPDATE_ORDER_RESET());
             navigate("/admin/orders")
           }
       
         dispatch(getOrderDetails(id));
-    }, [dispatch,error,updateError,isUpdate])
+    }, [dispatch,error,updateError,isUpdate,Swal,navigate])
     
     const updateOrderSubmitHandler=(e)=>{
         e.preventDefault();

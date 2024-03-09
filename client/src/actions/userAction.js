@@ -136,7 +136,7 @@ export const forgotPassword =(email) =>
 
       const { data } = await axios.post(link,{email},config);
 
-      dispatch(FORGOT_PASSWORD_SUCCESS(data.message));
+      dispatch(FORGOT_PASSWORD_SUCCESS(data));
       
     } catch (error) {
       dispatch(FORGOT_PASSWORD_FAIL(error.response.data.message));
@@ -150,14 +150,14 @@ async (dispatch) => {
   dispatch( CLEAR_FPERRORS());
 };
 //RESET PASSWORD
-export const resetPassword =(token,password,confirmPassword) =>
+export const resetPassword =(otp,newPassword) =>
   async (dispatch) => {
     try {
       dispatch(RESET_PASSWORD_REQUEST());
       const config={headers:{"Content-Type":"application/json"},withCredentials:true}
-      let link = `http://localhost:4000/api/v1/password/reset/${token}`;
+      let link = `http://localhost:4000/api/v1/password/reset`;
 
-      const { data } = await axios.put(link,{password,confirmPassword},config);
+      const { data } = await axios.put(link,{otp,newPassword},config);
 
       dispatch(RESET_PASSWORD_SUCCESS(data.success));
       

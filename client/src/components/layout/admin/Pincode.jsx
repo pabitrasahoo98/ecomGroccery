@@ -10,29 +10,42 @@ import Loader from '../Loader';
 import AddIcon from '@mui/icons-material/Add';
 import { clearAPErrors, getAdminPincode,deletePincode,clearDPErrors } from '../../../actions/catagoryAction';
 import { DELETE_PINCODE_RESET } from '../../../reducers/deletePreReducer';
+import Swal from 'sweetalert2';
 
 
 const Pincode = ({role}) => {
 
     const navigate=useNavigate();
     const {pincode,perror,ploading}=useSelector((state)=>state.allPre);
-    const {isPDeleted,error,loading}=useSelector((state)=>state.delPre);
+    const {isPDeleted,perror:DPError,ploading:DPLoading}=useSelector((state)=>state.delPre);
     const dispatch=useDispatch();
     useEffect(() => {
     if(perror){
-      window.alert(perror);
+      Swal.fire({
+        title: "Error",
+        text: perror,
+        icon: "warning"
+      })
       dispatch(clearAPErrors());
     }
-    if(error){
-      window.alert(error);
+    if(DPError){
+      Swal.fire({
+        title: "Error",
+        text: DPError,
+        icon: "warning"
+      })
       dispatch(clearDPErrors());
     }
     if(isPDeleted){
-      window.alert("Pincode Removed succesfully");
+      Swal.fire({
+        title: "Success",
+        text: "Pincode Deleted Successfully",
+        icon: "success"
+      })
       dispatch(DELETE_PINCODE_RESET());
     }
     dispatch(getAdminPincode());
-    }, [dispatch,error,perror,isPDeleted])
+    }, [dispatch,DPError,perror,isPDeleted,Swal])
     const deletePincodeHandle=(id)=>{
       dispatch(deletePincode(id));
     }

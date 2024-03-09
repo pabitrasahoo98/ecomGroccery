@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cancelOrder, clearCOErrors, clearODErrors, getOrderDetails } from '../actions/orderAction';
 import Loader from '../components/layout/Loader';
 import { CANCEL_ORDER_RESET } from '../reducers/cancelOrderReducer';
+import Swal from 'sweetalert2'
 
 
 const OrderDetails = () => {
@@ -17,21 +18,33 @@ const OrderDetails = () => {
     const {isCanceled,loading:cloading,error:cerror}=useSelector((state)=>state.cancelOrder)
     useEffect(() => {
       if(error){
-        window.alert(error);
+        Swal.fire({
+          title: "Error",
+          text: error,
+          icon: "warning"
+        })
         dispatch(clearODErrors());
       }
       if(cerror){
-        window.alert(cerror);
+        Swal.fire({
+          title: "Error",
+          text: cerror,
+          icon: "warning"
+        })
         dispatch(clearCOErrors());
       }
 
       if(isCanceled){
-        window.alert("Order Cancelled succesfully");
+        Swal.fire({
+          title: "Success",
+          text: "Order Cancellation Success",
+          icon: "success"
+        })
         dispatch(CANCEL_ORDER_RESET());
         navigate("/profile/yourorders")
       }
       dispatch(getOrderDetails(id));
-    }, [dispatch,error,cerror,isCanceled,navigate])
+    }, [dispatch,error,cerror,isCanceled,navigate,Swal])
 
     
     const CancelOrder=(e)=>{

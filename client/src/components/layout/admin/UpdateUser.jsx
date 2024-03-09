@@ -9,6 +9,7 @@ import { Button } from '@mui/material';
 import { UPDATE_USER_RESET } from '../../../reducers/manipulateUserReducer';
 import { clearUUErrors, updateUser,userDetails,clearAUDErrors } from '../../../actions/userAction';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UpdateUser = ({role}) => {
     const navigate=useNavigate();
@@ -36,22 +37,34 @@ const UpdateUser = ({role}) => {
             setUrole(user.role);
           }
           if (error) {
-            window.alert(error);
+            Swal.fire({
+              title: "Error",
+              text: error,
+              icon: "warning"
+            })
             dispatch(clearAUDErrors());
           }
       
           if (updateError) {
-            window.alert(updateError);
+            Swal.fire({
+              title: "Error",
+              text: updateError,
+              icon: "warning"
+            })
             dispatch(clearUUErrors());
           }
       
           if (isUpdate) {
-            window.alert("User Updated Successfully");
+            Swal.fire({
+              title: "Success",
+              text: "Update User Successful",
+              icon: "success"
+            })
             navigate("/admin/users");
             dispatch(UPDATE_USER_RESET());
           }
     
-    }, [user,dispatch,error,updateError,isUpdate,id,navigate])
+    }, [user,dispatch,error,updateError,isUpdate,id,navigate,Swal])
 
     const updateUserSubmitHandler=(e)=>{
         e.preventDefault();

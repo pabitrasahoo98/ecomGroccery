@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { addCatagory, clearAACErrors } from '../../../actions/catagoryAction';
 import { ADD_CATAGORY_RESET } from '../../../reducers/addPrerequisitionReducer';
+import Swal from 'sweetalert2'
 
 const AddCatagory = ({role}) => {
 
@@ -16,16 +17,24 @@ const AddCatagory = ({role}) => {
   const [catagory, setCatagory] = useState("");
   useEffect(() => {
     if(cerror){
-      window.alert(cerror);
+      Swal.fire({
+        title: "Error",
+        text: cerror,
+        icon: "warning"
+      });
       dispatch(clearAACErrors());
     }
     if(csuccess){
-      window.alert("Category added succesfully");
+        Swal.fire({
+          title: "Success",
+          text: "Catagory is live now",
+          icon: "success"
+        })
       dispatch(ADD_CATAGORY_RESET());
       navigate("/admin/category");
     }
     
-  }, [cerror,csuccess,dispatch])
+  }, [cerror,csuccess,dispatch,Swal])
   
   const addCatagorySubmitHandler=(e)=>{
     e.preventDefault();

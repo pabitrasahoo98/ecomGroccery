@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { addPincode, clearAAPErrors } from '../../../actions/catagoryAction';
 import { ADD_PINCODE_RESET } from '../../../reducers/addPrerequisitionReducer';
+import Swal from 'sweetalert2';
 
 
 const AddPincode = ({role}) => {
@@ -16,16 +17,24 @@ const AddPincode = ({role}) => {
   const [pinCode, setPinCode] = useState("");
   useEffect(() => {
     if(perror){
-      window.alert(perror);
+        Swal.fire({
+          title: "Error",
+          text: perror,
+          icon: "warning"
+        })
       dispatch(clearAAPErrors());
     }
     if(psuccess){
-      window.alert("Pincode added succesfully");
+      Swal.fire({
+        title: "Success",
+        text: "Pincode is live now",
+        icon: "success"
+      })
       dispatch(ADD_PINCODE_RESET());
       navigate("/admin/pincode");
     }
     
-  }, [perror,psuccess,dispatch])
+  }, [perror,psuccess,dispatch,Swal,navigate])
   
   const addPincodeSubmitHandler=(e)=>{
     e.preventDefault();

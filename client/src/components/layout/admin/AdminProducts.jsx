@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Loader from '../Loader';
 import AddIcon from '@mui/icons-material/Add';
 import { DELETE_PRODUCT_RESET } from '../../../reducers/manipulateProductReducer';
+import Swal from 'sweetalert2';
 
 
 const AdminProducts = ({role}) => {
@@ -19,19 +20,31 @@ const AdminProducts = ({role}) => {
   const dispatch=useDispatch();
   useEffect(() => {
   if(error){
-    window.alert(error);
+    Swal.fire({
+      title: "Error",
+      text: error,
+      icon: "warning"
+    })
     dispatch(clearProductErrors());
   }
   if(dError){
-    window.alert(dError);
+    Swal.fire({
+      title: "Error",
+      text: dError,
+      icon: "warning"
+    })
     dispatch(clearDPrrors());
   }
   if(isDeleted){
-    window.alert("Product Deleted succesfully");
+     Swal.fire({
+    title: "Success",
+    text: "Product Deleted Successfully",
+    icon: "success"
+  })
     dispatch(DELETE_PRODUCT_RESET());
   }
   dispatch(getAdminProducts());
-  }, [dispatch,error,dError,isDeleted])
+  }, [dispatch,error,dError,isDeleted,Swal])
   const deleteProductHandle=(id)=>{
     dispatch(deleteProduct(id));
   }

@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Loader from '../Loader';
 import { getAdminUsers,clearAUErrors,deleteUser,clearDUErrors } from '../../../actions/userAction';
 import { DELETE_USER_RESET } from '../../../reducers/manipulateUserReducer';
+import Swal from 'sweetalert2';
 
 const Users = ({role}) => {
 
@@ -20,19 +21,31 @@ const Users = ({role}) => {
 
   useEffect(() => {
       if(error){
-        window.alert(error);
+        Swal.fire({
+          title: "Error",
+          text: error,
+          icon: "warning"
+        })
         dispatch(clearAUErrors());
       }
       if(dError){
-        window.alert(dError);
+        Swal.fire({
+          title: "Error",
+          text: dError,
+          icon: "warning"
+        })
         dispatch(clearDUErrors());
       }
       if(isDeleted){
-        window.alert("User Deleted succesfully");
+        Swal.fire({
+          title: "Success",
+          text: "User deleted successful",
+          icon: "success"
+        })
         dispatch(DELETE_USER_RESET());
       }
       dispatch(getAdminUsers());
-      }, [dispatch,error,isDeleted,dError])
+      }, [dispatch,error,isDeleted,dError,Swal])
 
   const columns = [
     { field: "id",

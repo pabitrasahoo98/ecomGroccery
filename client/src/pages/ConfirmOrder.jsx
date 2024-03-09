@@ -6,6 +6,7 @@ import Layout from "../components/layout/Layout";
 import { Radio, Typography } from "@mui/material";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { clearOErrors, createOrder } from "../actions/orderAction";
+import Swal from 'sweetalert2'
 
 
 
@@ -19,12 +20,16 @@ const ConfirmOrder = () => {
 
   useEffect(() => {
     if(error){
-      window.alert("Order Failed");
+      Swal.fire({
+        title: "Error",
+        text: "Order failed",
+        icon: "warning"
+      })
       dispatch(clearOErrors());
     }
   
    
-  }, [dispatch,error])
+  }, [dispatch,error,Swal])
 
   
   

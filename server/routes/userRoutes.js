@@ -16,7 +16,7 @@ const router =express.Router();
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/password/forgot").post(forgotPassword);
-router.route("/password/reset/:token").put(resetPassword);
+router.route("/password/reset").put(resetPassword);
 router.route("/me").get(isAuthenticateUser,getUserDetails);
 router.route("/password/update").put(isAuthenticateUser,updatePassword);
 router.route("/me/update").put(isAuthenticateUser,updateProfile);

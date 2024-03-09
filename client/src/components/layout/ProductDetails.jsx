@@ -4,24 +4,27 @@ import "./ProductDetails.css"
 import {useDispatch, useSelector } from 'react-redux'
 import { getProductDetails, getSProducts } from '../../actions/productAction'
 import { useLocation} from 'react-router-dom'
-import { Paper, Rating, Typography } from '@mui/material'
+import { Paper, Rating} from '@mui/material'
 import Layout from './Layout'
 import Loader from './Loader'
 import { addItemsToCart } from '../../actions/cartAction'
 import Product from '../layout/Product'
+import Swal from 'sweetalert2'
 
 const ProductDetails = () => {
     const dispatch=useDispatch();
     const location=useLocation();
     const id=location.state.id;
     const {product,loading,error}=useSelector(state=>state.product)
+    const {sProduct,sloading,serror}=useSelector(state=>state.sameProduct)
+    let pc=product.catagory;
     
     useEffect(() => {
       dispatch(getProductDetails(id))
-      dispatch(getSProducts(product.catagory))
-    }, [dispatch,id]);
+      dispatch(getSProducts(pc))
+    }, [dispatch,id,pc]);
     
-    const {sProduct,sloading,serror}=useSelector(state=>state.sameProduct)
+    
     const options = {
         size: "large",
         value: 4.5,
@@ -44,7 +47,11 @@ const ProductDetails = () => {
     const addToCartHandller=(e)=>{
       e.preventDefault();
       dispatch(addItemsToCart(id,quantity))
-      window.alert("item added successfully");
+      Swal.fire({
+        title: "Success",
+        text: "Product Added To Cart",
+        icon: "success"
+      })
 
     }
     

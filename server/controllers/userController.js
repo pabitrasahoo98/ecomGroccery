@@ -3,7 +3,7 @@ const catchAsyncError=require("../middleware/catchAsyncError");
 const User=require("../model/userModel");
 const sendToken = require("../utils/sendToken");
 const sendEmail=require("../utils/sendEmail");
-const crypto=require("crypto");
+//const crypto=require("crypto");
 
 //register user
 exports.registerUser=catchAsyncError(async(req,res,next)=>{
@@ -45,29 +45,40 @@ exports.forgotPassword=catchAsyncError(async(req,res,next)=>{
     if(!user){
         return next(new ErrorHandler("user not found ",404))
     }
-    //get password recovery token
+    //get otp and save to db
+    const otp = Math.floor(Math.random() * 1000000);
+
+    user.resetPasswordOtp = otp;
+    user.resetPasswordOtpExpiry = Date.now() + 10 * 60 * 1000;
+    const Email=user.email;
+
+    await user.save();
+    const message = `Your OTP for reseting the password ${otp}. If you did not request for this, please ignore this email.`;
+
+
+    /*//get password recovery token
     const resetToken=user.getResetPasswordToken();
     await user.save({validateBeforeSave:false});
 
     const resetPasswordUrl=`${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`;
 
     const message=`Your password reset Token is:-\n\n${resetPasswordUrl}
-    \n\n if you are not requested this email then ,please ignore it`;
+    \n\n if you are not requested this email then ,please ignore it`;*/
     try {
         await sendEmail({
-            email:user.email,
+            email:Email,
             subject:`grocery now pasword reset`,
             message
         });
 
         res.status(200).json({
-            sucess:true,
-            messege:`Email sent to${user.email} successfully`
+            success:true,
+            messege:`OTP sent to${user.email} successfully`
         })
         
     } catch (error) {
-        user.resetPasswordToken=undefined;
-        user.resetPasswordExpiry=undefined;
+       /* user.resetPasswordToken=undefined;
+        user.resetPasswordExpiry=undefined;*/
         await user.save({validateBeforeSave:false});
         return next(new ErrorHandler(error.message,500));
 
@@ -75,33 +86,41 @@ exports.forgotPassword=catchAsyncError(async(req,res,next)=>{
 });
 //reset password
 exports.resetPassword = catchAsyncError(async (req, res, next) => {
-    // creating token hash
+   /* // creating token hash
     const resetPasswordToken = crypto
       .createHash("sha256")
       .update(req.params.token)
-      .digest("hex");
+      .digest("hex");*/
+      const { otp, newPassword } = req.body;
+
+      const user = await User.findOne({
+        resetPasswordOtp: otp,
+        resetPasswordOtpExpiry: { $gt: Date.now() },
+      })
   
-    const user = await User.findOne({
+   /* const user = await User.findOne({
       resetPasswordToken,
       //resetPasswordExpire: { $gt: Date.now() },
-    });
+    });*/
   
     if (!user) {
       return next(
         new ErrorHandler(
-          "Reset Password Token is invalid or has been expired",
+          "OTP is invalid or has been expired",
           400
         )
       );
     }
   
-    if (req.body.password !== req.body.confirmPassword) {
+   /* if (req.body.password !== req.body.confirmPassword) {
       return next(new ErrorHandler("Password does not password", 400));
-    }
+    }*/
   
-    user.password = req.body.password;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpiry = undefined;
+    user.password = newPassword;
+    user.resetPasswordOtp = null;
+    user.resetPasswordOtpExpiry = null;
+    /*user.resetPasswordToken = undefined;
+    user.resetPasswordExpiry = undefined;*/
   
     await user.save();
   

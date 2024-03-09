@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Loader from '../Loader';
 import { DELETE_ORDER_RESET } from '../../../reducers/manipulateOrderReducer';
+import Swal from 'sweetalert2';
 
 const OrderList = ({role}) => {
 
@@ -19,19 +20,31 @@ const OrderList = ({role}) => {
 
     useEffect(() => {
         if(error){
-          window.alert(error);
+          Swal.fire({
+            title: "Error",
+            text: error,
+            icon: "warning"
+          })
           dispatch(clearOErrors());
         }
         if(dError){
-          window.alert(dError);
+          Swal.fire({
+            title: "Error",
+            text: dError,
+            icon: "warning"
+          })
           dispatch(clearDOErrors());
         }
         if(isDeleted){
-          window.alert("Order Deleted succesfully");
+          Swal.fire({
+            title: "Success",
+            text: "Order Deleted Successfully",
+            icon: "success"
+          })
           dispatch(DELETE_ORDER_RESET());
         }
         dispatch(getAdminOrders());
-        }, [dispatch,error,dError,isDeleted])
+        }, [dispatch,error,dError,isDeleted,Swal])
 
     const columns = [
         { field: 'id',

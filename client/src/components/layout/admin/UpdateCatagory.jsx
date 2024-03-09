@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UPDATE_CATAGORY_RESET } from '../../../reducers/updatePrerequisitionReducer';
 import {  catagoryDetails, clearCDErrors, clearUCErrors, updateCatagory } from '../../../actions/catagoryAction';
+import Swal from 'sweetalert2';
 
 const UpdateCatagory = ({role}) => {
   const [cata,setCata]=useState("");
@@ -28,22 +29,34 @@ const UpdateCatagory = ({role}) => {
         setCata(Catagory.catagory);
       }
       if (cerror) {
-        window.alert(cerror);
+        Swal.fire({
+          title: "Error",
+          text: cerror,
+          icon: "warning"
+        })
         dispatch(clearCDErrors());
       }
   
       if (updateError) {
-        window.alert(updateError);
+        Swal.fire({
+          title: "Error",
+          text: updateError,
+          icon: "warning"
+        })
         dispatch(clearUCErrors());
       }
   
       if (iscupdate) {
-        window.alert("Catagory Updated Successfully");
+        Swal.fire({
+          title: "Succes",
+          text: "Category Updated Successfully",
+          icon: "success"
+        })
         navigate("/admin/category");
         dispatch(UPDATE_CATAGORY_RESET());
       }
 
-}, [Catagory,dispatch,cerror,updateError,iscupdate,id,navigate])
+}, [Catagory,dispatch,cerror,updateError,iscupdate,id,navigate,Swal])
 
 const updateCatagorySubmitHandler=(e)=>{
   e.preventDefault();

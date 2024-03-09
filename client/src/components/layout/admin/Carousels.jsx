@@ -10,28 +10,41 @@ import Loader from '../Loader';
 import AddIcon from '@mui/icons-material/Add';
 import { clearACARErrors, getAdminCarousel,deleteCarousel,clearDCARErrors } from '../../../actions/catagoryAction';
 import { DELETE_CAROUSEL_RESET } from '../../../reducers/deletePreReducer';
+import Swal from 'sweetalert2';
 
 const Carousels = ({role}) => {
 
   const navigate=useNavigate();
   const {carousel,carerror,carloading}=useSelector((state)=>state.allPre);
-  const {isCarDeleted,error,loading}=useSelector((state)=>state.delPre);
+  const {isCarDeleted,carerror:DCError,carloading:DCLoading}=useSelector((state)=>state.delPre);
   const dispatch=useDispatch();
   useEffect(() => {
   if(carerror){
-    window.alert(carerror);
+    Swal.fire({
+      title: "Error",
+      text: carerror,
+      icon: "warning"
+    })
     dispatch(clearACARErrors());
   }
-  if(error){
-    window.alert(error);
+  if(DCError){
+    Swal.fire({
+      title: "Error",
+      text: DCError,
+      icon: "warning"
+    })
     dispatch(clearDCARErrors());
   }
   if(isCarDeleted){
-    window.alert("Carousel Removed succesfully");
+    Swal.fire({
+      title: "Success",
+      text: "Carousel Deleted successfully",
+      icon: "success"
+    })
     dispatch(DELETE_CAROUSEL_RESET());
   }
   dispatch(getAdminCarousel());
-  }, [dispatch,error,carerror,isCarDeleted])
+  }, [dispatch,DCError,carerror,isCarDeleted,Swal])
   const deleteCarouselHandle=(id)=>{
     dispatch(deleteCarousel(id));
   }

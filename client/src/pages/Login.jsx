@@ -9,6 +9,7 @@ import InstallMobileIcon from '@mui/icons-material/InstallMobile';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { login,clearErrors,register} from '../actions/userAction';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const dispatch=useDispatch();
@@ -35,14 +36,18 @@ dispatch(login(loginEmail,loginPassword))
 }
 useEffect(() => {
   if(error){
-    console.log(error);
+    Swal.fire({
+      title: "Error",
+      text: error,
+      icon: "warning"
+    })
     dispatch(clearErrors);
   }
   if(isAuthenticate){
   navigate(redirect);
   }
     
-}, [dispatch,isAuthenticate,error,navigate,redirect])
+}, [dispatch,isAuthenticate,error,navigate,redirect,Swal])
 
 const registerSubmit=(e)=>{
   e.preventDefault();

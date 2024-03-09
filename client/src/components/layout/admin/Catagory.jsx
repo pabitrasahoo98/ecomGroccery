@@ -10,29 +10,42 @@ import Loader from '../Loader';
 import AddIcon from '@mui/icons-material/Add';
 import { clearACErrors, getAdminCatagory,deleteCatagory,clearDCErrors } from '../../../actions/catagoryAction';
 import { DELETE_CATAGORY_RESET } from '../../../reducers/deletePreReducer';
+import Swal from 'sweetalert2';
 
 const Catagory = ({role}) => {
 
   
   const navigate=useNavigate();
   const {Catagory,cerror,cloading}=useSelector((state)=>state.allPre);
-  const {isCDeleted,error,loading}=useSelector((state)=>state.delPre);
+  const {isCDeleted,cerror:DCError,cloading:DCLoading}=useSelector((state)=>state.delPre);
   const dispatch=useDispatch();
   useEffect(() => {
   if(cerror){
-    window.alert(cerror);
+    Swal.fire({
+      title: "Error",
+      text: cerror,
+      icon: "warning"
+    })
     dispatch(clearACErrors());
   }
-  if(error){
-    window.alert(error);
+  if(DCError){
+    Swal.fire({
+      title: "Error",
+      text: DCError,
+      icon: "warning"
+    })
     dispatch(clearDCErrors());
   }
   if(isCDeleted){
-    window.alert("Category Removed succesfully");
+    Swal.fire({
+      title: "Success",
+      text: "Category Deleted Successfully",
+      icon: "success"
+    })
     dispatch(DELETE_CATAGORY_RESET());
   }
   dispatch(getAdminCatagory());
-  }, [dispatch,error,cerror,isCDeleted])
+  }, [dispatch,DCError,cerror,isCDeleted,Swal])
   const deleteCatagoryHandle=(id)=>{
     dispatch(deleteCatagory(id));
   }
