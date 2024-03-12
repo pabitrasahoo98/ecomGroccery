@@ -29,6 +29,16 @@
     width: 9vmax;
     font: 500 1vmax "Roboto";
 }
+.homeHeading1{
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 2vmax;
+    border-bottom: 2px solid goldenrod;
+    width: 40vmax;
+    padding: 1vmax;
+    margin:1.5vmax auto;
+    color: rgba(0,0,0,0.7);
+}
 .homeHeading{
     text-align: center;
     font-family:Arial, Helvetica, sans-serif;

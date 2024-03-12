@@ -38,6 +38,7 @@ import AddPincode from "./components/layout/admin/AddPincode";
 import UpdatePincode from "./components/layout/admin/UpdatePincode";
 import AddCarousel from "./components/layout/admin/AddCarousel";
 import UpdateCarousel from "./components/layout/admin/UpdateCarousel";
+import CategoryProducts from "./pages/CategoryProducts";
 
 
 
@@ -60,7 +61,9 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route exact path="/products" element={<Products/>}/>
       <Route path="/productdetails" element={<ProductDetails/>}/>
-      <Route path="/products/:keyword" element={<Products/>} />
+      <Route path="/products/:keyword" element={<Products/>}/>
+      <Route path="/products/category/:catagory" element={<CategoryProducts/>}/>
+      <Route path="/products" element={<Products/>} />
       <Route path="/contact" element={<Contact/>}/>
       <Route path="/about" element={<About/>} />
       <Route path="/login" element={<Login/>} />

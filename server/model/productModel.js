@@ -23,6 +23,18 @@ const productSchema= new mongoose.Schema({
         type:Number,
         default:0
     },
+    dod:{
+        type:Boolean,
+        default:false
+    },
+    de:{
+        type:Boolean,
+        default:false
+    },
+    td:{
+        type:Boolean,
+        default:false
+    },
     images:[{
         public_id:{
             type:String,

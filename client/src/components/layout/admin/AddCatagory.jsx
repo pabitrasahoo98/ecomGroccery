@@ -15,6 +15,7 @@ const AddCatagory = ({role}) => {
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const [catagory, setCatagory] = useState("");
+  const [imgLink, setImgLink] = useState("");
   useEffect(() => {
     if(cerror){
       Swal.fire({
@@ -42,6 +43,7 @@ const AddCatagory = ({role}) => {
     const myForm = new FormData();
 
     myForm.set("catagory", catagory);
+    myForm.set("imgLink", imgLink);
     dispatch(addCatagory(myForm))
 
   }
@@ -68,6 +70,17 @@ const AddCatagory = ({role}) => {
            value={catagory}
            required
            onChange={(e) => setCatagory(e.target.value)}
+         />
+       </div>
+
+       <div>
+         <CategoryIcon />
+         <input
+           type="text"
+           placeholder="Catagory Image Link"
+           value={imgLink}
+           required
+           onChange={(e) => setImgLink(e.target.value)}
          />
        </div>
        <Button

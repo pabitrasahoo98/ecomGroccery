@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 
 const UpdateCatagory = ({role}) => {
   const [cata,setCata]=useState("");
+  const [img,setImg]=useState("");
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const {id}=useParams();
@@ -27,6 +28,7 @@ const UpdateCatagory = ({role}) => {
         dispatch(catagoryDetails(id));
       } else {
         setCata(Catagory.catagory);
+        setImg(Catagory.imgLink)
       }
       if (cerror) {
         Swal.fire({
@@ -61,8 +63,10 @@ const UpdateCatagory = ({role}) => {
 const updateCatagorySubmitHandler=(e)=>{
   e.preventDefault();
   const myForm = new FormData();
+  
 
   myForm.set("catagory", cata);
+  myForm.set("imgLink", img);
 
   dispatch(updateCatagory(id, myForm));
 }
@@ -90,6 +94,17 @@ const updateCatagorySubmitHandler=(e)=>{
            value={cata}
            required
            onChange={(e) => setCata(e.target.value)}
+         />
+       </div>
+
+       <div>
+         <CategoryIcon />
+         <input
+           type="text"
+           placeholder="Catagory Img Link"
+           value={img}
+           required
+           onChange={(e) => setImg(e.target.value)}
          />
        </div>
        <Button

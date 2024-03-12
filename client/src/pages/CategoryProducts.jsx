@@ -11,18 +11,28 @@ import {Typography} from '@mui/material';
 
  
 
-const Products = () => {
+const CategoryProducts = () => {
+  let {catagory}=useParams();
   const {catalog}=useSelector((state)=>state.catagories);
   const [currentPage,setCurrentPage]=useState(1);
   const [category,setCategory]=useState("");
-
+  
   const dispatch=useDispatch();
-  let {keyword}=useParams();
+  const keyword="";
   const{loading,error,product,productsCount,resultPerPage}=useSelector((state)=>state.products);
+  
   useEffect(() => { 
+    if(catagory){
+    dispatch(getProduct(keyword,currentPage,catagory));
+    catagory=null;
     
-    dispatch(getProduct(keyword,currentPage,category));
-  }, [dispatch,keyword,currentPage,category])
+    }
+    if(category){
+        dispatch(getProduct(keyword,currentPage,category));
+    }
+
+    
+  }, [dispatch,currentPage,category])
   const setCurrentPageNo=(e)=>{
     setCurrentPage(e);
 
@@ -38,7 +48,7 @@ const Products = () => {
         <Product key={p._id} product={p}/>))}
         </div>
         <div className='filterBox'>
-        <Typography  className='filterBoxT'>CATEGORIES</Typography>
+        <Typography  className='filterBoxT'>MORE CATEGORIES</Typography>
             <ul className="categoryBox">
               {catalog.map((item) => (
                 <li
@@ -71,4 +81,4 @@ const Products = () => {
   )
 }
 
-export default Products
+export default CategoryProducts

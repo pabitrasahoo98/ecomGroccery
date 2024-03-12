@@ -1,0 +1,75 @@
+.category-slider-container {
+  margin: 20px auto;
+  position: relative; /* Required for positioning slider buttons */
+}
+
+.category-slider {
+  width: 100%;
+}
+
+.category-slider >div >a{
+  text-decoration: none;
+}
+
+.card {
+  width: 100%;
+  margin: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Hover effect */
+}
+
+.card-media {
+  object-fit: cover;
+}
+
+.card-content {
+  text-align: center;
+}
+
+.category-name {
+  margin-top: 10px;
+}
+
+.slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.custom-next-arrow,
+.custom-prev-arrow {
+  width: 50px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.custom-next-arrow {
+  right: 0;
+}
+
+.custom-prev-arrow {
+  left: 0;
+}
+
+@media (max-width: 599px) {
+  .category-slider-container {
+    max-width: 100%; /* Full width on screens less than 600px */
+  }
+
+  .slick-arrow {
+    display: none; /* Hide preview arrows */
+  }
+
+  .custom-next-arrow,
+  .custom-prev-arrow {
+    display: block; /* Display slider buttons */
+  }
+}

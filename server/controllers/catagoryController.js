@@ -5,8 +5,7 @@ const Catagory=require("../model/catagoryModel");
 //creating a new catagory-admin
 
 exports.createCatagory=catchAsyncError(async(req,res,next)=>{
-    const {catagory}= req.body;
-    const catagories=await Catagory.create({catagory});
+    const catagories=await Catagory.create(req.body);
     res.status(201).json({
         success:true,
         catagories,
@@ -61,7 +60,7 @@ exports.updateCatagory=catchAsyncError(async(req,res,next)=>{
   })
 })
 
-//catagories details
+//catagories details 
 
 exports.getCatagory = catchAsyncError(async (req, res, next) => {
   const catagory = await Catagory.findById(req.params.id);

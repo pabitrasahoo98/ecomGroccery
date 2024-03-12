@@ -6,6 +6,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import StorageIcon from "@mui/icons-material/Storage";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { Button } from '@mui/material';
 import "./AddProduct.css";
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
@@ -25,6 +26,9 @@ const UpdateProduct = ({role}) => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
     const [mrp, setMrp] = useState(0);
+    const [dod,setDod]=useState(false);
+    const [de,setDe]=useState(false);
+    const [td,setTd]=useState(false);
     const [description, setDescription] = useState("");
     const [catagory, setCatagory] = useState("");
     const [stock, setStock] = useState(0);
@@ -43,6 +47,10 @@ const UpdateProduct = ({role}) => {
         myForm.set("description", description);
         myForm.set("catagory", catagory);
         myForm.set("stock", stock);
+        myForm.set("dod",dod);
+        myForm.set("td", td);
+        myForm.set("de", de);
+
     
         images.forEach((image) => {
           myForm.append("images", image);
@@ -80,6 +88,9 @@ const UpdateProduct = ({role}) => {
             setPrice(product.price);
             setCatagory(product.catagory);
             setStock(product.stock);
+            setDod(product.dod);
+            setDe(product.de);
+            setTd(product.td);
             setOldImages(product.images);
         }
         if(pError){
@@ -100,9 +111,9 @@ const UpdateProduct = ({role}) => {
         }
         if(isUpdate){
           Swal.fire({
-            title: "Error",
+            title: "Success",
             text: "Product Updated successfuly",
-            icon: "warning"
+            icon: "success"
           })
           dispatch(UPDATE_PRODUCT_RESET());
           navigate("/admin/products");
@@ -175,6 +186,32 @@ const UpdateProduct = ({role}) => {
                 ))}
               </select>
             </div>
+            <div>
+         <LocalOfferIcon />
+         <select value={dod} onChange={(e) => setDod(e.target.value)}>
+           <option value="">Set Deals of the Day</option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+       </div>
+
+       <div>
+         <LocalOfferIcon />
+         <select value={de} onChange={(e) => setDe(e.target.value)}>
+           <option value="">Set Daily Essentials</option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+       </div>
+
+       <div>
+         <LocalOfferIcon />
+         <select value={td} onChange={(e) => setTd(e.target.value)}>
+           <option value="">Set Top Delas</option>
+           <option value="true">True</option>
+           <option value="false">False</option>
+         </select>
+       </div>
 
             <div>
               <StorageIcon />
