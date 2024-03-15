@@ -80,7 +80,7 @@ const CatSlider = () => {
         <Slider ref={sliderRef} {...settings} className="category-slider">
           {catalog.map((item, index) => (
             
-            <div key={index} >
+            <div key={index} > 
               <Link  to={`/products/category/${item.catagory}`}>  
             
               <Grid container justifyContent="center">
@@ -89,13 +89,13 @@ const CatSlider = () => {
                     <CardMedia
                         
                       component="img"
-                      height="140"
+                      height="100"
                       image={item.imgLink}
                       alt={item.catagory}
                       className="card-media"
                     />
                     <CardContent className="card-content">
-                      <Typography variant="h6" className="category-name">{item.catagory}</Typography>
+                      <Typography variant='subtitle2' className="category-name">{item.catagory}</Typography>
                     </CardContent>
                   </Card>
                 </Grid>

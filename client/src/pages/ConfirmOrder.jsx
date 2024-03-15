@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./ConfirmOrder.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,29 +7,40 @@ import { Radio, Typography } from "@mui/material";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import { clearOErrors, createOrder } from "../actions/orderAction";
 import Swal from 'sweetalert2'
+import { CREATE_ORDER_RESET } from "../reducers/orderReducer";
 
 
 
 const ConfirmOrder = () => {
   const dispatch=useDispatch();
+  const targetRef=useRef(null);
   const navigate=useNavigate();
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
-  const{error}=useSelector((state)=>state.newOrder);
+  const{error,isplaced}=useSelector((state)=>state.newOrder);
   const [paymentType,setPaymentType]=useState(false);
 
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
+    if(isplaced){
+      dispatch(CREATE_ORDER_RESET());
+      navigate("/success");
+      window.location.reload();
+    }
+
     if(error){
       Swal.fire({
         title: "Error",
-        text: "Order failed",
+        text: error,
         icon: "warning"
       })
       dispatch(clearOErrors());
     }
   
    
-  }, [dispatch,error,Swal])
+  }, [dispatch,error,Swal,isplaced,navigate])
 
   
   
@@ -50,14 +61,10 @@ const ConfirmOrder = () => {
   const placeOrder = (e) => {
     e.preventDefault();
     dispatch(createOrder(order));
-    navigate("/success")
-    
-
-
-
-  };
+};
 
   return (
+    <div ref={targetRef}>
     <Layout>
       <div className="confirmOrderPage">
         <div>
@@ -139,6 +146,7 @@ const ConfirmOrder = () => {
         </div>
       </div>
     </Layout>
+    </div>
   );
 };
 

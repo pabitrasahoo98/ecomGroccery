@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import { Button, Typography } from '@mui/material'
 import "./ProcessOrder.css"
@@ -15,11 +15,16 @@ const ProcessOrder = ({role}) => {
     const [status, setStatus] = useState("");
     const navigate=useNavigate();
     const {id}=useParams();
+    const targetRef=useRef(null);
     const dispatch=useDispatch();
     const { order, error, loading } = useSelector((state) => state.orderDetails);
     const { error: updateError, isUpdate } = useSelector((state) => state.maniOrder);
     useEffect(() => {
         if (error) {
+          if(targetRef.current){
+            targetRef.current.scrollIntoView({behavior:'smooth'});
+          }
+          
           Swal.fire({
             title: "Error",
             text: error,
@@ -43,6 +48,7 @@ const ProcessOrder = ({role}) => {
             })
             dispatch(UPDATE_ORDER_RESET());
             navigate("/admin/orders")
+            window.location.reload();
           }
       
         dispatch(getOrderDetails(id));
@@ -58,6 +64,7 @@ const ProcessOrder = ({role}) => {
     dispatch(updateOrder(id, myForm));
     }
   return (
+    <div  ref={targetRef}>
     <Layout>
     {(role==="admin")?
    <> 
@@ -195,6 +202,7 @@ const ProcessOrder = ({role}) => {
     
    </>
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 

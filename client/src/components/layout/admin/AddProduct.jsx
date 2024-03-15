@@ -6,6 +6,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import StorageIcon from "@mui/icons-material/Storage";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import ScaleIcon from '@mui/icons-material/Scale';
 import { Button } from '@mui/material';
 import "./AddProduct.css";
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
@@ -26,6 +27,7 @@ const AddProduct = ({role}) => {
     const [price, setPrice] = useState(0);
     const [mrp, setMrp] = useState(0);
     const [description, setDescription] = useState("");
+    const [qty, setQty] = useState("");
     const [catagory, setCatagory] = useState("");
     const [stock, setStock] = useState(0);
     const [images, setImages] = useState([]);
@@ -40,6 +42,7 @@ const AddProduct = ({role}) => {
         myForm.set("mrp", mrp);
         myForm.set("price", price);
         myForm.set("description", description);
+        myForm.set("qty", qty);
         myForm.set("catagory", catagory);
         myForm.set("stock", stock);
     
@@ -108,6 +111,16 @@ const AddProduct = ({role}) => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <ScaleIcon />
+              <input
+                type="text"
+                placeholder="Product Weight or Quantity"
+                required
+                value={qty}
+                onChange={(e) => setQty(e.target.value)}
               />
             </div>
 

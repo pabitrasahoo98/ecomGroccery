@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Layout from '../components/layout/Layout'
 import "./Cart.css";
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
@@ -9,9 +9,18 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 const Cart = () => {
+
+  const targetRef=useRef(null);
+  
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const {cartItems}=useSelector((state)=>state.cart);
+  useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
+  }, [])
+  
 
   
   const increaseQuantity=(id,quantity,stock)=>{
@@ -37,6 +46,7 @@ const Cart = () => {
   }
 
   return (
+    <div ref={targetRef}>
     <Layout>
        <>{cartItems.length===0? <div className="emptyCart">
           <RemoveShoppingCartIcon />
@@ -83,6 +93,7 @@ const Cart = () => {
             </div>
             </>}</>
     </Layout>
+    </div>
     
   )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
@@ -24,7 +24,12 @@ const UpdateCarousel = ({role}) => {
     iscarupdate,
   } = useSelector((state) => state.updatePre);
 
+  const targetRef=useRef(null);
+
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     if (Carousel && Carousel._id !== id) {
         dispatch(carouselDetails(id));
       } else {
@@ -57,6 +62,7 @@ const UpdateCarousel = ({role}) => {
         })
         navigate("/admin/carousel");
         dispatch(UPDATE_CAROUSEL_RESET());
+        window.location.reload();
       }
 
 }, [Carousel,dispatch,carerror,updateError,iscarupdate,id,navigate,Swal])
@@ -73,6 +79,7 @@ const updateCarouselSubmitHandler=(e)=>{
  
 
   return (
+    <div ref={targetRef}>
     <Layout>{(role==="admin")?<>
 
    <div className="newProductContainer">
@@ -118,6 +125,7 @@ const updateCarouselSubmitHandler=(e)=>{
  </div>
     
     </>:<h3>You are not Authorised</h3>}</Layout>
+    </div>
   )
 }
 

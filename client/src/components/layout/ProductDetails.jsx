@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Carousel from 'react-material-ui-carousel'
 import "./ProductDetails.css"
 import {useDispatch, useSelector } from 'react-redux'
@@ -8,10 +8,11 @@ import { Paper, Rating} from '@mui/material'
 import Layout from './Layout'
 import Loader from './Loader'
 import { addItemsToCart } from '../../actions/cartAction'
-import Product from '../layout/Product'
 import Swal from 'sweetalert2'
+import ProductSlick from './ProductSlick'
 
 const ProductDetails = () => {
+  const targetRef=useRef(null);
     const dispatch=useDispatch();
     const location=useLocation();
     const id=location.state.id;
@@ -20,6 +21,9 @@ const ProductDetails = () => {
     let pc=product.catagory;
     
     useEffect(() => {
+      if(targetRef.current){
+        targetRef.current.scrollIntoView({behavior:'smooth'});
+      }
       dispatch(getProductDetails(id))
       dispatch(getSProducts(pc))
     }, [dispatch,id,pc]);
@@ -57,6 +61,7 @@ const ProductDetails = () => {
     
     
   return (
+    <div ref={targetRef}>
     <Layout>
         <>{loading?<Loader/>:<>
     <div className='ProductDetails'>
@@ -87,6 +92,7 @@ const ProductDetails = () => {
               </div>
               <div className="detailsBlock-3">
                 <span><s>{`₹${product.mrp}`}</s><span>{Math.ceil((product.mrp-product.price)/product.mrp*100)}% off<span>{`₹${product.price}`}</span></span></span>
+                <p>Quantity:<span className='productweight'>{product.qty}</span></p>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>
@@ -115,15 +121,14 @@ const ProductDetails = () => {
 </div>
  </div>
  <div>
+ {sProduct &&<>
  <h2 className='ProductsHeading'>Similar Products</h2>
- <div className="Products">
-         {sProduct &&
-         sProduct.map((p) => (
-         <Product key={p._id} product={p}/>))}
-         </div>
+ <div><ProductSlick prod={sProduct}/></div></>}
+
  </div></>
  }</>
     </Layout>
+    </div>
   )
 }
 

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Typography, Container, Paper, Grid } from '@mui/material';
 import Layout from "../components/layout/Layout"
 
 const About = () => {
+  const targetRef=useRef(null);
+  useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
+  }, [])
+  
   return (
+    <div ref={targetRef}>
     <Layout>    
       <Container>
       <Typography variant="h2" gutterBottom style={{ marginBottom: '20px' }}>
@@ -38,7 +46,7 @@ const About = () => {
       </Grid>
     </Container>
     </Layout>
-
+    </div>
   );
 }
 

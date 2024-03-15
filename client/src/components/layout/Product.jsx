@@ -26,7 +26,7 @@ const Product = ({product}) => {
         </span>
     </div>
     <span className='mrp'>MRP <s>{`₹${product.mrp}`}</s><span>{Math.ceil((product.mrp-product.price)/product.mrp*100)}% off</span></span>
-    
+    <span>{product.qty}</span>
     <span className='price'>{`₹${product.price}`}</span> 
     </a>
   )

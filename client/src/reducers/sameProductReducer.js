@@ -22,7 +22,7 @@ export const sameProductReducer = createSlice(
           },
     
         CLEAR_SPERRORS:(state)=>{
-            state.error=null;
+            state.serror=null;
           }
        }
   

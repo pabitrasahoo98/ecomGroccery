@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
 import { useSelector, useDispatch } from "react-redux";
@@ -11,11 +11,15 @@ import Swal from 'sweetalert2';
 
 
 const AddPincode = ({role}) => {
-  const {ploading,psuccess,perror}=useSelector((state)=>state.addPre)
+  const {ploading,psuccess,perror}=useSelector((state)=>state.addPre);
+  const targetRef=useRef(null);
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const [pinCode, setPinCode] = useState("");
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     if(perror){
         Swal.fire({
           title: "Error",
@@ -46,6 +50,7 @@ const AddPincode = ({role}) => {
 
   }
   return (
+    <div ref={targetRef}>
     <Layout>{(role==="admin")?<>
 
    <div className="newProductContainer">
@@ -81,6 +86,7 @@ const AddPincode = ({role}) => {
  </div>
     
     </>:<h3>You are not Authorised</h3>}</Layout>
+    </div>
   )
 }
 

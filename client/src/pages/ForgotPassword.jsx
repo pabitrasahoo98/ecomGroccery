@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../components/layout/Layout'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import "./ForgotPassword.css"
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 
 
 const ForgotPassword = () => {
+    const inputRef=useRef(null);
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const {error,message,loading,isSent}=useSelector((state)=>state.forgotPassword);
@@ -20,6 +21,7 @@ const ForgotPassword = () => {
         dispatch(forgotPassword(email))
     }
     useEffect(() => {
+      inputRef.current.focus();
     if(error){
       Swal.fire({
         title: "Error",
@@ -40,9 +42,10 @@ const ForgotPassword = () => {
     }
     }
 
-    },[dispatch,message,error,isSent,navigate,Swal])
+    },[dispatch,message,error,isSent,navigate,Swal]) 
     
   return (
+    <div>
     
     <Layout>{loading?<Loader/>:
     <>
@@ -57,6 +60,7 @@ const ForgotPassword = () => {
                 <div className="forgotPasswordEmail">
                   <MailOutlineIcon />
                   <input
+                   ref={inputRef}
                     type="email"
                     placeholder="Email"
                     required
@@ -75,6 +79,7 @@ const ForgotPassword = () => {
             </div>
           </div>
         </>}</Layout>
+        </div>
   )
 }
 

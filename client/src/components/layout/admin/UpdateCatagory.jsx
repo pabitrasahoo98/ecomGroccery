@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import CategoryIcon from '@mui/icons-material/Category';
 import { useSelector, useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import {  catagoryDetails, clearCDErrors, clearUCErrors, updateCatagory } from '
 import Swal from 'sweetalert2';
 
 const UpdateCatagory = ({role}) => {
+  const targetRef=useRef(null);
   const [cata,setCata]=useState("");
   const [img,setImg]=useState("");
   const dispatch=useDispatch();
@@ -24,6 +25,9 @@ const UpdateCatagory = ({role}) => {
   } = useSelector((state) => state.updatePre);
 
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     if (Catagory && Catagory._id !== id) {
         dispatch(catagoryDetails(id));
       } else {
@@ -56,6 +60,7 @@ const UpdateCatagory = ({role}) => {
         })
         navigate("/admin/category");
         dispatch(UPDATE_CATAGORY_RESET());
+        window.location.reload();
       }
 
 }, [Catagory,dispatch,cerror,updateError,iscupdate,id,navigate,Swal])
@@ -73,6 +78,8 @@ const updateCatagorySubmitHandler=(e)=>{
   
 
   return (
+    <div ref={targetRef}>
+    
     <Layout>{(role==="admin")?<>
 
    <div className="newProductContainer">
@@ -119,6 +126,7 @@ const updateCatagorySubmitHandler=(e)=>{
  </div>
     
     </>:<h3>You are not Authorised</h3>}</Layout>
+    </div>
 )}
 
 export default UpdateCatagory

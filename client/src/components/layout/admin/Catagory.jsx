@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect} from 'react'
 import Layout from '../Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,11 +14,11 @@ import Swal from 'sweetalert2';
 
 const Catagory = ({role}) => {
 
-  
   const navigate=useNavigate();
   const {Catagory,cerror,cloading}=useSelector((state)=>state.allPre);
   const {isCDeleted,cerror:DCError,cloading:DCLoading}=useSelector((state)=>state.delPre);
   const dispatch=useDispatch();
+
   useEffect(() => {
   if(cerror){
     Swal.fire({
@@ -90,7 +90,7 @@ rows.push({
 
 });
   return (
-
+    <div>
     <Layout>
     {(role==="admin")?
    <Box>{cloading ?<Loader/>:
@@ -115,6 +115,7 @@ rows.push({
     }
    </Box>
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 

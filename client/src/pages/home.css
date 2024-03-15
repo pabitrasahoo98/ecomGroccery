@@ -111,6 +111,23 @@
     background-color:gold;
     font: 500 1.5vmax "Roboto";
 }
+
+.view-all-btn {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color:goldenrod;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .view-all-btn:hover {
+    background-color:gold;
+  }
 @media screen and (max-width:600px) {
     .productCard > p{
         font-size: 1.7vmax;

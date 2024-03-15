@@ -111,6 +111,7 @@ const OrderList = ({role}) => {
         }
          
   return (
+    <div>
     <Layout>
     {(role==="admin")?
    <Box>{loading ?<Loader/>:
@@ -123,11 +124,11 @@ const OrderList = ({role}) => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 30,
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10,20,30]}
 
       />
     </Box>
@@ -135,6 +136,7 @@ const OrderList = ({role}) => {
     }
    </Box>
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 

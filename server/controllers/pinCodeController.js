@@ -11,7 +11,7 @@ exports.createPincode=catchAsyncError(async(req,res,next)=>{
         success:true,
         pincodes,
     })
-})
+}) 
 
 //all pincodes
 

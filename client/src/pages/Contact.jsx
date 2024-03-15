@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 
 const ContactForm = () => {
+  const targetRef=useRef(null);
   const{user}=useSelector((state)=>state.user);
   const form = useRef();
   const [name, setName] = useState("");
@@ -17,6 +18,9 @@ const ContactForm = () => {
   let isSubmited=sessionStorage.getItem("submit");
 
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     if(user){
       setEmail(user.email);
       setName(user.name);
@@ -52,6 +56,7 @@ const ContactForm = () => {
   };
 
   return (
+    <div ref={targetRef}>
     <Layout>
       {user?<><Container maxWidth="sm" style={{ marginTop: '20px', marginBottom: '20px' }}>
       <Typography variant="h4" gutterBottom>Contact Us</Typography>
@@ -146,6 +151,7 @@ const ContactForm = () => {
       
     }
     </Layout>
+    </div>
   );
 };
 

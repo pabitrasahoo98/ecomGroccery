@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import CategoryIcon from '@mui/icons-material/Category';
 import { useSelector, useDispatch } from "react-redux";
@@ -11,12 +11,16 @@ import Swal from 'sweetalert2'
 
 const AddCatagory = ({role}) => {
 
-  const {cloading,csuccess,cerror}=useSelector((state)=>state.addPre)
+  const {cloading,csuccess,cerror}=useSelector((state)=>state.addPre);
+  const targetRef=useRef(null);
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const [catagory, setCatagory] = useState("");
   const [imgLink, setImgLink] = useState("");
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     if(cerror){
       Swal.fire({
         title: "Error",
@@ -48,6 +52,8 @@ const AddCatagory = ({role}) => {
 
   }
   return (
+
+    <div ref={targetRef}>
     
     <Layout>{(role==="admin")?<>
 
@@ -95,6 +101,7 @@ const AddCatagory = ({role}) => {
  </div>
     
     </>:<h3>You are not Authorised</h3>}</Layout>
+    </div>
   )
 }
 

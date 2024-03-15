@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
@@ -8,16 +8,20 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { addCarousel, clearAACARErrors } from '../../../actions/catagoryAction';
 import { ADD_CAROUSEL_RESET } from '../../../reducers/addPrerequisitionReducer';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2' 
 
 const AddCarousel = ({role}) => {
 
+  const targetRef=useRef(null);
   const {carloading,carsuccess,carerror}=useSelector((state)=>state.addPre)
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const [carouselLink, setCarousellink] = useState("");
   const [carouselName, setCarouselName] = useState("");
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     if(carerror){
       Swal.fire({
         title: "Error",
@@ -49,6 +53,7 @@ const AddCarousel = ({role}) => {
 
   }
   return (
+    <div ref={targetRef}>
     
     <Layout>{(role==="admin")?<>
 
@@ -95,6 +100,7 @@ const AddCarousel = ({role}) => {
  </div>
     
     </>:<h3>You are not Authorised</h3>}</Layout>
+    </div>
   )
 }
 

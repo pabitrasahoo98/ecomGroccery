@@ -21,7 +21,7 @@ const Search = () => {
         else{
             navigate("/products")
         }
-    };
+    }; 
 
   return (
     <Layout>

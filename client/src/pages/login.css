@@ -63,6 +63,10 @@
     width: 100%;
     align-items: center;
 }
+.cbox{
+    display: block;
+}
+
 .loginForm > div > input,
 .signupForm > div  > input{
     padding: 1vmax 4vmax;
@@ -76,6 +80,11 @@
 
 }
 
+.loginForm > div > input[type="checkbox"],
+.signupForm > div  > input[type="checkbox"]{
+    margin-left: 0;
+
+}
 .loginForm > div > svg,
 .signupForm > div  > svg{
 
@@ -127,47 +136,46 @@
     transform: translateX(100%);
 }
 
+
+
+/* For smaller screens */
 @media screen and (max-width:600px) {
-    .loginSignupContainer{
-        background-color: white;
-    }
-    .loginSignupBox{
-        margin-top: 15vmax;
-        width: 100vw;
-        height: 95vh;
-    }
-    .login_Signup_Toggle{
-        height: 5vmax;
-    }
-    .login_Signup_Toggle > p{
-        font: 300 1.5vmax "Roboto";
+  .loginSignupContainer{
+      background-color: white;
+  }
+  .loginSignupBox{
+      margin-top: 15vmax;
+      width: 100vw;
+      height: 95vh;
+  }
+  .login_Signup_Toggle{
+      height: 5vmax;
+  }
+  .login_Signup_Toggle > p{
+      font: 300 1.5vmax "Roboto";
 
-    }
-    .loginForm,
-    .signupForm{
-        padding: 6vmax;
-    }
-    .loginForm > input,
-    .signupForm >input{
-        padding: 2.5vmax;
-        font: 300 1.7vmax cursive;
+  }
+  .loginForm,
+  .signupForm{
+      padding: 6vmax;
+  }
+  .loginForm > input,
+  .signupForm >input{
+      padding: 2.5vmax;
+      font: 300 1.7vmax cursive;
 
-    }
-    .loginForm > div > svg,
-    .signupForm > div > svg{
-        font-size: 2.8vmax;
-    }
-    .loginForm > a{
-        font: 500 1.8vmax "Gill Sans";
-    }
-    .loginBtn,
-    .signupBtn{
-        font: 300 1.9vmax "Roboto";
-        padding: 1.8vmax;
-    }
-    
+  }
+  .loginForm > div > svg,
+  .signupForm > div > svg{
+      font-size: 2.8vmax;
+  }
+  .loginForm > a{
+      font: 500 1.8vmax "Gill Sans";
+  }
+  .loginBtn,
+  .signupBtn{
+      font: 300 1.9vmax "Roboto";
+      padding: 1.8vmax;
+  }
+  
 }
-
-
-
-

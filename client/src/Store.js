@@ -24,12 +24,14 @@ import {addPrerequisitionReducer} from './reducers/addPrerequisitionReducer';
 import {updatePrerequisitionReducer} from './reducers/updatePrerequisitionReducer';
 import {getPrerequisitionReducer} from './reducers/getPrerequisitionReducer';
 import {cancelOrderReducer} from './reducers/cancelOrderReducer';
+import { dealsProductReducer } from './reducers/dealsProductReducer';
 
 
 const store=configureStore({
     reducer:{
         products:productsReducer.reducer,
         product:productDetailsReducer.reducer,
+        deals:dealsProductReducer.reducer,
         catagories:catagoryReducer.reducer,
         user:userReducer.reducer,
         profile:userUpdateReducer.reducer,

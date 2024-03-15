@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
@@ -7,6 +7,7 @@ import StorageIcon from "@mui/icons-material/Storage";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import ScaleIcon from '@mui/icons-material/Scale';
 import { Button } from '@mui/material';
 import "./AddProduct.css";
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
@@ -24,6 +25,7 @@ const UpdateProduct = ({role}) => {
     const { loading, error, isUpdate } = useSelector((state) => state.maniProduct);
     const { product,error:pError } = useSelector((state) => state.product);
     const [name, setName] = useState("");
+    const [qty, setQty] = useState("");
     const [price, setPrice] = useState(0);
     const [mrp, setMrp] = useState(0);
     const [dod,setDod]=useState(false);
@@ -36,6 +38,8 @@ const UpdateProduct = ({role}) => {
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
 
+    const targetRef=useRef(null);
+
     const updateProductSubmitHandler = (e) => {
         e.preventDefault();
     
@@ -45,6 +49,7 @@ const UpdateProduct = ({role}) => {
         myForm.set("mrp", mrp);
         myForm.set("price", price);
         myForm.set("description", description);
+        myForm.set("qty", qty);
         myForm.set("catagory", catagory);
         myForm.set("stock", stock);
         myForm.set("dod",dod);
@@ -79,6 +84,10 @@ const UpdateProduct = ({role}) => {
         });
       };
       useEffect(() => {
+
+        if(targetRef.current){
+          targetRef.current.scrollIntoView({behavior:'smooth'});
+        }
         if (product && product._id !== id) {
             dispatch(getProductDetails(id));
           }else{
@@ -86,6 +95,7 @@ const UpdateProduct = ({role}) => {
             setDescription(product.description);
             setMrp(product.mrp);
             setPrice(product.price);
+            setQty(product.qty);
             setCatagory(product.catagory);
             setStock(product.stock);
             setDod(product.dod);
@@ -117,11 +127,13 @@ const UpdateProduct = ({role}) => {
           })
           dispatch(UPDATE_PRODUCT_RESET());
           navigate("/admin/products");
+          window.location.reload();
         }
         
       }, [product,error,isUpdate,dispatch,id,pError,Swal,navigate])
 
   return (
+    <div ref={targetRef}>
     <Layout> {(role==="admin")?<>
     <div className="newProductContainer">
           <form
@@ -139,6 +151,16 @@ const UpdateProduct = ({role}) => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div>
+              <ScaleIcon />
+              <input
+                type="text"
+                placeholder="Product Weight or Quantity"
+                required
+                value={qty}
+                onChange={(e) => setQty(e.target.value)}
               />
             </div>
 
@@ -207,7 +229,7 @@ const UpdateProduct = ({role}) => {
        <div>
          <LocalOfferIcon />
          <select value={td} onChange={(e) => setTd(e.target.value)}>
-           <option value="">Set Top Delas</option>
+           <option value="">Set Trending Deals</option>
            <option value="true">True</option>
            <option value="false">False</option>
          </select>
@@ -259,6 +281,7 @@ const UpdateProduct = ({role}) => {
     
  
     </> :<h3>You are not Authorised</h3>}</Layout>
+    </div>
   )
 }
 

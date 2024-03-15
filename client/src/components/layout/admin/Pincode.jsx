@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect} from 'react'
 import Layout from '../Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid } from '@mui/x-data-grid';
@@ -93,7 +93,7 @@ pincode.forEach((item) => {
 
 
   return (
-    
+    <div>
     <Layout>
     {(role==="admin")?
    <Box>{ploading ?<Loader/>:
@@ -118,6 +118,7 @@ pincode.forEach((item) => {
     }
    </Box>
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 

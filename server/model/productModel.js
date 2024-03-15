@@ -9,6 +9,10 @@ const productSchema= new mongoose.Schema({
         type:String,
         required:[true,"please enter product description"]
     },
+    qty:{
+        type:String,
+        required:[true,"please enter sub-description"]
+    },
     mrp:{
         type:Number,
         required:[true,"please enter product price"],

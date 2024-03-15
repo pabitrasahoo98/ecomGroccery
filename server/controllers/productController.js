@@ -49,6 +49,60 @@ exports.getAllProducts=catchAsyncError(async(req,res)=>{
         resultPerPage})
 })
 
+
+//get dod product 
+
+exports.getDODProducts=catchAsyncError(async(req,res)=>{
+    const products=await Product.find({dod:true});
+    if(products.length>0){
+    res.status(200).json({
+        success:true,
+        products
+    })
+    }
+    else{
+        res.status(200).json({
+            success:false
+        })
+
+    }
+})
+//get de product 
+
+exports.getDEProducts=catchAsyncError(async(req,res)=>{
+    const products=await Product.find({de:true});
+    if(products.length>0){
+        res.status(200).json({
+            success:true,
+            products
+        })
+        }
+        else{
+            res.status(200).json({
+                success:false
+            })
+    
+        }
+})
+
+//get td product 
+
+exports.getTDProducts=catchAsyncError(async(req,res)=>{
+    const products=await Product.find({td:true});
+    if(products.length>0){
+    res.status(200).json({
+        success:true,
+        products
+    })
+    }
+    else{
+        res.status(200).json({
+            success:false
+        })
+
+    }
+})
+
 //update product admin
 
 exports.updateProduct=catchAsyncError(async(req,res,next)=>{

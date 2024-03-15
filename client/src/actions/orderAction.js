@@ -13,6 +13,7 @@ export const createOrder=(order)=>async(dispatch)=>{
         const config={headers:{"Content-Type":"application/json"},withCredentials:true}
         const {data}=await axios.post(`http://localhost:4000/api/v1/order/new`,order,config);
         dispatch(CREATE_ORDER_SUCCESS(data));
+        localStorage.removeItem('cartItems');
         
     } catch (error) {
     dispatch(CREATE_ORDER_FAIL(error.response.data.message))

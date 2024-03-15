@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Layout from '../Layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid } from '@mui/x-data-grid';
@@ -15,10 +15,14 @@ import Swal from 'sweetalert2';
 const Carousels = ({role}) => {
 
   const navigate=useNavigate();
+  const targetRef=useRef(null);
   const {carousel,carerror,carloading}=useSelector((state)=>state.allPre);
   const {isCarDeleted,carerror:DCError,carloading:DCLoading}=useSelector((state)=>state.delPre);
   const dispatch=useDispatch();
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
   if(carerror){
     Swal.fire({
       title: "Error",
@@ -94,7 +98,9 @@ rows.push({
 })
 
 });
-  return (<Layout>
+  return (
+  <div ref={targetRef}>
+  <Layout>
     {(role==="admin")?
    <Box>{carloading ?<Loader/>:
    <Box><Typography align='center'variant="h3">All Carousel Links </Typography>
@@ -118,6 +124,7 @@ rows.push({
     }
    </Box>
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 

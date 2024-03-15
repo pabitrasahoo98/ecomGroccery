@@ -1,10 +1,10 @@
 .productsHeading {
-  margin: 2vmax auto;
-  width: 15vw;
+  margin: 1vmax auto;
+  width: 30vw;
   border-bottom: 2px solid goldenrod;
   padding: 2vmax;
   color: rgba(0, 0, 0, 0.678);
-  font: 750 1.5vmax "Roboto";
+  font: 750 2vmax "Roboto";
   text-align: center;
 }
  
@@ -103,6 +103,11 @@
 
 .filterBox > fieldset {
   border: 1px solid rgba(0, 0, 0, 0.329);
+}
+
+.product-list {
+  margin: 20px auto;
+  max-width: 75%;
 }
 
 @media screen and (max-width: 600px) {

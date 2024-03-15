@@ -18,7 +18,7 @@ const AdminProducts = ({role}) => {
   const {product,error,loading}=useSelector((state)=>state.products);
   const {isDeleted,error:dError,loading:dLoading}=useSelector((state)=>state.maniProduct);
   const dispatch=useDispatch();
-  useEffect(() => {
+useEffect(() => {
   if(error){
     Swal.fire({
       title: "Error",
@@ -120,6 +120,7 @@ const rows = [];
 
 
   return (
+    <div>
     <Layout>
     {(role==="admin")?
    <Box>{loading ?<Loader/>:
@@ -132,11 +133,11 @@ const rows = [];
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 30,
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10,20,30]}
 
       />
     </Box>
@@ -144,6 +145,7 @@ const rows = [];
     }
    </Box>
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 

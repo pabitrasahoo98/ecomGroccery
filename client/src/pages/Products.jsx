@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../components/layout/Layout'
 import "./Products.css";
 import Product from '../components/layout/Product'
@@ -7,11 +7,34 @@ import { getProduct } from '../actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
-import {Typography} from '@mui/material';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Button, Typography } from '@mui/material';
+ const Products = () => {
+  const targetRef=useRef(null);
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  };
 
- 
-
-const Products = () => {
   const {catalog}=useSelector((state)=>state.catagories);
   const [currentPage,setCurrentPage]=useState(1);
   const [category,setCategory]=useState("");
@@ -20,7 +43,9 @@ const Products = () => {
   let {keyword}=useParams();
   const{loading,error,product,productsCount,resultPerPage}=useSelector((state)=>state.products);
   useEffect(() => { 
-    
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     dispatch(getProduct(keyword,currentPage,category));
   }, [dispatch,keyword,currentPage,category])
   const setCurrentPageNo=(e)=>{
@@ -28,30 +53,23 @@ const Products = () => {
 
   }
   return (
+    <div ref={targetRef}>
     <Layout>
         {loading?<Loader/>
         :<> 
+      <Typography align='center' variant='h5' style={{color:'black',fontWeight:'bold',borderBottom:'2px solid goldenrod'}}>Categories</Typography>
+      <div className="product-list">
+      <Slider {...settings}>
+      {catalog&&catalog.map((item,key)=>(<Button key={key} onClick={()=>setCategory(item.catagory)}>{item.catagory}</Button>))}
+      </Slider>
+    </div>
         <h2 className="productsHeading">Products</h2>
         <div className="products">
         {product &&
         product.map((p) => (
         <Product key={p._id} product={p}/>))}
         </div>
-        <div className='filterBox'>
-        <Typography  className='filterBoxT'>CATEGORIES</Typography>
-            <ul className="categoryBox">
-              {catalog.map((item) => (
-                <li
-                  className="category-link"
-                  key={item.catagory}
-                  onClick={() => setCategory(item.catagory)}
-                >
-                  {item.catagory}
-                </li>
-              ))}
-            </ul>
 
-        </div>
         {resultPerPage<productsCount &&<div className='paginationBox'><Pagination 
         activePage={currentPage}
         itemsCountPerPage={resultPerPage}
@@ -67,7 +85,7 @@ const Products = () => {
         activeLinkClass="pageLinkActive"/></div>}
         </>}
     </Layout>
-    
+    </div>
   )
 }
 

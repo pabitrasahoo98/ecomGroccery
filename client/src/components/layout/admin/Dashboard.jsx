@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Layout from '../Layout'
 import { Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { getAdminProducts} from '../../../actions/productAction';
 import "./Dashboard.css";
-import {Doughnut,Line} from "react-chartjs-2";
+import {Doughnut,Line} from "react-chartjs-2"; 
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,15 +21,19 @@ import { getAdminOrders } from '../../../actions/orderAction';
 import { getAdminUsers } from '../../../actions/userAction';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,ArcElement);
-
+ 
 const Dashboard = ({role}) => {
   const {product,loading}=useSelector((state)=>state.products);
   const {Orders,error:Oerror,loading:Oloading}=useSelector((state)=>state.orderList);
   const {Users,error:uerror,loading:uloading}=useSelector((state)=>state.userList);
   
   const dispatch=useDispatch();
+  const targetRef=useRef(null);
 
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
   dispatch(getAdminProducts());
   dispatch(getAdminOrders());
   dispatch(getAdminUsers())
@@ -66,26 +70,9 @@ const Dashboard = ({role}) => {
 
   };
 
- 
-
-/*const config = {
-    type: 'line',
-    data: data,
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-        },
-        title: {
-          display: true,
-          text: 'Chart.js Line Chart'
-        }
-      }
-    },
-  };*/
 
   return (
+    <div ref={targetRef}>
     <Layout>
     {(role==="admin")?
    <> 
@@ -120,6 +107,7 @@ const Dashboard = ({role}) => {
    
    </>
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 

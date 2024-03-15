@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +17,7 @@ const UpdatePincode = ({role}) => {
   const navigate=useNavigate();
   const {id}=useParams();
   const { ploading, perror, Pincode } = useSelector((state) => state.getPre);
+  const targetRef=useRef(null);
     
   const {
     ploading:updateLoading,
@@ -25,6 +26,9 @@ const UpdatePincode = ({role}) => {
   } = useSelector((state) => state.updatePre);
 
   useEffect(() => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({behavior:'smooth'});
+    }
     if (Pincode && Pincode._id !== id) {
         dispatch(pincodeDetails(id));
       } else {
@@ -54,8 +58,10 @@ const UpdatePincode = ({role}) => {
           text: "Update pincode successful",
           icon: "success"
         })
-        navigate("/admin/pincode");
+        
         dispatch(UPDATE_PINCODE_RESET());
+        navigate("/admin/pincode");
+        window.location.reload();
       }
 
 }, [Pincode,dispatch,perror,updateError,ispupdate,id,navigate,Swal])
@@ -71,6 +77,7 @@ const updatePincodeSubmitHandler=(e)=>{
 
   
   return (
+    <div ref={targetRef}>
     <Layout>{(role==="admin")?<>
 
    <div className="newProductContainer">
@@ -106,6 +113,7 @@ const updatePincodeSubmitHandler=(e)=>{
  </div>
     
     </>:<h3>You are not Authorised</h3>}</Layout>
+    </div>
   )
 }
 

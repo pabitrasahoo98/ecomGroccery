@@ -5,7 +5,7 @@ import { clearMOErrors, myOrder } from '../../../actions/orderAction';
 import Loader from '../Loader';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
+ 
 const YourOrders = () => {
     
     const dispatch=useDispatch();
@@ -78,7 +78,7 @@ const YourOrders = () => {
                                     <div>
                                         {item.orderStatus === 'Delivered' && <span className='greendot'></span>}
                                         {item.orderStatus === 'Processing' && <span className='yellowdot'></span>}
-                                        {item.status === 'Cancelled' && <span className='reddot'></span>}
+                                        {item.orderStatus === 'Shipped' && <span className='yellowdot'></span>}
                                         {item.orderStatus}
                                     </div>
                                 </td>

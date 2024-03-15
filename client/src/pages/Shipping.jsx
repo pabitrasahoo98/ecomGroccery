@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./Shipping.css"
 import Layout from '../components/layout/Layout'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2'
 
 
 const Shipping = () => {
+    const targetRef=useRef(null);
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const {user}=useSelector((state)=>state.user)
@@ -27,6 +28,14 @@ const Shipping = () => {
     const country=(shippingInfo.country?shippingInfo.country:"India");
     const [pinCode,setPinCode]=useState(shippingInfo.pinCode);
     const [phoneNo,setPhoneNo]=useState(shippingInfo.phoneNo?shippingInfo.phoneNo:user.mobileNo);
+
+    useEffect(() => {
+      if(targetRef.current){
+        targetRef.current.scrollIntoView({behavior:'smooth'});
+      }
+      
+    }, [])
+    
 
 
 
@@ -46,6 +55,7 @@ const Shipping = () => {
     }
 
   return (
+    <div ref={targetRef}>
     <Layout>
 
 <div className="shippingContainer">
@@ -141,6 +151,7 @@ const Shipping = () => {
 </div>
 
     </Layout>
+    </div>
   )
 }
 

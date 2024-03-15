@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import "./OrderDetails.css";
 import Layout from '../components/layout/Layout';
 import { Button, Typography } from '@mui/material';
@@ -11,12 +11,16 @@ import Swal from 'sweetalert2'
 
 
 const OrderDetails = () => {
+  const targetRef=useRef(null);
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const {id}=useParams();
     const {order,loading,error}=useSelector((state)=>state.orderDetails);
     const {isCanceled,loading:cloading,error:cerror}=useSelector((state)=>state.cancelOrder)
     useEffect(() => {
+      if(targetRef.current){
+        targetRef.current.scrollIntoView({behavior:'smooth'});
+      }
       if(error){
         Swal.fire({
           title: "Error",
@@ -56,6 +60,7 @@ const OrderDetails = () => {
     
 
   return (
+    <div ref={targetRef}>
     <Layout>
         <>{loading?<Loader/>:<>
           <div className="orderDetailsPage">
@@ -148,6 +153,7 @@ const OrderDetails = () => {
           </>}
         </>
     </Layout>
+    </div>
   )
 }
 

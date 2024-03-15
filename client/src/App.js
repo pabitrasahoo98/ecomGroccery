@@ -39,6 +39,7 @@ import UpdatePincode from "./components/layout/admin/UpdatePincode";
 import AddCarousel from "./components/layout/admin/AddCarousel";
 import UpdateCarousel from "./components/layout/admin/UpdateCarousel";
 import CategoryProducts from "./pages/CategoryProducts";
+import { fetchDE, fetchDod, fetchTD } from "./actions/dealsAction";
 
 
 
@@ -50,6 +51,9 @@ function App() {
     store.dispatch(fetchCatagories());
     store.dispatch(fetchPinCodes());
     store.dispatch(fetchCarousel());
+    store.dispatch(fetchDod());
+    store.dispatch(fetchDE());
+    store.dispatch(fetchTD());
     if(error){
       window.alert(error);
       store.dispatch(clearErrors);

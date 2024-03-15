@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from '../Layout'
 import { useSelector, useDispatch } from "react-redux";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -22,6 +22,7 @@ const UpdateUser = ({role}) => {
   } = useSelector((state) => state.maniUser);
 
     
+  const targetRef=useRef(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [urole, setUrole] = useState("");
@@ -29,6 +30,9 @@ const UpdateUser = ({role}) => {
   const {id}=useParams();
     const dispatch=useDispatch();
     useEffect(() => {
+      if(targetRef.current){
+        targetRef.current.scrollIntoView({behavior:'smooth'});
+      }
         if (user && user._id !== id) {
             dispatch(userDetails(id));
           } else {
@@ -60,8 +64,10 @@ const UpdateUser = ({role}) => {
               text: "Update User Successful",
               icon: "success"
             })
-            navigate("/admin/users");
             dispatch(UPDATE_USER_RESET());
+            navigate("/admin/users");
+            window.location.reload();
+            
           }
     
     }, [user,dispatch,error,updateError,isUpdate,id,navigate,Swal])
@@ -80,6 +86,7 @@ const UpdateUser = ({role}) => {
 
   return (
     
+    <div ref={targetRef}>
     <Layout>
     {(role==="admin")?
    <div className="newProductContainer">
@@ -136,6 +143,7 @@ const UpdateUser = ({role}) => {
  </div>
 
    :<h3>You are not Authorised</h3>}</Layout>
+   </div>
   )
 }
 
