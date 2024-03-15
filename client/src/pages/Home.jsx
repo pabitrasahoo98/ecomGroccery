@@ -37,7 +37,7 @@ const Home = () => {
     {deSuccess && <><h2 className='homeHeading'>Daily Essentials</h2>
     <ProductSlick prod={de}/></>}
 
-    {tdSuccess && <><h2 className='homeHeading'>Top Deals</h2>
+    {tdSuccess && <><h2 className='homeHeading'>Trending Deals</h2>
     <ProductSlick prod={td}/></>}
     <h2 className='homeHeading'>Featured Prouducts</h2>
     <div className='container' id='container'>

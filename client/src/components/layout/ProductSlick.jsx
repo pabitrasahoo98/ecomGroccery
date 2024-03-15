@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,6 +7,14 @@ import Product from './Product';
 
 
 const ProductSlick = ({prod}) => {
+  const [key, setKey] = useState(0);
+
+  // Use useEffect to force a re-render when prod changes
+  useEffect(() => {
+    // Update the key to trigger a re-render
+    setKey((prevKey) => prevKey + 1);
+  }, [prod]);
+  
     const settings = {
         dots: false,
         infinite: false,
@@ -33,8 +41,8 @@ const ProductSlick = ({prod}) => {
 
   return (
     <div className="product-list">
-      <Slider {...settings}>
-      {prod&&prod.map(p=>(<Product product={p}/>))}
+      <Slider key={key} {...settings}>
+      {prod&&prod.map((p)=>(<Product key={p._id} product={p}/>))}
       </Slider>
     </div>
   );
