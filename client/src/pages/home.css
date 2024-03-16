@@ -108,9 +108,10 @@
     justify-content: center;
     text-decoration: none;
     padding: 1vmax;
-    background-color:gold;
+    background-color:#74703F;
     font: 500 1.5vmax "Roboto";
-}
+    color: goldenrod;
+} 
 
 .view-all-btn {
     display: block;

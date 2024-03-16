@@ -22,6 +22,7 @@ export const productsReducer = createSlice(
             state.product=action.payload.products;
             state.resultPerPage=action.payload.resultPerPage;
             state.productsCount=action.payload.productCount;
+            state.filteredProductsCount=action.payload.filteredProductsCount;
           },
         ADMIN_PRODUCT_SUCCESS(state,action){
           state.loading=false;

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import {AppBar,Box,Divider,Drawer,IconButton,Toolbar,Typography} from "@mui/material"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import MenuIcon from "@mui/icons-material/Menu"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import "../../styles/HeaderStyle.css"
 import { useSelector } from 'react-redux';
+import  Logo1 from "../../images/logo1.png"
+
 
 
 const Header = () => {
-const {user,isAuthenticate}=useSelector((state)=>state.user);
 
 const [mobileOpen,setMobileOpen]=useState(false);
 const handleDrawerToggle=()=>{
@@ -19,9 +20,18 @@ const handleDrawerToggle=()=>{
 const drawer=(
     <Box onClick={handleDrawerToggle} sx={{textAlign:'center'}}>
         
-                <Typography component={"div"} color={"goldenrod"} variant='h6'  sx={{flexGrow:1,my:2}}>
-                    NowGrocery
-                </Typography> 
+         
+                
+                <Box>
+                <Link to={"/"}>
+                <Box>
+                    <img src={Logo1} alt="NowGrocceries" style={{ height: "60px" }} />
+                </Box>
+                <Typography component={"div"} color={"goldenrod"} variant='h6'  sx={{flexGrow:1,my:1}}>
+                NowGrocceries
+                </Typography>
+                </Link>
+                </Box>
                 <Divider/>
                 <ul className='mobile-navigation'>
                         <li>
@@ -29,6 +39,12 @@ const drawer=(
                         </li>
                         <li>
                             <Link to={"/products"}>Products</Link>
+                        </li>
+                        <li>
+                            <Link to={"/cart"}>Cart</Link>
+                        </li>
+                        <li>
+                            <Link to={"/login"}>Profile</Link>
                         </li>
                         <li>
                             <Link to={"/contact"}>Contact</Link>
@@ -43,14 +59,19 @@ const drawer=(
   return (
     <>
     <Box>
-        <AppBar component={"nav"} sx={{bgcolor:"black" ,minHeight:"70px"}}>
+        <AppBar component={"nav"} sx={{bgcolor:"#74703F" ,minHeight:"70px"}}>
             <Toolbar>
                 <IconButton color={'inherit'} aria-label='open drawer' edge="start" sx={{mr:2,display:{sm:"none"},}} onClick={handleDrawerToggle}>
                     <MenuIcon/>
                 </IconButton>
+                <>
+                <Box>
+                    <img src={Logo1} alt="NowGrocceries" style={{ height: "50px" }}/>
+                </Box>
                 <Typography component={"div"} color={"goldenrod"} variant='h6'  sx={{flexGrow:1}}>
-                    NowGrocery
+                NowGrocceries
                 </Typography>
+                </>
                 <Box sx={{display:{xs:"none",sm:"block"}}}>
                     <ul className='navigation-menu'>
                         <li>

@@ -9,7 +9,7 @@ const CarouselItem = (items) => {
             <img src={items.item.carouselLink} alt="pks" style={{width:"100%",height:"45vh",}}></img>
 
             <Link to="/products" className="CheckButton">
-                View Products!!!
+                View Products
             </Link>
         </Paper>
   ) 

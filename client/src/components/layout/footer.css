@@ -5,7 +5,7 @@
 .footer{
     margin-top: 0;
     padding: 2vmax;
-    background-color: rgb(34, 33, 33);
+    background-color:#74703F;
     color: white;
     display: flex;
     align-items: center;
@@ -33,10 +33,10 @@
     width: 60%;
     text-align: center;
 }
-.midFooter > h1{
-    font: 4vmax;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color:goldenrod;
+.midFooter > img{
+    width: 20vmax;
+    margin: 2vmax;
+    cursor: pointer;
 }
 .midFooter > p{
     max-width: 60%;

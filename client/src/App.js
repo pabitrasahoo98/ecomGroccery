@@ -40,6 +40,7 @@ import AddCarousel from "./components/layout/admin/AddCarousel";
 import UpdateCarousel from "./components/layout/admin/UpdateCarousel";
 import CategoryProducts from "./pages/CategoryProducts";
 import { fetchDE, fetchDod, fetchTD } from "./actions/dealsAction";
+import webFont from "webfontloader";
 
 
 
@@ -47,6 +48,11 @@ function App() {
   const {loading,error,isAuthenticate,user}=useSelector(state=>state.user);
   
   React.useEffect(()=>{
+    webFont.load({
+      google:{
+        families:["Roboto","Droid Sans","Chilanka"]
+      }
+    })
     store.dispatch(loadUser());
     store.dispatch(fetchCatagories());
     store.dispatch(fetchPinCodes());

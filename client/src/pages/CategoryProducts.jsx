@@ -46,7 +46,8 @@ const CategoryProducts = () => {
   
   const dispatch=useDispatch();
   const keyword="";
-  const{loading,error,product,productsCount,resultPerPage}=useSelector((state)=>state.products);
+  const { loading, error, product, productsCount, resultPerPage ,filteredProductsCount} = useSelector((state) => state.products);
+
   
   useEffect(() => { 
     if(targetRef.current){
@@ -63,43 +64,77 @@ const CategoryProducts = () => {
 
     
   }, [dispatch,currentPage,category])
-  const setCurrentPageNo=(e)=>{
-    setCurrentPage(e);
 
-  }
+  const setCurrentPageNo = (e) => {
+    setCurrentPage(e);
+  };
+  
+  const handleCategoryChange = (selectedCategory) => {
+    setCategory(selectedCategory);
+    setCurrentPage(1); // Reset current page to 1 when category changes
+  };
   return (
     <div ref={targetRef}>
     <Layout>
-        {loading?<Loader/>
-        :<> 
-      <Typography align='center' variant='h5' style={{color:'black',fontWeight:'bold',borderBottom:'2px solid goldenrod'}}>Categories</Typography>
-      <div className="product-list">
-      <Slider {...settings}>
-      {catalog&&catalog.map((item,key)=>(<Button key={key} onClick={()=>setCategory(item.catagory)}>{item.catagory}</Button>))}
-      </Slider>
-    </div>
-        <h2 className="productsHeading">Products</h2>
-        <div className="products">
-        {product &&
-        product.map((p) => (
-        <Product key={p._id} product={p}/>))}
-        </div>
-        {resultPerPage<productsCount &&<div className='paginationBox'><Pagination 
-        activePage={currentPage}
-        itemsCountPerPage={resultPerPage}
-        totalItemsCount={productsCount}
-        onChange={setCurrentPageNo}
-        nextPageText="Next"
-        prevPageText="Prev"
-        firstPageText="1st"
-        lastPageText="Last"
-        itemClass="page-item"
-        linkClass="page-link"
-        activeClass="pageItemActive"
-        activeLinkClass="pageLinkActive"/></div>}
-        </>}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <Typography align="center" variant="h5" style={{ color: 'black', fontWeight: 'bold', borderBottom: '2px solid goldenrod' }}>Categories</Typography>
+          <div className="product-list">
+            <Slider {...settings}>
+              {catalog && catalog.map((item, key) => (
+                <Button key={key} onClick={() => handleCategoryChange(item.catagory)}>{item.catagory}</Button>
+              ))}
+            </Slider>
+          </div>
+          <h2 className="productsHeading">Products</h2>
+          <div className="products">
+            {product && product.map((p) => (
+              <Product key={p._id} product={p} />
+            ))}
+          </div>
+          {
+          category ? (resultPerPage <  filteredProductsCount)  &&  (
+            <div className="paginationBox">
+              <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={resultPerPage}
+              totalItemsCount={filteredProductsCount}
+              onChange={setCurrentPageNo}
+              nextPageText="Next"
+              prevPageText="Prev"
+              firstPageText="1st"
+              lastPageText="Last"
+              itemClass="page-item"
+              linkClass="page-link"
+              activeClass="pageItemActive"
+              activeLinkClass="pageLinkActive"
+            />
+            </div>
+          ): (resultPerPage <  productsCount)  &&  (
+            <div className="paginationBox">
+              <Pagination
+              activePage={currentPage}
+              itemsCountPerPage={resultPerPage}
+              totalItemsCount={productsCount}
+              onChange={setCurrentPageNo}
+              nextPageText="Next"
+              prevPageText="Prev"
+              firstPageText="1st"
+              lastPageText="Last"
+              itemClass="page-item"
+              linkClass="page-link"
+              activeClass="pageItemActive"
+              activeLinkClass="pageLinkActive"
+            />
+            </div>
+            )}
+          
+        </>
+      )}
     </Layout>
-    </div>
+  </div>
   )
 }
 
