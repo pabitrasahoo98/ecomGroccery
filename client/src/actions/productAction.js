@@ -4,16 +4,16 @@ import { PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_SUCCESS} 
 import { SPRODUCT_FAIL, SPRODUCT_REQUEST, SPRODUCT_SUCCESS,CLEAR_SPERRORS } from "../reducers/sameProductReducer";
 import { ADD_PRODUCT_FAIL,ADD_PRODUCT_SUCCESS,ADD_PRODUCT_REQUEST,CLEAR_NPERRORS } from "../reducers/addProductReducer";
 import { CLEAR_DPERRORS, CLEAR_UPERRORS, DELETE_PRODUCT_FAIL, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS, UPDATE_PRODUCT_FAIL, UPDATE_PRODUCT_REQUEST, UPDATE_PRODUCT_SUCCESS } from "../reducers/manipulateProductReducer";
-
+ 
 //get all product
-export const getProduct =(keyword="",currentPage=1,category) =>
+export const getProduct =(keyword="",currentPage=1,category,sortOption) =>
   async (dispatch) => {
     try {
       dispatch(ALL_PRODUCT_REQUEST());
-      let link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}`;
+      let link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&sort=${sortOption}`;
 
      if (category) {
-        link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&catagory=${category}`;
+        link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&catagory=${category}&sort=${sortOption}`;
       }
 
       const { data } = await axios.get(link);

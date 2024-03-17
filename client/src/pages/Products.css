@@ -82,6 +82,11 @@
   margin-bottom: 1vmax;
   
 }
+.sortDropdown{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 
 .categoryBox {

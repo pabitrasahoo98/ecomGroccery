@@ -7,7 +7,7 @@ import { getProduct } from '../actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
-import {Button, Typography} from '@mui/material';
+import {Button, MenuItem, Select, Typography} from '@mui/material';
 import Slider from 'react-slick';
 
 
@@ -43,6 +43,7 @@ const CategoryProducts = () => {
   const {catalog}=useSelector((state)=>state.catagories);
   const [currentPage,setCurrentPage]=useState(1);
   const [category,setCategory]=useState("");
+  const [sortOption, setSortOption] = useState('');
   
   const dispatch=useDispatch();
   const keyword="";
@@ -54,16 +55,20 @@ const CategoryProducts = () => {
       targetRef.current.scrollIntoView({behavior:'smooth'});
     }
     if(catagory){
-    dispatch(getProduct(keyword,currentPage,catagory));
+    dispatch(getProduct(keyword,currentPage,catagory,sortOption));
     catagory=null;
     
     }
     if(category){
-        dispatch(getProduct(keyword,currentPage,category));
+        dispatch(getProduct(keyword,currentPage,category,sortOption));
     }
 
     
-  }, [dispatch,currentPage,category])
+  }, [dispatch,currentPage,category,sortOption])
+  
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+  };
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -94,43 +99,66 @@ const CategoryProducts = () => {
               <Product key={p._id} product={p} />
             ))}
           </div>
-          {
-          category ? (resultPerPage <  filteredProductsCount)  &&  (
-            <div className="paginationBox">
-              <Pagination
-              activePage={currentPage}
-              itemsCountPerPage={resultPerPage}
-              totalItemsCount={filteredProductsCount}
-              onChange={setCurrentPageNo}
-              nextPageText="Next"
-              prevPageText="Prev"
-              firstPageText="1st"
-              lastPageText="Last"
-              itemClass="page-item"
-              linkClass="page-link"
-              activeClass="pageItemActive"
-              activeLinkClass="pageLinkActive"
-            />
+
+          <div className="sortDropdown">
+<Select value={sortOption}
+    onChange={handleSortChange} displayEmpty style={{
+    fontFamily: 'Arial',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    color: '#333', // Text color
+    backgroundColor: '#fff', // Background color
+    border: '1px solid #DAA520', // Border
+    padding: '1px 5px', // Padding
+    width: '200px', // Width
+    
+  }}>
+                <MenuItem value="" disabled>
+                  Sort by
+                </MenuItem>
+                <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
+                <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+              </Select>
             </div>
-          ): (resultPerPage <  productsCount)  &&  (
-            <div className="paginationBox">
-              <Pagination
-              activePage={currentPage}
-              itemsCountPerPage={resultPerPage}
-              totalItemsCount={productsCount}
-              onChange={setCurrentPageNo}
-              nextPageText="Next"
-              prevPageText="Prev"
-              firstPageText="1st"
-              lastPageText="Last"
-              itemClass="page-item"
-              linkClass="page-link"
-              activeClass="pageItemActive"
-              activeLinkClass="pageLinkActive"
-            />
-            </div>
-            )}
-          
+
+          <div>{
+  category ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (
+    <div className="paginationBox">
+      <Pagination
+        activePage={currentPage}
+        itemsCountPerPage={resultPerPage}
+        totalItemsCount={filteredProductsCount}
+        onChange={setCurrentPageNo}
+        nextPageText="Next"
+        prevPageText="Prev"
+        firstPageText="1st"
+        lastPageText="Last"
+        itemClass="page-item"
+        linkClass="page-link"
+        activeClass="pageItemActive"
+        activeLinkClass="pageLinkActive"
+      />
+    </div> 
+  ) : (resultPerPage < productsCount) && (
+    <div className="paginationBox">
+      <Pagination
+        activePage={currentPage}
+        itemsCountPerPage={resultPerPage}
+        totalItemsCount={productsCount}
+        onChange={setCurrentPageNo}
+        nextPageText="Next"
+        prevPageText="Prev"
+        firstPageText="1st"
+        lastPageText="Last"
+        itemClass="page-item"
+        linkClass="page-link"
+        activeClass="pageItemActive"
+        activeLinkClass="pageLinkActive"
+      />
+    </div>
+  )
+}</div>
+         
         </>
       )}
     </Layout>

@@ -11,10 +11,12 @@ export const productsReducer = createSlice(
         ALL_PRODUCT_REQUEST(state){
             state.loading= true;
             state.product=[];
+            state.error=null;
           },
         ADMIN_PRODUCT_REQUEST(state){
             state.loading= true;
             state.product=[];
+            state.error=null;
           },
         
         ALL_PRODUCT_SUCCESS(state,action){

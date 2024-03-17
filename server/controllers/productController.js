@@ -34,23 +34,31 @@ exports.createProduct=catchAsyncError(async(req,res,next)=>{
     }) 
 })
 //get product all
+exports.getAllProducts=  catchAsyncError(async (req, res) => {
+    const resultPerPage = 8;
+    const productCount = await Product.countDocuments();
 
-exports.getAllProducts=catchAsyncError(async(req,res)=>{
+    let apifeature = new ApiFeatures(Product.find(), req.query)
+        .search()
+        .filter()
+        .sort() // Add sorting based on price
+        .pagination(resultPerPage);
 
-    const resultPerPage=8;
-    const productCount=await Product.countDocuments();
+    const products = await apifeature.query;
 
-    const apifeature=new ApiFeatures(Product.find(),req.query).search().filter().pagination(resultPerPage);
-    const products=await apifeature.query;
-    let filteredProductsCount = products.length;
+    const category = req.query.catagory;
+    const p=await Product.find({catagory:category})
+    const filteredProductsCount = p.length;
 
     res.status(200).json({
-        success:true,
+        success: true,
         products,
         productCount,
         resultPerPage,
-        filteredProductsCount})
-})
+        filteredProductsCount
+    });
+});
+
 
 
 //get dod product 
