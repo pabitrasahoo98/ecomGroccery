@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 const AdminProducts = ({role}) => {
   const navigate=useNavigate();
   const {product,error,loading}=useSelector((state)=>state.products);
-  const {isDeleted,error:dError,loading:dLoading}=useSelector((state)=>state.maniProduct);
+  const {isDeleted,error:dError}=useSelector((state)=>state.maniProduct);
   const dispatch=useDispatch();
 useEffect(() => {
   if(error){
@@ -44,7 +44,7 @@ useEffect(() => {
     dispatch(DELETE_PRODUCT_RESET());
   }
   dispatch(getAdminProducts());
-  }, [dispatch,error,dError,isDeleted,Swal])
+  }, [dispatch,error,dError,isDeleted])
   const deleteProductHandle=(id)=>{
     dispatch(deleteProduct(id));
   }

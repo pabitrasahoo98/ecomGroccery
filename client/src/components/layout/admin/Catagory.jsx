@@ -16,7 +16,7 @@ const Catagory = ({role}) => {
 
   const navigate=useNavigate();
   const {Catagory,cerror,cloading}=useSelector((state)=>state.allPre);
-  const {isCDeleted,cerror:DCError,cloading:DCLoading}=useSelector((state)=>state.delPre);
+  const {isCDeleted,cerror:DCError}=useSelector((state)=>state.delPre);
   const dispatch=useDispatch();
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Catagory = ({role}) => {
     dispatch(DELETE_CATAGORY_RESET());
   }
   dispatch(getAdminCatagory());
-  }, [dispatch,DCError,cerror,isCDeleted,Swal])
+  }, [dispatch,DCError,cerror,isCDeleted])
   const deleteCatagoryHandle=(id)=>{
     dispatch(deleteCatagory(id));
   }

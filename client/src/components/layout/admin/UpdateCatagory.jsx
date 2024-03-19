@@ -19,7 +19,6 @@ const UpdateCatagory = ({role}) => {
   const { cloading, cerror, Catagory } = useSelector((state) => state.getPre);
     
   const {
-    cloading:updateLoading,
     error: updateError,
     iscupdate,
   } = useSelector((state) => state.updatePre);
@@ -63,7 +62,7 @@ const UpdateCatagory = ({role}) => {
         window.location.reload();
       }
 
-}, [Catagory,dispatch,cerror,updateError,iscupdate,id,navigate,Swal])
+}, [Catagory,dispatch,cerror,updateError,iscupdate,id,navigate])
 
 const updateCatagorySubmitHandler=(e)=>{
   e.preventDefault();

@@ -19,13 +19,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdminOrders } from '../../../actions/orderAction';
 import { getAdminUsers } from '../../../actions/userAction';
+import Swal from 'sweetalert2';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,ArcElement);
  
 const Dashboard = ({role}) => {
-  const {product,loading}=useSelector((state)=>state.products);
-  const {Orders,error:Oerror,loading:Oloading}=useSelector((state)=>state.orderList);
-  const {Users,error:uerror,loading:uloading}=useSelector((state)=>state.userList);
+  const {product}=useSelector((state)=>state.products);
+  const {Orders,error:Oerror}=useSelector((state)=>state.orderList);
+  const {Users,error:uerror}=useSelector((state)=>state.userList);
   
   const dispatch=useDispatch();
   const targetRef=useRef(null);
@@ -34,10 +35,22 @@ const Dashboard = ({role}) => {
     if(targetRef.current){
       targetRef.current.scrollIntoView({behavior:'smooth'});
     }
+    if(Oerror){
+      Swal.fire({
+        title: "Error",
+        text: Oerror,
+        icon: "warning"
+      })}
+      if(uerror){
+        Swal.fire({
+          title: "Error",
+          text: uerror,
+          icon: "warning"
+        })}
   dispatch(getAdminProducts());
   dispatch(getAdminOrders());
   dispatch(getAdminUsers())
-  }, [dispatch])
+  }, [dispatch,Oerror,uerror])
 
   let totalAmount=0;
   Orders && Orders.forEach(item=>totalAmount+=item.totalPrice)

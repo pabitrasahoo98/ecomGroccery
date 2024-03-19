@@ -130,7 +130,7 @@ const UpdateProduct = ({role}) => {
           window.location.reload();
         }
         
-      }, [product,error,isUpdate,dispatch,id,pError,Swal,navigate])
+      }, [product,error,isUpdate,dispatch,id,pError,navigate])
 
   return (
     <div ref={targetRef}>

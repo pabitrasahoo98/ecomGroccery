@@ -15,7 +15,7 @@ const Users = ({role}) => {
 
 
   const {Users,error,loading}=useSelector((state)=>state.userList);
-  const {isDeleted,error:dError,loading:dLoading}=useSelector((state)=>state.maniUser);
+  const {isDeleted,error:dError}=useSelector((state)=>state.maniUser);
   const dispatch=useDispatch();
 
 
@@ -45,7 +45,7 @@ const Users = ({role}) => {
         dispatch(DELETE_USER_RESET());
       }
       dispatch(getAdminUsers());
-      }, [dispatch,error,isDeleted,dError,Swal])
+      }, [dispatch,error,isDeleted,dError])
 
   const columns = [
     { field: "id",

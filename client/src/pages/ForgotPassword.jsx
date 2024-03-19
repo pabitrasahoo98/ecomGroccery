@@ -42,7 +42,7 @@ const ForgotPassword = () => {
     }
     }
 
-    },[dispatch,message,error,isSent,navigate,Swal]) 
+    },[dispatch,message,error,isSent,navigate]) 
     
   return (
     <div>

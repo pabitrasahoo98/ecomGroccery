@@ -1,0 +1,64 @@
+.category_container {
+    display: flex;
+    justify-content:center;
+    max-width:  100%;
+    flex-wrap: wrap;
+  }
+  
+  .category-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    height: auto;
+    padding: 20px;
+    margin: 10px;
+    max-width: 200px; /* Set a maximum width for larger screens */
+    text-align: center; /* Center align content */
+  }
+  
+  .category-card img {
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+    
+  }
+  
+  .category-card h3 {
+    margin-top: 10px;
+    font-size: 1vmax;
+    overflow-y: hidden;
+  }
+  
+  /* Media query for responsiveness */
+  @media (max-width: 600px) {
+  .category_container {
+    display: flex;
+    justify-content: space-evenly;
+    max-width:  100%;
+    flex-wrap: wrap;
+  }
+  .category-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    height: auto;
+    padding: 10px;
+    margin: 5px;
+    max-width: 200px; /* Set a maximum width for larger screens */
+    text-align: center; /* Center align content */
+  }
+  
+  .category-card img {
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+  }
+  
+  .category-card h3 {
+    margin-top: 10px;
+    font-size: 1vmax;
+  }
+    .category-card {
+      width: calc(50vw - 80px); /* Adjust the width for two cards per row */
+      max-width: none; /* Remove the maximum width for smaller screens */
+    }
+  }
+  

@@ -11,7 +11,7 @@ const AccountSettings = () => {
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const{user}=useSelector((state)=>state.user);
-  const {error,isUpdate,loading}=useSelector((state)=>state.profile);
+  const {error,isUpdate}=useSelector((state)=>state.profile);
   const[name,setName]=useState("");
   const[email,setEmail]=useState("");
   const[mobileNo,setMobileNo]=useState("");
@@ -39,7 +39,7 @@ const AccountSettings = () => {
       navigate("/profile/accountsettings");
       dispatch(UPDATE_PROFILE_RESET());
     }
-  }, [dispatch,user,isUpdate,error,Swal,navigate])
+  }, [dispatch,user,isUpdate,error,navigate])
 
   const handleSaveChanges=(e)=>{
     e.preventDefault();

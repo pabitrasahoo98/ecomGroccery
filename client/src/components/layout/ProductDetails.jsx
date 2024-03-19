@@ -17,16 +17,30 @@ const ProductDetails = () => {
     const location=useLocation();
     const id=location.state.id;
     const {product,loading,error}=useSelector(state=>state.product)
-    const {sProduct,sloading,serror}=useSelector(state=>state.sameProduct)
+    const {sProduct,serror}=useSelector(state=>state.sameProduct)
     let pc=product.catagory;
     
     useEffect(() => {
+      if(error){
+        Swal.fire({
+          title: "Error",
+          text: error,
+          icon: "warning"
+        })
+      }
+      if(serror){
+        Swal.fire({
+          title: "Error",
+          text: error,
+          icon: "warning"
+        })
+      }
       if(targetRef.current){
         targetRef.current.scrollIntoView({behavior:'smooth'});
       }
       dispatch(getProductDetails(id))
       dispatch(getSProducts(pc))
-    }, [dispatch,id,pc]);
+    }, [dispatch,id,pc,error,serror]);
     
     
     const options = {
@@ -70,7 +84,7 @@ const ProductDetails = () => {
           
                 {product.images &&
                   product.images.map((item, i) => (
-                    <Paper><img
+                    <Paper key={i}><img
                     
                       key={i}
                       src={item.url}

@@ -1,6 +1,6 @@
 .product-list {
     margin: 20px auto;
-    max-width: 75%;
+    width: 75%;
   }
   
   .product {
@@ -57,5 +57,12 @@
     font-size: 12px;
     color: #888;
   }
+
+  @media (max-width: 480px) {
+    .product-list {
+        width: 100%; /* Adjust width for mobile screens */
+        overflow-x: hidden;
+    }
+}
   
   

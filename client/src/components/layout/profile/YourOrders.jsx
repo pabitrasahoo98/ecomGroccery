@@ -23,7 +23,7 @@ const YourOrders = () => {
         
       dispatch(myOrder());
 
-    }, [dispatch,error,Swal])
+    }, [dispatch,error])
 
     const [currentPage,setCurrentPage]=useState(1);
     const recordsPerPage=6;

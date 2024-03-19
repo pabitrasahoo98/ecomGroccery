@@ -38,7 +38,7 @@ const AddPincode = ({role}) => {
       navigate("/admin/pincode");
     }
     
-  }, [perror,psuccess,dispatch,Swal,navigate])
+  }, [perror,psuccess,dispatch,navigate])
   
   const addPincodeSubmitHandler=(e)=>{
     e.preventDefault();

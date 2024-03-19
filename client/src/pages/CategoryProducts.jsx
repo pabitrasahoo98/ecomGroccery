@@ -5,10 +5,11 @@ import Product from '../components/layout/Product'
 import Loader from '../components/layout/Loader';
 import { getProduct } from '../actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Pagination from 'react-js-pagination';
 import {Button, MenuItem, Select, Typography} from '@mui/material';
 import Slider from 'react-slick';
+import Swal from 'sweetalert2';
 
 
 
@@ -42,8 +43,8 @@ const CategoryProducts = () => {
   let {catagory}=useParams();
   const {catalog}=useSelector((state)=>state.catagories);
   const [currentPage,setCurrentPage]=useState(1);
-  const [category,setCategory]=useState("");
   const [sortOption, setSortOption] = useState('');
+  const navigate=useNavigate();
   
   const dispatch=useDispatch();
   const keyword="";
@@ -54,17 +55,21 @@ const CategoryProducts = () => {
     if(targetRef.current){
       targetRef.current.scrollIntoView({behavior:'smooth'});
     }
+    if(error){
+      Swal.fire({
+        title: "Error",
+        text: error,
+        icon: "warning"
+      })
+    }
     if(catagory){
     dispatch(getProduct(keyword,currentPage,catagory,sortOption));
-    catagory=null;
     
     }
-    if(category){
-        dispatch(getProduct(keyword,currentPage,category,sortOption));
-    }
+  
 
     
-  }, [dispatch,currentPage,category,sortOption])
+  }, [dispatch,currentPage,catagory,sortOption,error])
   
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
@@ -73,11 +78,11 @@ const CategoryProducts = () => {
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
   };
-  
   const handleCategoryChange = (selectedCategory) => {
-    setCategory(selectedCategory);
     setCurrentPage(1); // Reset current page to 1 when category changes
+    navigate(`/products/category/${selectedCategory}`);
   };
+
   return (
     <div ref={targetRef}>
     <Layout>
@@ -122,7 +127,7 @@ const CategoryProducts = () => {
             </div>
 
           <div>{
-  category ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (
+  catagory ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (
     <div className="paginationBox">
       <Pagination
         activePage={currentPage}

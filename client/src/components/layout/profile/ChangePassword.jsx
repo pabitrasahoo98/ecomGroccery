@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 const ChangePassword = () => {
     const navigate=useNavigate();
     const dispatch=useDispatch();
-    const {error,isUpdate,loading}=useSelector((state)=>state.profile);
+    const {error,isUpdate}=useSelector((state)=>state.profile);
     const[oldPassword,setOldPassword]=useState("");
     const[newPassword,setNewPassword]=useState("");
     const[confirmPassword,setConfirmPassword]=useState("");
@@ -33,7 +33,7 @@ const ChangePassword = () => {
           navigate("/profile/changepassword");
           dispatch(UPDATE_PASSWORD_RESET());
         }
-      }, [dispatch,isUpdate,error,Swal,navigate])
+      }, [dispatch,isUpdate,error,navigate])
     const handleSaveChanges=(e)=>{
         e.preventDefault();
         dispatch(updatePassword(oldPassword,newPassword,confirmPassword))

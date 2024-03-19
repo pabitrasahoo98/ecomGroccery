@@ -70,7 +70,7 @@ const UpdateUser = ({role}) => {
             
           }
     
-    }, [user,dispatch,error,updateError,isUpdate,id,navigate,Swal])
+    }, [user,dispatch,error,updateError,isUpdate,id,navigate])
 
     const updateUserSubmitHandler=(e)=>{
         e.preventDefault();

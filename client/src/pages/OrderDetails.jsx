@@ -16,7 +16,7 @@ const OrderDetails = () => {
     const navigate=useNavigate();
     const {id}=useParams();
     const {order,loading,error}=useSelector((state)=>state.orderDetails);
-    const {isCanceled,loading:cloading,error:cerror}=useSelector((state)=>state.cancelOrder)
+    const {isCanceled,error:cerror}=useSelector((state)=>state.cancelOrder)
     useEffect(() => {
       if(targetRef.current){
         targetRef.current.scrollIntoView({behavior:'smooth'});
@@ -48,7 +48,7 @@ const OrderDetails = () => {
         navigate("/profile/yourorders")
       }
       dispatch(getOrderDetails(id));
-    }, [dispatch,error,cerror,isCanceled,navigate,Swal])
+    }, [dispatch,error,cerror,isCanceled,navigate])
 
     
     const CancelOrder=(e)=>{

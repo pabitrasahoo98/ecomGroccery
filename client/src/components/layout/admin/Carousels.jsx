@@ -17,7 +17,7 @@ const Carousels = ({role}) => {
   const navigate=useNavigate();
   const targetRef=useRef(null);
   const {carousel,carerror,carloading}=useSelector((state)=>state.allPre);
-  const {isCarDeleted,carerror:DCError,carloading:DCLoading}=useSelector((state)=>state.delPre);
+  const {isCarDeleted,carerror:DCError}=useSelector((state)=>state.delPre);
   const dispatch=useDispatch();
   useEffect(() => {
     if(targetRef.current){
@@ -48,7 +48,7 @@ const Carousels = ({role}) => {
     dispatch(DELETE_CAROUSEL_RESET());
   }
   dispatch(getAdminCarousel());
-  }, [dispatch,DCError,carerror,isCarDeleted,Swal])
+  }, [dispatch,DCError,carerror,isCarDeleted])
   const deleteCarouselHandle=(id)=>{
     dispatch(deleteCarousel(id));
   }

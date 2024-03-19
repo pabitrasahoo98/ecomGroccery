@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { addCatagory, clearAACErrors } from '../../../actions/catagoryAction';
 import { ADD_CATAGORY_RESET } from '../../../reducers/addPrerequisitionReducer';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2' 
 
 const AddCatagory = ({role}) => {
 
@@ -39,7 +39,7 @@ const AddCatagory = ({role}) => {
       navigate("/admin/category");
     }
     
-  }, [cerror,csuccess,dispatch,Swal])
+  }, [cerror,csuccess,dispatch,navigate])
   
   const addCatagorySubmitHandler=(e)=>{
     e.preventDefault();

@@ -2,11 +2,11 @@
     margin:0;
     padding: 0;
     scroll-behavior: smooth;
-}* {
-    margin: 0;
-    scroll-behavior: smooth;
-  }
+}
+
   
+
+
   body {
     cursor: url("./images/cursor.png"), auto;
   }

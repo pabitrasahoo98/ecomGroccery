@@ -38,9 +38,8 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('service_myp0rdo', 'template_mx5jjjq', form.current, 'XXiM7Xca7bB8VDBoH')
+    emailjs.sendForm('service_vv03nub', 'template_j8qsd3s', form.current, 'qpwmpwGbIfO2-AD94')
       .then((result) => {
-        console.log(result.text);
         setStatusMessage('Your message has been sent successfully.');
         // Optionally reset the form fields after successful submission
         setName('');
@@ -71,7 +70,6 @@ const ContactForm = () => {
           name='from_name'
           onChange={(e) => setName(e.target.value)}
           required
-          disabled
         />
         <TextField
           label="Email"
@@ -84,7 +82,6 @@ const ContactForm = () => {
           name='from_email'
           onChange={(e) => setEmail(e.target.value)}
           required
-          disabled
         />
         <TextField
           label="Mobile"
@@ -97,7 +94,6 @@ const ContactForm = () => {
           value={mobile}
           onChange={(e) => setMobile(e.target.value)}
           required
-          disabled
         />
         <InputLabel id="reason-label">Reason/Purpose</InputLabel>
         <Select

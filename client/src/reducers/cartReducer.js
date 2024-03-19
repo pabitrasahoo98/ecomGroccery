@@ -25,7 +25,7 @@ export const cartReducer = createSlice(
           REMOVE_CART_ITEM(state,action){
             return{
               ...state,
-              cartItems:state.cartItems.filter((i)=>i.product!=action.payload)
+              cartItems:state.cartItems.filter((i)=>i.product!==action.payload)
             }
 
           },

@@ -19,7 +19,6 @@ const UpdateCarousel = ({role}) => {
   const { carloading, carerror, Carousel } = useSelector((state) => state.getPre);
     
   const {
-    carloading:updateLoading,
     carerror: updateError,
     iscarupdate,
   } = useSelector((state) => state.updatePre);
@@ -65,7 +64,7 @@ const UpdateCarousel = ({role}) => {
         window.location.reload();
       }
 
-}, [Carousel,dispatch,carerror,updateError,iscarupdate,id,navigate,Swal])
+}, [Carousel,dispatch,carerror,updateError,iscarupdate,id,navigate])
 
 const updateCarouselSubmitHandler=(e)=>{
   e.preventDefault();

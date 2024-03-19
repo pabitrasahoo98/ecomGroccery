@@ -43,7 +43,7 @@
   color:blue;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 1vmax;
-}
+} 
 .price{
   margin: 0.2vmax;
   color:green;
@@ -58,6 +58,18 @@
 }
 
 @media screen and (max-width: 600px) {
+
+  .productCard {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: rgb(48, 48, 48);
+    margin: 1vmax;
+    transition: all 0.5s;
+    padding-bottom: 0.5vmax;
+    height: auto;
+    max-width: 200px;
+  }
   .productCard > p {
     font-size: 1.7vmax;
   }

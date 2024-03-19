@@ -17,7 +17,7 @@ const Pincode = ({role}) => {
 
     const navigate=useNavigate();
     const {pincode,perror,ploading}=useSelector((state)=>state.allPre);
-    const {isPDeleted,perror:DPError,ploading:DPLoading}=useSelector((state)=>state.delPre);
+    const {isPDeleted,perror:DPError}=useSelector((state)=>state.delPre);
     const dispatch=useDispatch();
     useEffect(() => {
     if(perror){
@@ -45,7 +45,7 @@ const Pincode = ({role}) => {
       dispatch(DELETE_PINCODE_RESET());
     }
     dispatch(getAdminPincode());
-    }, [dispatch,DPError,perror,isPDeleted,Swal])
+    }, [dispatch,DPError,perror,isPDeleted])
     const deletePincodeHandle=(id)=>{
       dispatch(deletePincode(id));
     }

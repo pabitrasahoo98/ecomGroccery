@@ -113,13 +113,20 @@
 .product-list {
   margin: 20px auto;
   max-width: 75%;
-}
+} 
 
 @media screen and (max-width: 600px) {
   .filterBox {
     width: 20vmax;
     position: static;
     margin: auto;
+  }
+
+  .products {
+    display: flex;
+    justify-content: space-evenly;
+    max-width:  100%;
+    flex-wrap: wrap;
   }
 
   .page-link {

@@ -2,9 +2,12 @@
   margin: 20px auto;
   position: relative; /* Required for positioning slider buttons */
 }
-
+.product-list {
+  margin: 20px auto;
+  max-width: 75%;
+}
 .category-slider {
-  width: 100%;
+  width: 100vw;
 }
 
 .category-slider >div >a{
@@ -62,7 +65,7 @@
 
 @media (max-width: 599px) {
   .category-slider-container {
-    max-width: 100%; /* Full width on screens less than 600px */
+    max-width: 100vw; /* Full width on screens less than 600px */
   }
   .category-name {
     margin-top: 5px;

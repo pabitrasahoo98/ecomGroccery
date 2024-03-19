@@ -90,7 +90,7 @@ const AddProduct = ({role}) => {
           navigate("/admin/products");
         }
         
-      }, [error,success,dispatch,Swal,navigate])
+      }, [error,success,dispatch,navigate])
       
   return (
     <Layout>{(role==="admin")?<>

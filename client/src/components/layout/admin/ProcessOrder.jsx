@@ -7,7 +7,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import { clearODErrors, clearUOErrors, getOrderDetails,updateOrder} from '../../../actions/orderAction'
 import Loader from '../Loader';
 import { UPDATE_ORDER_RESET } from '../../../reducers/manipulateOrderReducer';
-import { useNavigate, useParams } from 'react-router-dom';
+import {Link, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 
@@ -52,7 +52,7 @@ const ProcessOrder = ({role}) => {
           }
       
         dispatch(getOrderDetails(id));
-    }, [dispatch,error,updateError,isUpdate,Swal,navigate])
+    }, [dispatch,error,updateError,isUpdate,navigate,id])
     
     const updateOrderSubmitHandler=(e)=>{
         e.preventDefault();
@@ -147,9 +147,9 @@ const ProcessOrder = ({role}) => {
                       order.orderItems.map((item) => (
                         <div key={item.product}>
                           <img src={item.image} alt="Product" />
-                          <a  onClick={()=>{navigate("/productdetails",{state:{id:item.product}})}}>
+                          <Link to="/productdetails" state={{ id: item.product }}>
                             {item.name}
-                          </a>{" "}
+                          </Link>
                           <span>
                             {item.quantity} X ₹{item.price} ={" "}
                             <b>₹{item.price * item.quantity}</b>

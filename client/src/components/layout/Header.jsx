@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {AppBar,Box,Divider,Drawer,IconButton,Toolbar,Typography} from "@mui/material"
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import MenuIcon from "@mui/icons-material/Menu"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
-import "../../styles/HeaderStyle.css"
-import { useSelector } from 'react-redux';
+import "./HeaderStyle.css";
 import  Logo1 from "../../images/logo1.png"
 
 

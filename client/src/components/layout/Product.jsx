@@ -10,9 +10,9 @@ const options={
     activeColor:"tomato",
     size:window.innerWidth<600?20:25,
     value:4.5,
-    isHalf:true,
+    ishalf:true,
 };
-
+ 
 const Product = ({product}) => {
   const navigate=useNavigate();
   return (

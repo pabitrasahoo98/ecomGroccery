@@ -11,6 +11,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Button, MenuItem, Select, Typography } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const Products = () => {
   const targetRef = useRef(null);
@@ -45,11 +46,18 @@ const Products = () => {
   const { loading, error, product, productsCount, resultPerPage ,filteredProductsCount} = useSelector((state) => state.products);
 
   useEffect(() => {
+    if(error){
+      Swal.fire({
+        title: "Error",
+        text: error,
+        icon: "warning"
+      })
+    }
     if (targetRef.current) {
       targetRef.current.scrollIntoView({ behavior: 'smooth' });
     }
     dispatch(getProduct(keyword, currentPage, category,sortOption));
-  }, [dispatch, keyword, currentPage, category,sortOption]);
+  }, [dispatch, keyword, currentPage, category,sortOption,error]);
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -71,7 +79,7 @@ const Products = () => {
         {loading ? (
           <Loader />
         ) : (
-          <>
+          <> 
             <Typography align="center" variant="h5" style={{ color: 'black', fontWeight: 'bold', borderBottom: '2px solid goldenrod' }}>Categories</Typography>
             <div className="product-list">
               <Slider {...settings}>
@@ -84,7 +92,7 @@ const Products = () => {
             <div className="products">
               {product && product.map((p) => (
                 <Product key={p._id} product={p} />
-              ))}
+              ))} 
             </div>
 
 

@@ -20,7 +20,6 @@ const UpdatePincode = ({role}) => {
   const targetRef=useRef(null);
     
   const {
-    ploading:updateLoading,
     perror: updateError,
     ispupdate,
   } = useSelector((state) => state.updatePre);
@@ -64,7 +63,7 @@ const UpdatePincode = ({role}) => {
         window.location.reload();
       }
 
-}, [Pincode,dispatch,perror,updateError,ispupdate,id,navigate,Swal])
+}, [Pincode,dispatch,perror,updateError,ispupdate,id,navigate])
 
 const updatePincodeSubmitHandler=(e)=>{
   e.preventDefault();

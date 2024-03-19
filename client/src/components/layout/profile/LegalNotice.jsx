@@ -6,7 +6,7 @@ const LegalNotice = () => {
     return (
         <div className='legalnotice'>
             <h1 className='mainhead1'>Legal Notice</h1>
-            <Typography>Welcome to [Your Grocery Website]. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use:</Typography>
+            <Typography>Welcome to NowGrocceries. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use:</Typography>
 
             <div className='legalnoticein'>
                 <h2>1. Terms of Use</h2>

@@ -40,7 +40,7 @@ const AddCarousel = ({role}) => {
       navigate("/admin/carousel");
     }
     
-  }, [carerror,carsuccess,dispatch,Swal])
+  }, [carerror,carsuccess,dispatch])
   
   const addCarouselSubmitHandler=(e)=>{
     e.preventDefault();

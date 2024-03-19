@@ -19,7 +19,7 @@ const About = () => {
       </Typography>
       <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
         <Typography variant="body1">
-          Welcome to our grocery store! We are committed to providing high-quality products and excellent customer service to our valued customers. Our mission is to make grocery shopping convenient and enjoyable for everyone.
+          Welcome to NowGrocceries! We are committed to providing high-quality products and excellent customer service to our valued customers. Our mission is to make grocery shopping convenient and enjoyable for everyone.
         </Typography>
       </Paper>
       <Grid container spacing={3} style={{ marginBottom: '20px' }}>

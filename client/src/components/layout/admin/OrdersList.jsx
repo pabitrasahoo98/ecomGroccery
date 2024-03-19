@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 const OrderList = ({role}) => {
 
     const {Orders,error,loading}=useSelector((state)=>state.orderList);
-    const {isDeleted,error:dError,loading:dLoading}=useSelector((state)=>state.maniOrder);
+    const {isDeleted,error:dError}=useSelector((state)=>state.maniOrder);
     const dispatch=useDispatch();
 
 
@@ -44,7 +44,7 @@ const OrderList = ({role}) => {
           dispatch(DELETE_ORDER_RESET());
         }
         dispatch(getAdminOrders());
-        }, [dispatch,error,dError,isDeleted,Swal])
+        }, [dispatch,error,dError,isDeleted])
 
     const columns = [
         { field: 'id',

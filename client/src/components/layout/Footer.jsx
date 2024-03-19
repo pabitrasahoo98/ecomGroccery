@@ -4,11 +4,13 @@ import ContactNumber from './ContactNumber'
 import playStore from "../../images/playstore.png"
 import  appStore from "../../images/Appstore.png"
 import  Logo from "../../images/logo.png"
+import DeliveryInfo from './DeliveryInfo'
 
 const Footer = () => {
   return (
   <div className='contact_us'>
     <ContactNumber/> 
+    <DeliveryInfo/>
     <div className='footer'>
         <div className='leftFooter'>
             <h4>DOWNLOAD OUR APP</h4>
@@ -25,7 +27,7 @@ const Footer = () => {
             <h4>FOLLOW US</h4>
             
         <a href="https://www.instagram.com/nowgrocceries/">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?id=61557393482487"h>Facebook</a>
+        <a href="https://www.facebook.com/profile.php?id=61557393482487">Facebook</a>
 
         </div>
     </div>
