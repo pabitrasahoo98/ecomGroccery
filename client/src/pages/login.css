@@ -159,9 +159,10 @@
   .signupForm{
       padding: 6vmax;
   }
-  .loginForm > input,
-  .signupForm >input{
-      padding: 2.5vmax;
+  .loginForm > div> input,
+  .signupForm > div >input{
+     margin:0.5vmax;
+    padding: 3vmax;
       font: 300 1.7vmax cursive;
 
   }

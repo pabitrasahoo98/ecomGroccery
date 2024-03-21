@@ -17,10 +17,12 @@ const ProductSlick = ({prod}) => {
   
     const settings = {
         dots: false,
-        infinite: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
         responsive: [
           {
             breakpoint: 768,

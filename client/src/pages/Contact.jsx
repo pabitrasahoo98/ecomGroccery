@@ -137,7 +137,7 @@ const ContactForm = () => {
         <Grid item xs={12}>
           <Typography variant="h5" gutterBottom>Contact Information</Typography>
           <Typography variant="body1">
-            Email: info@example.com<br />
+            Email: <a href="mailto:example@example.com">nowgrocceries@gmail.com</a><br />
             Phone: +91 993 880 0359
           </Typography>
         </Grid>
