@@ -94,7 +94,16 @@ const CategoryProducts = () => {
           <div className="product-list">
             <Slider {...settings}>
               {catalog && catalog.map((item, key) => (
-                <Button key={key} onClick={() => handleCategoryChange(item.catagory)}>{item.catagory}</Button>
+                <Button  sx={{
+                  fontSize: '16px', // Default font size
+                  width: '150px', // Add a fixed width to prevent overlapping
+                  mr: '10px', // Add margin-right between buttons
+                  mb: '10px', // Add margin-bottom below buttons
+                  '@media (max-width: 768px)': { // Media query for smaller screens
+                    fontSize: '9px', // Decrease font size for smaller screens
+                    width: '120px', // Decrease width for smaller screens
+                  },
+                }} key={key} onClick={() => handleCategoryChange(item.catagory)}>{item.catagory}</Button>
               ))}
             </Slider>
           </div>
