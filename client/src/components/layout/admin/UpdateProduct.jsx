@@ -60,6 +60,7 @@ const UpdateProduct = ({role}) => {
         images.forEach((image) => {
           myForm.append("images", image);
         });
+
         dispatch(updateProduct(id,myForm))
         
       }

@@ -131,7 +131,7 @@ const Products = () => {
 
             <div>
             {
-  category ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (
+  (category) ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (
     <div className="paginationBox">
       <Pagination
         activePage={currentPage}
@@ -147,7 +147,7 @@ const Products = () => {
         activeClass="pageItemActive"
         activeLinkClass="pageLinkActive"
       />
-    </div>
+    </div> 
   ) : (resultPerPage < productsCount) && (
     <div className="paginationBox">
       <Pagination

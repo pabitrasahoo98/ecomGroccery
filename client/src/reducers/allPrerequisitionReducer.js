@@ -6,12 +6,18 @@ export const allPrerequisitionReducer = createSlice(
         Catagory:[],
         pincodes:[],
         carousel:[],
+        subCatagory:[],
+        brand:[],
         cloading:false,
         cerror:null,
         ploading:false,
         perror:null,
         carloading:false,
-        carerror:null
+        carerror:null,
+        scloading:false,
+        scerror:null,
+        bloading:false,
+        berror:null
        },
        reducers:{
         
@@ -89,8 +95,60 @@ export const allPrerequisitionReducer = createSlice(
                         ...state,
                         carerror:null
                         }
-                      }
+                      },
+
+                      ADMIN_SUBCATAGORY_REQUEST(state){
+                        return{
+                            ...state,
+                            scloading:true
+                            };
+                          },
+                        ADMIN_SUBCATAGORY_SUCCESS(state,action){
+                            return{
+                            ...state,
+                            scloading:false,
+                            subCatagory:action.payload.subCatagories
+                            }
+                          },
+                        ADMIN_SUBCATAGORY_FAIL(state,action){
+                            return{
+                            scloading:true,
+                            scerror:action.payload
+                            }
+                         },
+                         CLEAR_SCERRORS:(state)=>{
+                            return{
+                            ...state,
+                            scerror:null
+                            }
+                          },
+
+                          ADMIN_BRAND_REQUEST(state){
+                            return{
+                                ...state,
+                                bloading:true
+                                };
+                              },
+                            ADMIN_BRAND_SUCCESS(state,action){
+                                return{
+                                ...state,
+                                bloading:false,
+                                brand:action.payload.brand
+                                }
+                              },
+                            ADMIN_BRAND_FAIL(state,action){
+                                return{
+                                bloading:true,
+                                berror:action.payload
+                                }
+                             },
+                             CLEAR_BERRORS:(state)=>{
+                                return{
+                                ...state,
+                                berror:null
+                                }
+                              },
       }
     })
-        export const {ADMIN_CATAGORY_FAIL,ADMIN_CATAGORY_REQUEST,ADMIN_CATAGORY_SUCCESS,CLEAR_ACERRORS,ADMIN_PINCODE_FAIL,ADMIN_PINCODE_REQUEST,ADMIN_PINCODE_SUCCESS,CLEAR_APERRORS,ADMIN_CAROUSEL_FAIL,ADMIN_CAROUSEL_REQUEST,ADMIN_CAROUSEL_SUCCESS,CLEAR_ACARERRORS}=allPrerequisitionReducer.actions
+        export const {ADMIN_CATAGORY_FAIL,ADMIN_CATAGORY_REQUEST,ADMIN_CATAGORY_SUCCESS,CLEAR_ACERRORS,ADMIN_PINCODE_FAIL,ADMIN_PINCODE_REQUEST,ADMIN_PINCODE_SUCCESS,CLEAR_APERRORS,ADMIN_CAROUSEL_FAIL,ADMIN_CAROUSEL_REQUEST,ADMIN_CAROUSEL_SUCCESS,CLEAR_ACARERRORS,ADMIN_SUBCATAGORY_FAIL,ADMIN_SUBCATAGORY_REQUEST,ADMIN_SUBCATAGORY_SUCCESS,CLEAR_SCERRORS,ADMIN_BRAND_FAIL,ADMIN_BRAND_REQUEST,ADMIN_BRAND_SUCCESS,CLEAR_BERRORS}=allPrerequisitionReducer.actions
         export default allPrerequisitionReducer.reducer

@@ -46,8 +46,19 @@ exports.getAllProducts=  catchAsyncError(async (req, res) => {
 
     const products = await apifeature.query;
 
-    const category = req.query.catagory;
-    const p=await Product.find({catagory:category})
+    let p={};
+
+    if(req.query.catagory){
+    p=await Product.find({catagory:req.query.catagory})
+    }
+
+    if(req.query.subcatagory){
+        p=await Product.find({subcatagory:req.query.subcatagory})
+        }
+    if(req.query.brand){
+            p=await Product.find({brand:req.query.brand})
+            }
+
     const filteredProductsCount = p.length;
 
     res.status(200).json({

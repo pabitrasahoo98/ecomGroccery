@@ -41,6 +41,10 @@ import UpdateCarousel from "./components/layout/admin/UpdateCarousel";
 import CategoryProducts from "./pages/CategoryProducts";
 import { fetchDE, fetchDod, fetchTD } from "./actions/dealsAction";
 import webFont from "webfontloader";
+import SubCatagory from "./components/layout/admin/SubCatagory";
+import AddSubCatagory from "./components/layout/admin/AddSubCatagory";
+import Brands from "./components/layout/admin/Brands";
+import AddBrand from "./components/layout/admin/AddBrand";
 
 
 
@@ -105,6 +109,10 @@ function App() {
       {isAuthenticate&& <Route path="/admin/carousel" element={<Carousels role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/carousel/new" element={<AddCarousel role={user.role}/>} />}
       {isAuthenticate&& <Route path="/admin/carousel/:id" element={<UpdateCarousel role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/subcategory" element={<SubCatagory role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/subcatagory/new" element={<AddSubCatagory role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/brand" element={<Brands role={user.role}/>} />}
+      {isAuthenticate&& <Route path="/admin/brand/new" element={<AddBrand role={user.role}/>} />}
 
       <Route path="*" element={<Pagenotfound/>} />
     </Routes>

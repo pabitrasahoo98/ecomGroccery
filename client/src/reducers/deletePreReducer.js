@@ -4,10 +4,16 @@ export const deletePreReducer = createSlice(
     { name:'ManiPre',
        initialState:{
         isCDeleted:false,
+        isSCDeleted:false,
+        isBDeleted:false,
         isPDeleted:false,
         isCarDeleted:false,
         cloading:false,
         cerror:null, 
+        bloading:false,
+        berror:null,
+        scloading:false,
+        scerror:null,
         ploading:false,
         perror:null,
         carloading:false,
@@ -110,8 +116,72 @@ export const deletePreReducer = createSlice(
                 ...state,
                 carerror:null
                 }
-              }
+              },
+              DELETE_SUBCATAGORY_REQUEST(state){
+                return{
+                    ...state,
+                    scloading:true
+                    };
+                  },
+                DELETE_SUBCATAGORY_SUCCESS(state,action){
+                    return{
+                    ...state,
+                    scloading:false,
+                    isSCDeleted:action.payload.success
+                    }
+                  },
+                DELETE_SUBCATAGORY_RESET(state,action){
+                    return{
+                      ...state,
+                      isSCDeleted:false,
+                    }
+                   
+                  },
+                DELETE_SUBCATAGORY_FAIL(state,action){
+                    return{
+                    scloading:false,
+                    scerror:action.payload
+                    }
+                  },
+                  CLEAR_DSCERRORS:(state)=>{
+                    return{
+                    ...state,
+                    scerror:null
+                    }
+                  },
+                  DELETE_BRAND_REQUEST(state){
+                    return{
+                        ...state,
+                        bloading:true
+                        };
+                      },
+                    DELETE_BRAND_SUCCESS(state,action){
+                        return{
+                        ...state,
+                        bloading:false,
+                        isBDeleted:action.payload.success
+                        }
+                      },
+                    DELETE_BRAND_RESET(state,action){
+                        return{
+                          ...state,
+                          isBDeleted:false,
+                        }
+                       
+                      },
+                    DELETE_BRAND_FAIL(state,action){
+                        return{
+                        bloading:false,
+                        berror:action.payload
+                        }
+                      },
+                      CLEAR_DBERRORS:(state)=>{
+                        return{
+                        ...state,
+                        berror:null
+                        }
+                      },
         }
     })
-        export const {DELETE_CATAGORY_FAIL,DELETE_CATAGORY_REQUEST,DELETE_CATAGORY_SUCCESS,DELETE_CATAGORY_RESET,CLEAR_DCERRORS,DELETE_PINCODE_FAIL,DELETE_PINCODE_REQUEST,DELETE_PINCODE_SUCCESS,DELETE_PINCODE_RESET,CLEAR_DPERRORS,DELETE_CAROUSEL_FAIL,DELETE_CAROUSEL_REQUEST,DELETE_CAROUSEL_SUCCESS,DELETE_CAROUSEL_RESET,CLEAR_DCARERRORS}=deletePreReducer.actions
+        export const {DELETE_CATAGORY_FAIL,DELETE_CATAGORY_REQUEST,DELETE_CATAGORY_SUCCESS,DELETE_CATAGORY_RESET,CLEAR_DCERRORS,DELETE_PINCODE_FAIL,DELETE_PINCODE_REQUEST,DELETE_PINCODE_SUCCESS,DELETE_PINCODE_RESET,CLEAR_DPERRORS,DELETE_CAROUSEL_FAIL,DELETE_CAROUSEL_REQUEST,DELETE_CAROUSEL_SUCCESS,DELETE_CAROUSEL_RESET,CLEAR_DCARERRORS,DELETE_SUBCATAGORY_FAIL,DELETE_SUBCATAGORY_REQUEST,DELETE_SUBCATAGORY_SUCCESS,DELETE_SUBCATAGORY_RESET,CLEAR_DSCERRORS,DELETE_BRAND_FAIL,DELETE_BRAND_REQUEST,DELETE_BRAND_SUCCESS,DELETE_BRAND_RESET,CLEAR_DBERRORS}=deletePreReducer.actions
         export default deletePreReducer.reducer

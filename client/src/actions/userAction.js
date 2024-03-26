@@ -223,7 +223,7 @@ dispatch( CLEAR_AUERRORS());
 
    try {
        dispatch(UPDATE_USER_REQUEST())
-       const config={withCredentials:true}
+       const config={headers:{"Content-Type":"application/json"},withCredentials:true}
        const {data}=await axios.put(`http://localhost:4000/api/v1/admin/user/${id}`,orderData,config);
        dispatch(UPDATE_USER_SUCCESS(data.success));
        

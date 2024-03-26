@@ -59,6 +59,14 @@ const productSchema= new mongoose.Schema({
         maxlength:[4,"stock cannot exceed 4 characters"],
         default:1
     },
+    subCatagory:{
+        type:String,
+        default:"none"
+    },
+    brand:{
+        type:String,
+        default:"none"
+    },
     /*reviews:[
         {
             name:{

@@ -137,7 +137,7 @@ dispatch( CLEAR_NPERRORS());
 
     try {
         dispatch(UPDATE_PRODUCT_REQUEST())
-        const config={withCredentials:true}
+        const config={headers:{"Content-Type":"application/json"},withCredentials:true}
         const {data}=await axios.put(`http://localhost:4000/api/v1/admin/product/${id}`,productData,config);
         dispatch(UPDATE_PRODUCT_SUCCESS(data.success));
         

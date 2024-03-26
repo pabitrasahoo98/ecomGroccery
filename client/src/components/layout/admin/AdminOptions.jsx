@@ -10,6 +10,8 @@ import Inventory2Icon from '@mui/icons-material/Inventory2';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import ClassIcon from '@mui/icons-material/Class';
 import { useNavigate } from 'react-router-dom';
 
 const AdminOptions = () => {
@@ -20,6 +22,8 @@ const AdminOptions = () => {
         { icon: <Inventory2Icon/>, name: 'Products',func:products },
         { icon: <PeopleIcon />, name: 'Users',func:users },
         { icon: <CategoryIcon />, name: 'Category',func:category },
+        { icon: <ClassIcon />, name: 'SubCategory',func:subcategory },
+        { icon: <BrandingWatermarkIcon />, name: 'Brand',func:brand },
         { icon: <PersonPinCircleIcon />, name: 'Delivery Pincodes',func:pincode },
         { icon: <PostAddIcon/>, name: 'Carousel',func:carousel },
       ]
@@ -37,6 +41,12 @@ const AdminOptions = () => {
       }
       function category() {
         navigate("/admin/category");
+      }
+      function subcategory() {
+        navigate("/admin/subcategory");
+      }
+      function brand() {
+        navigate("/admin/brand");
       }
       function pincode() {
         navigate("/admin/pincode");

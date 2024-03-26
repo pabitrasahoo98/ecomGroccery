@@ -22,8 +22,12 @@ const user=require("./routes/userRoutes")
 const order=require("./routes/orderRoutes")
 const pinCode=require("./routes/pinCodeRoutes")
 const catagory=require("./routes/catagoryRoutes")
+const brand=require("./routes/brandRoutes")
+const subcatagory=require("./routes/subCatagoryRoutes")
 const carousel=require("./routes/carouselRoutes")
 app.use("/api/v1",catagory);
+app.use("/api/v1",brand);
+app.use("/api/v1",subcatagory);
 app.use("/api/v1",order);
 app.use("/api/v1",product);
 app.use("/api/v1",user);

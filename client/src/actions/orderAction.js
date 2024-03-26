@@ -117,7 +117,7 @@ dispatch( CLEAR_AOERRORS());
 
    try {
        dispatch(UPDATE_ORDER_REQUEST())
-       const config={withCredentials:true}
+       const config={headers:{"Content-Type":"application/json"},withCredentials:true}
        const {data}=await axios.put(`http://localhost:4000/api/v1/admin/order/${id}`,orderData,config);
        dispatch(UPDATE_ORDER_SUCCESS(data.success));
        

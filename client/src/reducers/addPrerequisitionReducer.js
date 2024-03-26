@@ -6,6 +6,8 @@ export const addPrerequisitionReducer = createSlice(
         AddPincode:{},
         AddCatagory:{},
         AddCarousel:{},
+        AddSubCatagory:{},
+        AddBrand:{},
         psuccess:false,
         ploading:false,
         perror:null,
@@ -14,13 +16,19 @@ export const addPrerequisitionReducer = createSlice(
         cerror:null,
         carsuccess:false,
         carloading:false,
-        carerror:null
+        carerror:null,
+        scsuccess:false,
+        scloading:false,
+        scerror:null,
+        bsuccess:false,
+        bloading:false,
+        berror:null
        },
        reducers:{
         ADD_CATAGORY_REQUEST(state){
         return{
             ...state,
-            ccloading:true
+            cloading:true
             };
           },
         ADD_CATAGORY_SUCCESS(state,action){
@@ -115,8 +123,74 @@ export const addPrerequisitionReducer = createSlice(
                     ...state,
                     carerror:null
                     }
-                  }
+                  },
+                  ADD_SUBCATAGORY_REQUEST(state){
+                    return{
+                        ...state,
+                        scloading:true
+                        };
+                      },
+                    ADD_SUBCATAGORY_SUCCESS(state,action){
+                        return{
+                        ...state,
+                        scloading:false,
+                        scsuccess:action.payload.success,
+                        AddSubCatagory:action.payload.subCatagories
+                        }
+                      },
+                    ADD_SUBCATAGORY_RESET(state,action){
+                        return{
+                          ...state,
+                          scsuccess:false,
+                        }
+                       
+                      },
+                    ADD_SUBCATAGORY_FAIL(state,action){
+                        return{
+                        scloading:false,
+                        scerror:action.payload
+                        }
+                      },
+                      CLEAR_ASCERRORS:(state)=>{
+                        return{
+                        ...state,
+                        scerror:null
+                        }
+                      },
+                      ADD_BRAND_REQUEST(state){
+                        return{
+                            ...state,
+                            bloading:true
+                            };
+                          },
+                        ADD_BRAND_SUCCESS(state,action){
+                            return{
+                            ...state,
+                            bloading:false,
+                            bsuccess:action.payload.success,
+                            AddBrand:action.payload.brand
+                            }
+                          },
+                        ADD_BRAND_RESET(state,action){
+                            return{
+                              ...state,
+                              bsuccess:false,
+                            }
+                           
+                          },
+                        ADD_BRAND_FAIL(state,action){
+                            return{
+                            bloading:false,
+                            berror:action.payload
+                            }
+                          },
+                          CLEAR_ABERRORS:(state)=>{
+                            return{
+                            ...state,
+                            berror:null
+                            }
+                          },
         }
     })
-        export const {ADD_CATAGORY_FAIL,ADD_CATAGORY_REQUEST,ADD_CATAGORY_SUCCESS,ADD_CATAGORY_RESET,CLEAR_AACERRORS,ADD_PINCODE_FAIL,ADD_PINCODE_REQUEST,ADD_PINCODE_SUCCESS,ADD_PINCODE_RESET,CLEAR_AAPERRORS,ADD_CAROUSEL_FAIL,ADD_CAROUSEL_REQUEST,ADD_CAROUSEL_SUCCESS,ADD_CAROUSEL_RESET,CLEAR_AACARERRORS}=addPrerequisitionReducer.actions
+        export const {ADD_CATAGORY_FAIL,ADD_CATAGORY_REQUEST,ADD_CATAGORY_SUCCESS,ADD_CATAGORY_RESET,CLEAR_AACERRORS,ADD_PINCODE_FAIL,ADD_PINCODE_REQUEST,ADD_PINCODE_SUCCESS,ADD_PINCODE_RESET,CLEAR_AAPERRORS,ADD_CAROUSEL_FAIL,ADD_CAROUSEL_REQUEST,ADD_CAROUSEL_SUCCESS,ADD_CAROUSEL_RESET,CLEAR_AACARERRORS,ADD_SUBCATAGORY_FAIL,ADD_SUBCATAGORY_REQUEST,ADD_SUBCATAGORY_SUCCESS,ADD_SUBCATAGORY_RESET,CLEAR_ASCERRORS,ADD_BRAND_FAIL,ADD_BRAND_REQUEST,ADD_BRAND_SUCCESS,ADD_BRAND_RESET,CLEAR_ABERRORS}=addPrerequisitionReducer.actions
         export default addPrerequisitionReducer.reducer

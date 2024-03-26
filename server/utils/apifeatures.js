@@ -21,12 +21,29 @@ class ApiFeatures {
     filter() {
       const queryCopy = { ...this.queryStr };
       const removeFields = ['keyword', 'page', 'limit', 'sort'];
-  
+
       removeFields.forEach((field) => delete queryCopy[field]);
-  
+
+      if (queryCopy.brand && !queryCopy.subcatagory) {
+          this.query = this.query.find({ brand: queryCopy.brand });
+          delete queryCopy.brand;
+      }
+
+      if (!queryCopy.brand && queryCopy.subcatagory) {
+          this.query = this.query.find({ subCatagory: queryCopy.subcatagory });
+          delete queryCopy.subcatagory;
+      }
+
+      // If both brand and subcategory are present, we prioritize brand
+      if (queryCopy.brand && queryCopy.subcatagory) {
+          this.query = this.query.find({ brand: queryCopy.brand });
+          delete queryCopy.brand;
+          delete queryCopy.subcatagory;
+      }
+
       this.query = this.query.find(queryCopy);
       return this;
-    }
+  }
   
     pagination(resultPerPage) {
       const currentPage = parseInt(this.queryStr.page, 10) || 1;

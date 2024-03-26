@@ -1,8 +1,8 @@
 import axios from "axios";
 import { SAVE_CATAGORY_INFO ,SAVE_PINCODE_INFO,SAVE_CAROUSEL_INFO} from "../reducers/catagoryReducer";
-import { ADMIN_CAROUSEL_FAIL, ADMIN_CAROUSEL_REQUEST, ADMIN_CAROUSEL_SUCCESS, ADMIN_CATAGORY_FAIL, ADMIN_CATAGORY_REQUEST, ADMIN_CATAGORY_SUCCESS, ADMIN_PINCODE_FAIL, ADMIN_PINCODE_REQUEST, ADMIN_PINCODE_SUCCESS, CLEAR_ACARERRORS, CLEAR_ACERRORS, CLEAR_APERRORS } from "../reducers/allPrerequisitionReducer";
-import { CLEAR_DCARERRORS, CLEAR_DCERRORS, CLEAR_DPERRORS, DELETE_CAROUSEL_FAIL, DELETE_CAROUSEL_REQUEST, DELETE_CAROUSEL_SUCCESS, DELETE_CATAGORY_FAIL, DELETE_CATAGORY_REQUEST, DELETE_CATAGORY_SUCCESS, DELETE_PINCODE_FAIL, DELETE_PINCODE_REQUEST, DELETE_PINCODE_SUCCESS } from "../reducers/deletePreReducer";
-import { ADD_CAROUSEL_FAIL, ADD_CAROUSEL_REQUEST, ADD_CAROUSEL_SUCCESS, ADD_CATAGORY_FAIL, ADD_CATAGORY_REQUEST, ADD_CATAGORY_SUCCESS, ADD_PINCODE_FAIL, ADD_PINCODE_REQUEST, ADD_PINCODE_SUCCESS, CLEAR_AACARERRORS, CLEAR_AACERRORS, CLEAR_AAPERRORS } from "../reducers/addPrerequisitionReducer";
+import { ADMIN_BRAND_FAIL, ADMIN_BRAND_REQUEST, ADMIN_BRAND_SUCCESS, ADMIN_CAROUSEL_FAIL, ADMIN_CAROUSEL_REQUEST, ADMIN_CAROUSEL_SUCCESS, ADMIN_CATAGORY_FAIL, ADMIN_CATAGORY_REQUEST, ADMIN_CATAGORY_SUCCESS, ADMIN_PINCODE_FAIL, ADMIN_PINCODE_REQUEST, ADMIN_PINCODE_SUCCESS, ADMIN_SUBCATAGORY_FAIL, ADMIN_SUBCATAGORY_REQUEST, ADMIN_SUBCATAGORY_SUCCESS, CLEAR_ACARERRORS, CLEAR_ACERRORS, CLEAR_APERRORS, CLEAR_BERRORS, CLEAR_SCERRORS } from "../reducers/allPrerequisitionReducer";
+import { CLEAR_DBERRORS, CLEAR_DCARERRORS, CLEAR_DCERRORS, CLEAR_DPERRORS, CLEAR_DSCERRORS, DELETE_BRAND_FAIL, DELETE_BRAND_REQUEST, DELETE_BRAND_SUCCESS, DELETE_CAROUSEL_FAIL, DELETE_CAROUSEL_REQUEST, DELETE_CAROUSEL_SUCCESS, DELETE_CATAGORY_FAIL, DELETE_CATAGORY_REQUEST, DELETE_CATAGORY_SUCCESS, DELETE_PINCODE_FAIL, DELETE_PINCODE_REQUEST, DELETE_PINCODE_SUCCESS, DELETE_SUBCATAGORY_FAIL, DELETE_SUBCATAGORY_REQUEST, DELETE_SUBCATAGORY_SUCCESS } from "../reducers/deletePreReducer";
+import { ADD_BRAND_FAIL, ADD_BRAND_REQUEST, ADD_BRAND_SUCCESS, ADD_CAROUSEL_FAIL, ADD_CAROUSEL_REQUEST, ADD_CAROUSEL_SUCCESS, ADD_CATAGORY_FAIL, ADD_CATAGORY_REQUEST, ADD_CATAGORY_SUCCESS, ADD_PINCODE_FAIL, ADD_PINCODE_REQUEST, ADD_PINCODE_SUCCESS, ADD_SUBCATAGORY_FAIL, ADD_SUBCATAGORY_REQUEST, ADD_SUBCATAGORY_SUCCESS, CLEAR_AACARERRORS, CLEAR_AACERRORS, CLEAR_AAPERRORS, CLEAR_ABERRORS, CLEAR_ASCERRORS } from "../reducers/addPrerequisitionReducer";
 import { CATAGORY_DETAILS_FAIL, CATAGORY_DETAILS_REQUEST, CATAGORY_DETAILS_SUCCESS, CLEAR_CDERRORS, PINCODE_DETAILS_FAIL, PINCODE_DETAILS_REQUEST, PINCODE_DETAILS_SUCCESS ,CLEAR_PDERRORS, CAROUSEL_DETAILS_REQUEST, CAROUSEL_DETAILS_SUCCESS, CAROUSEL_DETAILS_FAIL, CLEAR_CARDERRORS} from "../reducers/getPrerequisitionReducer";
 import { CLEAR_UCARERRORS, CLEAR_UCERRORS, CLEAR_UPERRORS, UPDATE_CAROUSEL_FAIL, UPDATE_CAROUSEL_REQUEST, UPDATE_CAROUSEL_SUCCESS, UPDATE_CATAGORY_FAIL, UPDATE_CATAGORY_REQUEST, UPDATE_CATAGORY_SUCCESS, UPDATE_PINCODE_FAIL, UPDATE_PINCODE_REQUEST, UPDATE_PINCODE_SUCCESS } from "../reducers/updatePrerequisitionReducer";
 
@@ -316,7 +316,7 @@ async (dispatch) => {
 
   try {
       dispatch(UPDATE_CATAGORY_REQUEST())
-      const config={withCredentials:true}
+      const config={headers:{"Content-Type":"application/json"},withCredentials:true}
       const {data}=await axios.put(`http://localhost:4000/api/v1/admin/manipulatecatagory/${id}`,catagoryData,config);
       dispatch(UPDATE_CATAGORY_SUCCESS(data.success));
       
@@ -338,7 +338,7 @@ async (dispatch) => {
 
   try {
       dispatch(UPDATE_PINCODE_REQUEST())
-      const config={withCredentials:true}
+      const config={headers:{"Content-Type":"application/json"},withCredentials:true}
       const {data}=await axios.put(`http://localhost:4000/api/v1/admin/manipulatepincodes/${id}`,pincodeData,config);
       dispatch(UPDATE_PINCODE_SUCCESS(data.success));
       
@@ -362,7 +362,7 @@ async (dispatch) => {
   try {
 
       dispatch(UPDATE_CAROUSEL_REQUEST())
-      const config={withCredentials:true}
+      const config={headers:{"Content-Type":"application/json"},withCredentials:true}
       const {data}=await axios.put(`http://localhost:4000/api/v1/admin/manipulatecarousel/${id}`,carouselData,config);
       dispatch(UPDATE_CAROUSEL_SUCCESS(data.success));
       
@@ -379,3 +379,142 @@ async (dispatch) => {
 
  };
  
+
+    //get  SubCATAGORY--admin
+    export const getAdminSubCatagory =() =>
+    async (dispatch) => {
+      try {
+        dispatch(ADMIN_SUBCATAGORY_REQUEST());
+    
+        let link = `http://localhost:4000/api/v1/admin/subcatagories`;
+    
+        const { data } = await axios.get(link,{withCredentials:true});
+    
+        dispatch(ADMIN_SUBCATAGORY_SUCCESS(data)); 
+        
+      } catch (error) {
+        dispatch(ADMIN_SUBCATAGORY_FAIL(error.response.data.message));
+      }
+    };
+      //clear Admin sub catagory error
+   export const clearSCErrors =() =>
+   async (dispatch) => {
+   dispatch( CLEAR_SCERRORS());
+ 
+   };
+
+      //get Brand --admin
+      export const getAdminBrand =() =>
+      async (dispatch) => {
+        try {
+          dispatch(ADMIN_BRAND_REQUEST());
+      
+          let link = `http://localhost:4000/api/v1/admin/brand`;
+      
+          const { data } = await axios.get(link,{withCredentials:true});
+      
+          dispatch(ADMIN_BRAND_SUCCESS(data)); 
+          
+        } catch (error) {
+          dispatch(ADMIN_BRAND_FAIL(error.response.data.message));
+        }
+      };
+        //clear Admin BRAND error
+     export const clearBErrors =() =>
+     async (dispatch) => {
+     dispatch( CLEAR_BERRORS());
+   
+     };
+
+//ADD SUBCATAGORY
+export const addSubCatagory=(cataData) =>
+async (dispatch) => {
+  try {
+    dispatch(ADD_SUBCATAGORY_REQUEST());
+
+    let link = `http://localhost:4000/api/v1/admin/manipulatesubcatagory`;
+
+    const { data } = await axios.post(link,cataData,{headers:{"Content-Type":"application/json"},withCredentials:true});
+
+    dispatch(ADD_SUBCATAGORY_SUCCESS(data)); 
+    
+  } catch (error) {
+    dispatch(ADD_SUBCATAGORY_FAIL(error.response.data.message));
+  }
+};
+//clear Admin ADD CATAGORY ERROR
+export const clearASCErrors =() =>
+async (dispatch) => {
+dispatch( CLEAR_ASCERRORS());
+
+};
+
+//ADD Brand
+export const addBrand=(cataData) =>
+async (dispatch) => {
+  try {
+    dispatch(ADD_BRAND_REQUEST());
+
+    let link = `http://localhost:4000/api/v1/admin/manipulatebrand`;
+
+    const { data } = await axios.post(link,cataData,{headers:{"Content-Type":"application/json"},withCredentials:true});
+
+    dispatch(ADD_BRAND_SUCCESS(data)); 
+    
+  } catch (error) {
+    dispatch(ADD_BRAND_FAIL(error.response.data.message));
+  }
+};
+//clear Admin ADD BRAND ERROR
+export const clearABErrors =() =>
+async (dispatch) => {
+dispatch( CLEAR_ABERRORS());
+
+};
+
+
+//admin delete sub catagory
+export const deleteSubCatagory =(id) =>
+async (dispatch) => {
+  try {
+    dispatch(DELETE_SUBCATAGORY_REQUEST());
+
+    let link = `http://localhost:4000/api/v1/admin/manipulatesubcatagory/${id}`;
+
+    const { data } = await axios.delete(link,{withCredentials:true});
+
+    dispatch(DELETE_SUBCATAGORY_SUCCESS(data)); 
+    
+  } catch (error) {
+    dispatch(DELETE_SUBCATAGORY_FAIL(error.response.data.message));
+  }
+};
+//clear Admin SUBCATAGORY error
+export const clearDSCErrors =() =>
+async (dispatch) => {
+dispatch( CLEAR_DSCERRORS());
+
+};
+
+//admin delete Brand
+export const deleteBrand =(id) =>
+async (dispatch) => {
+  try {
+    dispatch(DELETE_BRAND_REQUEST());
+
+    let link = `http://localhost:4000/api/v1/admin/manipulatebrand/${id}`;
+
+    const { data } = await axios.delete(link,{withCredentials:true});
+
+    dispatch(DELETE_BRAND_SUCCESS(data)); 
+    
+  } catch (error) {
+    dispatch(DELETE_BRAND_FAIL(error.response.data.message));
+  }
+};
+//clear Admin brand error
+export const clearDBErrors =() =>
+async (dispatch) => {
+dispatch( CLEAR_DBERRORS());
+
+};
