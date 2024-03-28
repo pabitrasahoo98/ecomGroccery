@@ -35,7 +35,6 @@
   list-style: none;
   border: 1px solid rgba(0, 0, 0, 0.178);
   padding: 1vmax 1.5vmax;
-  transition: all 0.3s;
   cursor: pointer;
 }
 .page-item:first-child {
@@ -49,24 +48,18 @@
   text-decoration: none;
   font: 300 0.7vmax "Roboto";
   color: rgb(80, 80, 80);
-  transition: all 0.3s;
+  
 }
 
-.page-item:hover {
-  background-color: rgb(230, 230, 230);
+.page-item.active{
+  z-index: 3;
+  color: #fff;
+  background-color:goldenrod;
+  border-color:goldenrod;
 }
 
-.page-item:hover .page-link {
-  color: rgb(0, 0, 0);
-}
 
-.pageItemActive {
-  background-color: goldenrod;
-}
 
-.pageLinkActive {
-  color: white;
-}
 
 .filterBox {
   width: 10vmax;

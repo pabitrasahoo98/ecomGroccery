@@ -90,6 +90,21 @@
     border-radius: 50%;
     background-color: rgb(255, 81, 81);
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin-top: 20px; /* Adjust margin as needed */
+  }
+  
+  .page-item {
+    margin: 0 5px; /* Adjust margin as needed */
+  }
+  
+  .page-link {
+    padding: 5px 10px; /* Adjust padding as needed */
+    font-size: 14px; /* Adjust font size as needed */
+  }
 
 
 @media screen and (max-width: 1200px) {
@@ -124,3 +139,19 @@
         content:attr(data-label);
     }
 }
+
+@media screen and (max-width: 600px) {
+    .pagination {
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+  
+    .page-item {
+      margin: 5px 2px;
+    }
+  
+    .page-link {
+      padding: 3px 6px;
+      font-size: 12px;
+    }
+  }

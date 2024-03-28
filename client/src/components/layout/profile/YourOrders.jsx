@@ -26,7 +26,7 @@ const YourOrders = () => {
     }, [dispatch,error])
 
     const [currentPage,setCurrentPage]=useState(1);
-    const recordsPerPage=6;
+    const recordsPerPage=10;
     const lastIndex=currentPage*recordsPerPage;
     const firstIndex=lastIndex-recordsPerPage;
     const records=myOrders.slice(firstIndex,lastIndex);

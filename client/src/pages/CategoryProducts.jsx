@@ -10,7 +10,9 @@ import Pagination from 'react-js-pagination';
 import {Button, MenuItem, Select, Typography} from '@mui/material';
 import Slider from 'react-slick';
 import Swal from 'sweetalert2';
-
+import ResponsivePagination from 'react-responsive-pagination';
+import { dropEllipsis, dropNav, combine } from 'react-responsive-pagination/narrowBehaviour';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
  
@@ -75,8 +77,8 @@ const CategoryProducts = () => {
     setSortOption(event.target.value);
   };
 
-  const setCurrentPageNo = (e) => {
-    setCurrentPage(e);
+  const setCurrentPageNo = (page) => {
+    setCurrentPage(page);
   };
   const handleCategoryChange = (selectedCategory) => {
     setCurrentPage(1); // Reset current page to 1 when category changes
@@ -138,37 +140,21 @@ const CategoryProducts = () => {
           <div>{
   catagory ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (
     <div className="paginationBox">
-      <Pagination
-        activePage={currentPage}
-        itemsCountPerPage={resultPerPage}
-        totalItemsCount={filteredProductsCount}
-        onChange={setCurrentPageNo}
-        nextPageText="Next"
-        prevPageText="Prev"
-        firstPageText="1st"
-        lastPageText="Last"
-        itemClass="page-item"
-        linkClass="page-link"
-        activeClass="pageItemActive"
-        activeLinkClass="pageLinkActive"
-      />
+       <ResponsivePagination
+                  narrowBehaviour={combine(dropNav, dropEllipsis)}
+                  current={currentPage}
+                  total={Math.ceil(filteredProductsCount / resultPerPage)}
+                  onPageChange={page => setCurrentPageNo(page)}
+                />
     </div> 
   ) : (resultPerPage < productsCount) && (
     <div className="paginationBox">
-      <Pagination
-        activePage={currentPage}
-        itemsCountPerPage={resultPerPage}
-        totalItemsCount={productsCount}
-        onChange={setCurrentPageNo}
-        nextPageText="Next"
-        prevPageText="Prev"
-        firstPageText="1st"
-        lastPageText="Last"
-        itemClass="page-item"
-        linkClass="page-link"
-        activeClass="pageItemActive"
-        activeLinkClass="pageLinkActive"
-      />
+      <ResponsivePagination
+                  narrowBehaviour={combine(dropNav, dropEllipsis)}
+                  current={currentPage}
+                  total={Math.ceil(productsCount / resultPerPage) }
+                  onPageChange={page => setCurrentPageNo(page)}
+                />
     </div>
   )
 }</div>
