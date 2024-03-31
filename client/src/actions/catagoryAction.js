@@ -5,6 +5,8 @@ import { CLEAR_DBERRORS, CLEAR_DCARERRORS, CLEAR_DCERRORS, CLEAR_DPERRORS, CLEAR
 import { ADD_BRAND_FAIL, ADD_BRAND_REQUEST, ADD_BRAND_SUCCESS, ADD_CAROUSEL_FAIL, ADD_CAROUSEL_REQUEST, ADD_CAROUSEL_SUCCESS, ADD_CATAGORY_FAIL, ADD_CATAGORY_REQUEST, ADD_CATAGORY_SUCCESS, ADD_PINCODE_FAIL, ADD_PINCODE_REQUEST, ADD_PINCODE_SUCCESS, ADD_SUBCATAGORY_FAIL, ADD_SUBCATAGORY_REQUEST, ADD_SUBCATAGORY_SUCCESS, CLEAR_AACARERRORS, CLEAR_AACERRORS, CLEAR_AAPERRORS, CLEAR_ABERRORS, CLEAR_ASCERRORS } from "../reducers/addPrerequisitionReducer";
 import { CATAGORY_DETAILS_FAIL, CATAGORY_DETAILS_REQUEST, CATAGORY_DETAILS_SUCCESS, CLEAR_CDERRORS, PINCODE_DETAILS_FAIL, PINCODE_DETAILS_REQUEST, PINCODE_DETAILS_SUCCESS ,CLEAR_PDERRORS, CAROUSEL_DETAILS_REQUEST, CAROUSEL_DETAILS_SUCCESS, CAROUSEL_DETAILS_FAIL, CLEAR_CARDERRORS} from "../reducers/getPrerequisitionReducer";
 import { CLEAR_UCARERRORS, CLEAR_UCERRORS, CLEAR_UPERRORS, UPDATE_CAROUSEL_FAIL, UPDATE_CAROUSEL_REQUEST, UPDATE_CAROUSEL_SUCCESS, UPDATE_CATAGORY_FAIL, UPDATE_CATAGORY_REQUEST, UPDATE_CATAGORY_SUCCESS, UPDATE_PINCODE_FAIL, UPDATE_PINCODE_REQUEST, UPDATE_PINCODE_SUCCESS } from "../reducers/updatePrerequisitionReducer";
+import { SAVE_SUBCATAGORY_INFO } from "../reducers/subCatagoryReducer";
+import { SAVE_BRAND_INFO } from "../reducers/brandReducer";
 
   //saving CATAGORIES
   export const fetchCatagories =() =>
@@ -517,4 +519,27 @@ export const clearDBErrors =() =>
 async (dispatch) => {
 dispatch( CLEAR_DBERRORS());
 
+};
+
+export const fetchSubcatagory = (id) => async (dispatch) => {
+  try {
+    const link = `http://localhost:4000/api/v1/catagorysubcatagory/${id}`;
+    const { data } = await axios.get(link);
+    dispatch(SAVE_SUBCATAGORY_INFO(data));
+  } catch (error) {
+    console.error('Error fetching subcategories:', error);
+    // Handle error if needed
+  }
+};
+
+// Action to fetch brands based on category ID
+export const fetchBrand = (id) => async (dispatch) => {
+  try {
+    const link = `http://localhost:4000/api/v1/catagorybrand/${id}`;
+    const { data } = await axios.get(link);
+    dispatch(SAVE_BRAND_INFO(data));
+  } catch (error) {
+    console.error('Error fetching brands:', error);
+    // Handle error if needed
+  }
 };

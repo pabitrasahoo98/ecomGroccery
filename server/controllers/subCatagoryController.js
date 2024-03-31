@@ -17,7 +17,7 @@ exports.createSubCatagory=catchAsyncError(async(req,res,next)=>{
 exports.getAllSubCatagory = catchAsyncError(async (req, res, next) => {
     const subCatagories=await SubCatagory.find();
     res.status(200).json({
-        sucess:true,
+        success:true,
         subCatagories,
     })
 })
@@ -48,7 +48,7 @@ exports.getCatagorySubcatagory = catchAsyncError(async (req, res, next) => {
       "catagory"
     );
     res.status(200).json({
-        sucess:true,
+        success:true,
         scata,
     })
 })

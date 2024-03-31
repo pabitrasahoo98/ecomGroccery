@@ -25,6 +25,8 @@ import {updatePrerequisitionReducer} from './reducers/updatePrerequisitionReduce
 import {getPrerequisitionReducer} from './reducers/getPrerequisitionReducer';
 import {cancelOrderReducer} from './reducers/cancelOrderReducer';
 import { dealsProductReducer } from './reducers/dealsProductReducer';
+import {subCatagoryReducer} from './reducers/subCatagoryReducer';
+import {brandReducer} from './reducers/brandReducer';
 
 
 const store=configureStore({
@@ -33,6 +35,8 @@ const store=configureStore({
         product:productDetailsReducer.reducer,
         deals:dealsProductReducer.reducer,
         catagories:catagoryReducer.reducer,
+        subcatagory:subCatagoryReducer.reducer,
+        brand:brandReducer.reducer,
         user:userReducer.reducer,
         profile:userUpdateReducer.reducer,
         forgotPassword:forgotPasswordReducer.reducer,

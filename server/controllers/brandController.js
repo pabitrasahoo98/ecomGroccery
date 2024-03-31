@@ -17,7 +17,7 @@ exports.createBrand=catchAsyncError(async(req,res,next)=>{
 exports.getAllBrand = catchAsyncError(async (req, res, next) => {
     const brand=await Brand.find();
     res.status(200).json({
-        sucess:true,
+        success:true,
         brand,
     })
 })
@@ -49,7 +49,7 @@ exports.getCatagoryBrand = catchAsyncError(async (req, res, next) => {
       "catagory"
     );
     res.status(200).json({
-        sucess:true,
+        success:true,
         brand,
     })
 })

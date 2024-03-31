@@ -8,6 +8,8 @@ import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import ScaleIcon from '@mui/icons-material/Scale';
+import ClassIcon from '@mui/icons-material/Class';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import { Button } from '@mui/material';
 import "./AddProduct.css";
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
@@ -15,13 +17,17 @@ import { UPDATE_PRODUCT_RESET } from '../../../reducers/manipulateProductReducer
 import { updateProduct,clearUPerrors, getProductDetails, clearProductErrors} from '../../../actions/productAction';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { fetchBrand, fetchSubcatagory } from '../../../actions/catagoryAction';
 
 const UpdateProduct = ({role}) => {
 
     const {id}=useParams();
     const navigate=useNavigate();
     const dispatch = useDispatch();
-    const {catalog}=useSelector((state)=>state.catagories)
+    const {catalog}=useSelector((state)=>state.catagories);
+    const {subC,subCSuccess}=useSelector((state)=>state.subcatagory);
+    const {brand,brandSuccess}=useSelector((state)=>state.brand);
+
     const { loading, error, isUpdate } = useSelector((state) => state.maniProduct);
     const { product,error:pError } = useSelector((state) => state.product);
     const [name, setName] = useState("");
@@ -33,6 +39,8 @@ const UpdateProduct = ({role}) => {
     const [td,setTd]=useState(false);
     const [description, setDescription] = useState("");
     const [catagory, setCatagory] = useState("");
+    const [subCatagory, setSubCatagory] = useState("");
+    const [brad, setBrad] = useState("");
     const [stock, setStock] = useState(0);
     const [oldImages, setOldImages] = useState([]);
     const [images, setImages] = useState([]);
@@ -51,6 +59,8 @@ const UpdateProduct = ({role}) => {
         myForm.set("description", description);
         myForm.set("qty", qty);
         myForm.set("catagory", catagory);
+        myForm.set("subCatagory", subCatagory);
+        myForm.set("brand", brad);
         myForm.set("stock", stock);
         myForm.set("dod",dod);
         myForm.set("td", td);
@@ -84,6 +94,27 @@ const UpdateProduct = ({role}) => {
           reader.readAsDataURL(file);
         });
       };
+      const handleCatagory = (e) => {
+        const selectedCatagory = e.target.value;
+        setCatagory(selectedCatagory);
+        
+        const selectedOption = catalog.find(option => option.catagory === selectedCatagory);
+        if (selectedOption) {
+          dispatch(fetchSubcatagory(selectedOption._id));
+          dispatch(fetchBrand(selectedOption._id));
+        }
+      };
+
+      
+    useEffect(() => {
+      if (catagory) {
+          const selectedOption = catalog.find((option) => option.catagory === catagory);
+          if (selectedOption) {
+              dispatch(fetchSubcatagory(selectedOption._id));
+              dispatch(fetchBrand(selectedOption._id));
+          }
+      }
+  }, [dispatch, catalog, catagory]);
       useEffect(() => {
 
         if(targetRef.current){
@@ -98,6 +129,8 @@ const UpdateProduct = ({role}) => {
             setPrice(product.price);
             setQty(product.qty);
             setCatagory(product.catagory);
+            setSubCatagory(product.subCatagory);
+            setBrad(product.brand);
             setStock(product.stock);
             setDod(product.dod);
             setDe(product.de);
@@ -200,7 +233,7 @@ const UpdateProduct = ({role}) => {
 
             <div>
               <AccountTreeIcon />
-              <select onChange={(e) => setCatagory(e.target.value)} value={catagory}>
+              <select onChange={handleCatagory} value={catagory}>
                 <option value="">Choose Category</option>
                 {catalog.map((cate) => (
                   <option key={cate.catagory} value={cate.catagory}>
@@ -209,6 +242,33 @@ const UpdateProduct = ({role}) => {
                 ))}
               </select>
             </div>
+
+            <div>
+              <ClassIcon />
+              <select onChange={(e) => setSubCatagory(e.target.value)} value={subCatagory}>
+                <option value="none">Choose Sub-Category</option>
+                {subC.map((scate) => (
+                  <option key={scate.subCatagory} value={scate.subCatagory}>
+                    {scate.subCatagory}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <BrandingWatermarkIcon />
+              <select onChange={(e) => setBrad(e.target.value)} value={brad}>
+                <option value="none">Choose Brand</option>
+                {brand.map((b) => (
+                  <option key={b.brand} value={b.brand}>
+                    {b.brand}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+
+
+
             <div>
          <LocalOfferIcon />
          <select value={dod} onChange={(e) => setDod(e.target.value)}>
