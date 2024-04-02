@@ -11,23 +11,40 @@ exports.registerUser=catchAsyncError(async(req,res,next)=>{
     const user=await User.create({name,email,password,mobileNo});
     sendToken(user,201,res)
 })
-//login user
-exports.loginUser=catchAsyncError(async(req,res,next)=>{
-    const {email,password}= req.body;
+// Import the User model and other necessary dependencies
 
-    if(!email||!password){
-        return next(new ErrorHandler("please enter Email and Password",400))
-    }
-    const user= await User.findOne({email}).select("+password");
-    if(!user){
-        return next(new ErrorHandler("Invalid email and password",401))
-    }
-    const isPasswordMatched=await user.comparePassword(password);
-    if(!isPasswordMatched){
-        return next(new ErrorHandler("Invalid email or password",401))
-    }
-    sendToken(user,200,res);
-})
+// loginUser route handler
+exports.loginUser = catchAsyncError(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+      return next(new ErrorHandler("Please enter email and password", 400));
+  }
+
+  try {
+      // Convert the provided email to lowercase for case-insensitive search
+      const lowercaseEmail = email.toLowerCase();
+
+      // Search for the user using a case-insensitive search
+      const user = await User.findOne({ email: { $regex: new RegExp('^' + lowercaseEmail, 'i') } }).select("+password");
+
+      if (!user) {
+          // If no user found, return error
+          return next(new ErrorHandler("Invalid email or password", 401));
+      }
+
+      // Check if the provided password matches the user's password
+      const isPasswordMatched = await user.comparePassword(password);
+      if (!isPasswordMatched) {
+          return next(new ErrorHandler("Invalid email or password", 401));
+      }
+
+      // If password matches, send token using the found user
+      sendToken(user, 200, res);
+  } catch (error) {
+      return next(error);
+  }
+});
 //logout user
 exports.logout=catchAsyncError(async(req,res,next)=>{
     res.cookie("token",null,{expires:new Date(Date.now()),httpOnly:true,});
@@ -40,11 +57,13 @@ exports.logout=catchAsyncError(async(req,res,next)=>{
 });
 //forgot password
 exports.forgotPassword=catchAsyncError(async(req,res,next)=>{
-    const user=await User.findOne({email:req.body.email});
+  const lowercaseEmail = req.body.email.toLowerCase();
 
-    if(!user){
-        return next(new ErrorHandler("user not found ",404))
-    }
+  const user = await User.findOne({ email: { $regex: new RegExp("^" + lowercaseEmail, "i") } });
+
+  if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+  }
     //get otp and save to db
     const otp = Math.floor(Math.random() * 1000000);
 

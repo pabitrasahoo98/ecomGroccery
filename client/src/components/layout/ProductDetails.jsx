@@ -19,7 +19,8 @@ const ProductDetails = () => {
     const {product,loading,error}=useSelector(state=>state.product)
     const {sProduct,serror}=useSelector(state=>state.sameProduct)
     let pc=product.catagory;
-    let psc=product.subCatagory;
+    let psc=(product.subCatagory ==="none")?"":product.subCatagory;
+
 
     
     useEffect(() => {

@@ -24,6 +24,17 @@ class ApiFeatures {
 
       removeFields.forEach((field) => delete queryCopy[field]);
 
+      if (queryCopy.catagory && (queryCopy.subcatagory==="")) {
+        this.query = this.query.find({ catagory: queryCopy.catagory });
+        delete queryCopy.catagory;
+        delete queryCopy.subcatagory;
+    }
+    if (queryCopy.catagory && queryCopy.subcatagory) {
+      this.query = this.query.find({ subCatagory: queryCopy.subcatagory });
+      delete queryCopy.catagory;
+      delete queryCopy.subcatagory;
+  }
+
       if (queryCopy.brand && !queryCopy.subcatagory) {
           this.query = this.query.find({ brand: queryCopy.brand });
           delete queryCopy.brand;

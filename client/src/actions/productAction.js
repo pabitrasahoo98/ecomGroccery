@@ -56,8 +56,6 @@ async (dispatch) => {
 
 //get similar products
 
-
-
   export const getSProducts =(category,subcategory) =>
   async (dispatch) => {
     try {
