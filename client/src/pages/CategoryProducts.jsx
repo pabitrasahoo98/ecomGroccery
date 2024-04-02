@@ -72,8 +72,17 @@ const CategoryProducts = () => {
     }
     if(catagory){
     dispatch(getProduct(keyword, currentPage, catagory, sortOption, subCategory, brad));
+
+   const selectedCategory = catalog.find(cata => cata.catagory === catagory);
+
+  if (selectedCategory) {
+    // If category is found, dispatch actions to fetch subcategories and brands
+    const categoryId = selectedCategory._id;
+    dispatch(fetchSubcatagory(categoryId));
+    dispatch(fetchBrand(categoryId));
     
     }
+  }
   
 
     
@@ -86,9 +95,8 @@ const CategoryProducts = () => {
   const setCurrentPageNo = (page) => {
     setCurrentPage(page);
   };
-  const handleCategoryChange = (selectedCategory,id) => {
-  dispatch(fetchSubcatagory(id));
-  dispatch(fetchBrand(id));
+  const handleCategoryChange = (selectedCategory) => {
+
   setSubCategory(''); // Reset subcategory when category changes
   setBrad(''); // Reset brand when category changes
   setCurrentPage(1);
@@ -125,7 +133,7 @@ const CategoryProducts = () => {
                     fontSize: '9px', // Decrease font size for smaller screens
                     width: '120px', // Decrease width for smaller screens
                   },
-                }} key={key} onClick={() => handleCategoryChange(item.catagory,item._id)}>{item.catagory}</Button>
+                }} key={key} onClick={() => handleCategoryChange(item.catagory)}>{item.catagory}</Button>
               ))}
             </Slider>
           </div>
