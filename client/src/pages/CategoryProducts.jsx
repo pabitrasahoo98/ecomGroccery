@@ -6,13 +6,15 @@ import Loader from '../components/layout/Loader';
 import { getProduct } from '../actions/productAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import Pagination from 'react-js-pagination';
 import {Button, MenuItem, Select, Typography} from '@mui/material';
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import Swal from 'sweetalert2';
 import ResponsivePagination from 'react-responsive-pagination';
 import { dropEllipsis, dropNav, combine } from 'react-responsive-pagination/narrowBehaviour';
 import 'bootstrap/dist/css/bootstrap.css';
+import { fetchBrand, fetchSubcatagory } from '../actions/catagoryAction';
 
 
  
@@ -44,8 +46,12 @@ const CategoryProducts = () => {
 
   let {catagory}=useParams();
   const {catalog}=useSelector((state)=>state.catagories);
+  const {subC,subCSuccess}=useSelector((state)=>state.subcatagory);
+  const {brand,brandSuccess}=useSelector((state)=>state.brand);
   const [currentPage,setCurrentPage]=useState(1);
   const [sortOption, setSortOption] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [brad, setBrad] = useState('');
   const navigate=useNavigate();
   
   const dispatch=useDispatch();
@@ -65,13 +71,13 @@ const CategoryProducts = () => {
       })
     }
     if(catagory){
-    dispatch(getProduct(keyword,currentPage,catagory,sortOption));
+    dispatch(getProduct(keyword, currentPage, catagory, sortOption, subCategory, brad));
     
     }
   
 
     
-  }, [dispatch,currentPage,catagory,sortOption,error])
+  }, [dispatch,currentPage,catagory,subCategory, brad,sortOption,error])
   
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
@@ -80,9 +86,23 @@ const CategoryProducts = () => {
   const setCurrentPageNo = (page) => {
     setCurrentPage(page);
   };
-  const handleCategoryChange = (selectedCategory) => {
-    setCurrentPage(1); // Reset current page to 1 when category changes
+  const handleCategoryChange = (selectedCategory,id) => {
+  dispatch(fetchSubcatagory(id));
+  dispatch(fetchBrand(id));
+  setSubCategory(''); // Reset subcategory when category changes
+  setBrad(''); // Reset brand when category changes
+  setCurrentPage(1);
     navigate(`/products/category/${selectedCategory}`);
+  };
+
+  const handleSubCategoryChange = (selectedSubCategory) => {
+    setSubCategory(selectedSubCategory);
+    setCurrentPage(1); // Reset current page to 1 when subcategory changes
+  };
+
+  const handleBrandChange = (selectedBrand) => {
+    setBrad(selectedBrand);
+    setCurrentPage(1); // Reset current page to 1 when brand changes
   };
 
   return (
@@ -105,7 +125,7 @@ const CategoryProducts = () => {
                     fontSize: '9px', // Decrease font size for smaller screens
                     width: '120px', // Decrease width for smaller screens
                   },
-                }} key={key} onClick={() => handleCategoryChange(item.catagory)}>{item.catagory}</Button>
+                }} key={key} onClick={() => handleCategoryChange(item.catagory,item._id)}>{item.catagory}</Button>
               ))}
             </Slider>
           </div>
@@ -115,12 +135,41 @@ const CategoryProducts = () => {
               <Product key={p._id} product={p} />
             ))}
           </div>
-
-          <div className="sortDropdown">
+          <div className='filter'>
+            <div className="sortDropdown">
 <Select value={sortOption}
     onChange={handleSortChange} displayEmpty style={{
     fontFamily: 'Arial',
-    fontSize: '16px',
+    fontWeight: 'bold',
+    fontSize:'10px',
+    color: '#333', // Text color
+    backgroundColor: '#fff', // Background color
+    border: '1px solid #DAA520', // Border
+    padding: '1px 5px', // Padding
+    width: '200px', // Width
+    
+  }}
+  sx={{
+    '@media (max-width: 600px)': {
+      width: 'auto', // Allow width to adjust dynamically on smaller screens
+      minWidth: '100px', // Set a minimum width to prevent collapsing
+      fontSize: '5px', // Custom font size for smaller screens
+    }
+  }}>
+                <MenuItem value="">
+                  Sort by(No Selection)
+                </MenuItem>
+                <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
+                <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+              </Select>
+            </div>
+
+{ (catagory) &&<div className="sortDropdown">
+<Select value={subCategory}
+disabled={subCSuccess ? false :true}
+    onChange={(e)=>handleSubCategoryChange(e.target.value)} displayEmpty style={{
+    fontFamily: 'Arial',
+    fontSize:'10px',
     fontWeight: 'bold',
     color: '#333', // Text color
     backgroundColor: '#fff', // Background color
@@ -128,14 +177,64 @@ const CategoryProducts = () => {
     padding: '1px 5px', // Padding
     width: '200px', // Width
     
+  }}
+  sx={{
+    '@media (max-width: 600px)': {
+      width: 'auto', // Allow width to adjust dynamically on smaller screens
+      minWidth: '100px', // Set a minimum width to prevent collapsing
+      fontSize: '5px', // Custom font size for smaller screens
+    }
   }}>
-                <MenuItem value="" disabled>
-                  Sort by
+               <MenuItem value="">
+                  Filter(No Selection)
                 </MenuItem>
-                <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
-                <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+                {subC.map((scate) => (
+                  <MenuItem key={scate.subCatagory} value={scate.subCatagory}>
+                    {scate.subCatagory}
+                  </MenuItem>
+                ))} 
               </Select>
             </div>
+}
+
+
+{(catagory) &&<div className="sortDropdown">
+<Select value={brad}
+disabled={brandSuccess ? false :true}
+    onChange={(e)=>handleBrandChange(e.target.value)} displayEmpty style={{
+    fontFamily: 'Arial',
+    fontSize:'10px',
+    fontWeight: 'bold',
+    color: '#333', // Text color
+    backgroundColor: '#fff', // Background color
+    border: '1px solid #DAA520', // Border
+    padding: '1px 5px', // Padding
+    width: '200px', // Width
+    
+  }}
+  sx={{
+    '@media (max-width: 600px)': {
+      width: 'auto', // Allow width to adjust dynamically on smaller screens
+      minWidth: '100px', // Set a minimum width to prevent collapsing
+      fontSize: '5px', // Custom font size for smaller screens
+    }
+  }}>
+               <MenuItem value="">
+                  Brands(No Selection)
+                </MenuItem>
+                {brand.map((b) => (
+                  <MenuItem key={b.brand} value={b.brand}>
+                    {b.brand}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+}
+</div>
+    
+            
+
+
 
           <div>{
   catagory ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (

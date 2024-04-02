@@ -61,13 +61,24 @@
 
 
 
-.filterBox {
+/*.filterBox {
   width: 10vmax;
   position: absolute;
   top: 9vmax;
   left: 4vmax;
   
 }
+.filter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sortDropdown{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}*/
+
 .filterBoxT{
   border-bottom: 3px solid goldenrod;
   font: 800 2vmax "Roboto";
@@ -75,12 +86,33 @@
   margin-bottom: 1vmax;
   
 }
-.sortDropdown{
+
+
+
+/* Larger screens */
+.filter {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content:space-around;
+  padding: 10px;
 }
 
+.sortDropdown {
+  display: flex;
+}
+
+.sortDropdown select {
+  font-family: Arial;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #DAA520;
+  padding: 5px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  width: 200px; /* Set a fixed width for consistency */
+}
 
 .categoryBox {
   padding:0;
@@ -128,4 +160,22 @@
   .category-link {
     font: 400 1.8vmax "Roboto";
   }
+  .filter {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .sortDropdown {
+    margin-top: 10px;
+    width: 7vmax;
+  }
+
+  .sortDropdown select {
+    width: auto; /* Allow width to adjust dynamically */
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
 }

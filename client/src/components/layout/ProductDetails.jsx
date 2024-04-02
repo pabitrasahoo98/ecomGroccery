@@ -19,6 +19,8 @@ const ProductDetails = () => {
     const {product,loading,error}=useSelector(state=>state.product)
     const {sProduct,serror}=useSelector(state=>state.sameProduct)
     let pc=product.catagory;
+    let psc=product.subCatagory;
+
     
     useEffect(() => {
       if(error){
@@ -39,8 +41,8 @@ const ProductDetails = () => {
         targetRef.current.scrollIntoView({behavior:'smooth'});
       }
       dispatch(getProductDetails(id))
-      dispatch(getSProducts(pc))
-    }, [dispatch,id,pc,error,serror]);
+      dispatch(getSProducts(pc,psc))
+    }, [dispatch,id,pc,psc,error,serror]);
     
     
     const options = {

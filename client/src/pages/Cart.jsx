@@ -6,6 +6,7 @@ import CartItemCard from '../components/layout/CartItemCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemsToCart, removeItemFromCart } from '../actions/cartAction';
 import { Link, useNavigate } from 'react-router-dom';
+import ProductSlick from '../components/layout/ProductSlick';
 
 
 const Cart = () => {
@@ -15,6 +16,7 @@ const Cart = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const {cartItems}=useSelector((state)=>state.cart);
+  const{td,tdSuccess}=useSelector((state)=>state.deals);
   useEffect(() => {
     if(targetRef.current){
       targetRef.current.scrollIntoView({behavior:'smooth'});
@@ -92,6 +94,8 @@ const Cart = () => {
             </div>
             </div>
             </>}</>
+            {tdSuccess && <><h3 className='homeHeading'>Now Trending</h3>
+    <ProductSlick prod={td}/></>}
     </Layout>
     </div>
     

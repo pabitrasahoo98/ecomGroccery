@@ -7,10 +7,12 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import "./HeaderStyle.css";
 import  Logo1 from "../../images/logo1.png"
+import { useSelector } from 'react-redux';
 
 
 
 const Header = () => {
+    const {isAuthenticate,user}=useSelector(state=>state.user);
 
 const [mobileOpen,setMobileOpen]=useState(false);
 const handleDrawerToggle=()=>{
@@ -32,6 +34,21 @@ const drawer=(
                 </Link>
                 </Box>
                 <Divider/>
+                <Typography variant="h6" color={"goldenrod"} sx={{
+      my: 2,
+      fontSize: '14px', // Default font size
+      '@media (max-width: 600px)': { // Media query for smaller screens
+        fontSize: '12px', // Decrease font size for smaller screens
+      },
+    }}>
+      Welcome, {isAuthenticate ? (
+        <span>
+          <span style={{ fontSize: 'inherit' }}>{user.name}</span>
+          <br />
+          <span style={{ fontSize: 'inherit' }}>{user.email}</span>
+        </span>
+      ) : "Guest"}
+    </Typography>
                 <ul className='mobile-navigation'>
                         <li>
                             <Link to={"/"}>Home</Link>
@@ -42,8 +59,12 @@ const drawer=(
                         <li>
                             <Link to={"/cart"}>Cart</Link>
                         </li>
+                        {isAuthenticate &&
                         <li>
-                            <Link to={"/login"}>Profile</Link>
+                            <Link to={"/profile/yourorders"}>Orders</Link>
+                        </li>}
+                       <li>
+                            <Link to={"/login"}>{isAuthenticate ?<>Profile </> :<>Sign In</> }</Link>
                         </li>
                         <li>
                             <Link to={"/contact"}>Contact</Link>
@@ -51,6 +72,10 @@ const drawer=(
                         <li>
                             <Link to={"/about"}>About</Link>
                         </li>
+                        {isAuthenticate &&
+                        <li>
+                            <Link to={"/profile/logout"}>Log Out</Link>
+                        </li>}
                     </ul>
     </Box>
 )

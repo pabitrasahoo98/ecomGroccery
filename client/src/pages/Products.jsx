@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import ResponsivePagination from 'react-responsive-pagination';
 import { dropEllipsis, dropNav, combine } from 'react-responsive-pagination/narrowBehaviour';
 import 'bootstrap/dist/css/bootstrap.css';
+import { fetchBrand, fetchSubcatagory } from '../actions/catagoryAction';
 
 
 const Products = () => {
@@ -41,15 +42,19 @@ const Products = () => {
   };
 
   const { catalog } = useSelector((state) => state.catagories);
+  const {subC,subCSuccess}=useSelector((state)=>state.subcatagory);
+    const {brand,brandSuccess}=useSelector((state)=>state.brand);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
+  const [brad, setBrad] = useState('');
   const [sortOption, setSortOption] = useState('');
   const dispatch = useDispatch();
   let { keyword } = useParams();
   const { loading, error, product, productsCount, resultPerPage ,filteredProductsCount} = useSelector((state) => state.products);
 
   useEffect(() => {
-    if(error){
+    if (error) {
       Swal.fire({
         title: "Error",
         text: error,
@@ -59,20 +64,34 @@ const Products = () => {
     if (targetRef.current) {
       targetRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-    dispatch(getProduct(keyword, currentPage, category,sortOption));
-  }, [dispatch, keyword, currentPage, category,sortOption,error]);
+    dispatch(getProduct(keyword, currentPage, category, sortOption, subCategory, brad));
+  }, [dispatch, keyword, currentPage, category, sortOption, error, subCategory, brad]);
 
   const setCurrentPageNo = (page) => {
     setCurrentPage(page);
   };
-  
+
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
-  
-  const handleCategoryChange = (selectedCategory) => {
+
+  const handleCategoryChange = (selectedCategory,id) => {
     setCategory(selectedCategory);
+      dispatch(fetchSubcatagory(id));
+      dispatch(fetchBrand(id));
+    setSubCategory(''); // Reset subcategory when category changes
+    setBrad(''); // Reset brand when category changes
     setCurrentPage(1); // Reset current page to 1 when category changes
+  };
+
+  const handleSubCategoryChange = (selectedSubCategory) => {
+    setSubCategory(selectedSubCategory);
+    setCurrentPage(1); // Reset current page to 1 when subcategory changes
+  };
+
+  const handleBrandChange = (selectedBrand) => {
+    setBrad(selectedBrand);
+    setCurrentPage(1); // Reset current page to 1 when brand changes
   };
 
 
@@ -99,7 +118,7 @@ const Products = () => {
                     },
                   }}
                  
-               key={key} onClick={() => handleCategoryChange(item.catagory)}>{item.catagory}</Button>
+               key={key} onClick={() => handleCategoryChange(item.catagory,item._id)}>{item.catagory}</Button>
                 ))}
               </Slider>
             </div>
@@ -110,12 +129,41 @@ const Products = () => {
               ))} 
             </div>
 
-
+<div className='filter'>
             <div className="sortDropdown">
 <Select value={sortOption}
     onChange={handleSortChange} displayEmpty style={{
     fontFamily: 'Arial',
-    fontSize: '16px',
+    fontWeight: 'bold',
+    fontSize:'10px',
+    color: '#333', // Text color
+    backgroundColor: '#fff', // Background color
+    border: '1px solid #DAA520', // Border
+    padding: '1px 5px', // Padding
+    width: '200px', // Width
+    
+  }}
+  sx={{
+    '@media (max-width: 600px)': {
+      width: 'auto', // Allow width to adjust dynamically on smaller screens
+      minWidth: '100px', // Set a minimum width to prevent collapsing
+      fontSize: '5px', // Custom font size for smaller screens
+    }
+  }}>
+                <MenuItem value="">
+                  Sort by(No Selection)
+                </MenuItem>
+                <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
+                <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+              </Select>
+            </div>
+
+{ (category) &&<div className="sortDropdown">
+<Select value={subCategory}
+disabled={subCSuccess ? false :true}
+    onChange={(e)=>handleSubCategoryChange(e.target.value)} displayEmpty style={{
+    fontFamily: 'Arial',
+    fontSize:'10px',
     fontWeight: 'bold',
     color: '#333', // Text color
     backgroundColor: '#fff', // Background color
@@ -123,16 +171,66 @@ const Products = () => {
     padding: '1px 5px', // Padding
     width: '200px', // Width
     
+  }}
+  sx={{
+    '@media (max-width: 600px)': {
+      width: 'auto', // Allow width to adjust dynamically on smaller screens
+      minWidth: '100px', // Set a minimum width to prevent collapsing
+      fontSize: '5px', // Custom font size for smaller screens
+    }
   }}>
-                <MenuItem value="" disabled>
-                  Sort by
+               <MenuItem value="">
+                  Filter(No Selection)
                 </MenuItem>
-                <MenuItem value="priceLowToHigh">Price: Low to High</MenuItem>
-                <MenuItem value="priceHighToLow">Price: High to Low</MenuItem>
+                {subC.map((scate) => (
+                  <MenuItem key={scate.subCatagory} value={scate.subCatagory}>
+                    {scate.subCatagory}
+                  </MenuItem>
+                ))} 
               </Select>
             </div>
+}
 
-            <div>
+
+{(category) &&<div className="sortDropdown">
+<Select value={brad}
+disabled={brandSuccess ? false :true}
+    onChange={(e)=>handleBrandChange(e.target.value)} displayEmpty style={{
+    fontFamily: 'Arial',
+    fontSize:'10px',
+    fontWeight: 'bold',
+    color: '#333', // Text color
+    backgroundColor: '#fff', // Background color
+    border: '1px solid #DAA520', // Border
+    padding: '1px 5px', // Padding
+    width: '200px', // Width
+    
+  }}
+  sx={{
+    '@media (max-width: 600px)': {
+      width: 'auto', // Allow width to adjust dynamically on smaller screens
+      minWidth: '100px', // Set a minimum width to prevent collapsing
+      fontSize: '5px', // Custom font size for smaller screens
+    }
+  }}>
+               <MenuItem value="">
+                  Brands(No Selection)
+                </MenuItem>
+                {brand.map((b) => (
+                  <MenuItem key={b.brand} value={b.brand}>
+                    {b.brand}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+}
+</div>
+    
+            
+
+
+
+ <div>
             {
   (category) ? (currentPage <= Math.ceil(filteredProductsCount / resultPerPage)) && (
     <div className="paginationBox">

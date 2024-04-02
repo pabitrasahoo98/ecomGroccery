@@ -6,14 +6,22 @@ import { ADD_PRODUCT_FAIL,ADD_PRODUCT_SUCCESS,ADD_PRODUCT_REQUEST,CLEAR_NPERRORS
 import { CLEAR_DPERRORS, CLEAR_UPERRORS, DELETE_PRODUCT_FAIL, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS, UPDATE_PRODUCT_FAIL, UPDATE_PRODUCT_REQUEST, UPDATE_PRODUCT_SUCCESS } from "../reducers/manipulateProductReducer";
  
 //get all product
-export const getProduct =(keyword="",currentPage=1,category,sortOption) =>
+export const getProduct = (keyword = "", currentPage = 1, category, sortOption, subcatagory, brand) =>
   async (dispatch) => {
     try {
       dispatch(ALL_PRODUCT_REQUEST());
       let link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&sort=${sortOption}`;
 
-     if (category) {
-        link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&catagory=${category}&sort=${sortOption}`;
+      if (category) {
+        link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&sort=${sortOption}&catagory=${category}`;
+      }
+
+      if (subcatagory) {
+        link += `&subcatagory=${subcatagory}`;
+      }
+
+      if (brand) {
+        link += `&brand=${brand}`;
       }
 
       const { data } = await axios.get(link);
@@ -24,8 +32,6 @@ export const getProduct =(keyword="",currentPage=1,category,sortOption) =>
       dispatch(ALL_PRODUCT_FAIL(error.response.data.message));
     }
   };
-
-
   //get a product
 export const getProductDetails =(id) =>
 async (dispatch) => {
@@ -52,12 +58,14 @@ async (dispatch) => {
 
 
 
-  export const getSProducts =(category) =>
+  export const getSProducts =(category,subcategory) =>
   async (dispatch) => {
     try {
       dispatch(SPRODUCT_REQUEST());
-  
       let link = `http://localhost:4000/api/v1/products?catagory=${category}`;
+      if (subcategory) {
+        link += `&subcatagory=${subcategory}`;
+      }
   
       const { data } = await axios.get(link);
   
