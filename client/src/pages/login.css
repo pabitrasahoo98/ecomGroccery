@@ -23,7 +23,7 @@
 }
 .login_Signup_Toggle > p{
     color: rgba(0,0,0,0.678);
-    font: 300 1vmax,"Roboto";
+    font: 300 1vmax "Roboto";
     transition: all 0.5s;
     cursor: pointer;
     display: grid;
