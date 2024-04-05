@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 
 const Header = () => {
     const {isAuthenticate,user}=useSelector(state=>state.user);
+    const {cartItems}=useSelector((state)=>state.cart);
 
 const [mobileOpen,setMobileOpen]=useState(false);
 const handleDrawerToggle=()=>{
@@ -61,20 +62,20 @@ const drawer=(
                         </li>
                         {isAuthenticate &&
                         <li>
-                            <Link to={"/profile/yourorders"}>Orders</Link>
+                            <Link to={"/profile/yourorders"}>MyOrders</Link>
                         </li>}
                        <li>
                             <Link to={"/login"}>{isAuthenticate ?<>Profile </> :<>Sign In</> }</Link>
                         </li>
                         <li>
-                            <Link to={"/contact"}>Contact</Link>
+                            <Link to={"/contact"}>ContactUs</Link>
                         </li>
                         <li>
-                            <Link to={"/about"}>About</Link>
+                            <Link to={"/about"}>AboutUs</Link>
                         </li>
                         {isAuthenticate &&
                         <li>
-                            <Link to={"/profile/logout"}>Log Out</Link>
+                            <Link to={"/profile/logout"}>Logout</Link>
                         </li>}
                     </ul>
     </Box>
@@ -121,7 +122,7 @@ const drawer=(
                             <Link to={"/login"}><AccountCircleIcon/></Link>
                         </li>
                         <li>
-                            <Link to={"/cart"}><ShoppingCartIcon/></Link>
+                            <Link to={"/cart"}><><ShoppingCartIcon/><sup>{cartItems.length}</sup></></Link>
                         </li>
                         
                     </ul>

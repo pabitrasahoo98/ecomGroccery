@@ -12,7 +12,7 @@ const options={
     value:4.5,
     ishalf:true,
 };
- 
+  
 const Product = ({product}) => {
   const navigate=useNavigate();
   return (
