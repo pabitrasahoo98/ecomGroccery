@@ -43,12 +43,12 @@ background-color: gold;
     .searchBox > input[type="text"]{
     width: 50%;
     height: 10%;
-    font: 300 2vmax cursive
+    font: 300 2vmax "Roboto"
     }
     .searchBox > input[type="submit"]{
         width: 20%;
         height: 10%;
-        font: 300 2vmax cursive
+        font: 300 2vmax "Roboto"
     }
 
     
