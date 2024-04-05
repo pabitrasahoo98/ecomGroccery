@@ -122,7 +122,7 @@ const drawer=(
                             <Link to={"/login"}><AccountCircleIcon/></Link>
                         </li>
                         <li>
-                            <Link to={"/cart"}><><ShoppingCartIcon/><sup>{cartItems.length}</sup></></Link>
+                            <Link to={"/cart"}><><ShoppingCartIcon/>{(cartItems.length > 0) && <sup>{cartItems.length}</sup>}</></Link>
                         </li>
                         
                     </ul>

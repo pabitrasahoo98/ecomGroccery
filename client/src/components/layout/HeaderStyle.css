@@ -37,3 +37,6 @@
     text-decoration: none;
     color: white;
 }
+.right-header  >li > a > sup{
+    color: gold;
+}
