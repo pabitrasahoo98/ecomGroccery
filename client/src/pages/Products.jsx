@@ -101,7 +101,7 @@ const Products = () => {
         {loading ? (
           <Loader />
         ) : (
-          <> 
+          <>{(!keyword)&&<>
             <Typography align="center" variant="h5" style={{ color: 'black', fontWeight: 'bold', borderBottom: '2px solid goldenrod' }}>Categories</Typography>
             <div className="product-list">
               <Slider {...settings}>
@@ -121,7 +121,7 @@ const Products = () => {
                key={key} onClick={() => handleCategoryChange(item.catagory,item._id)}>{item.catagory}</Button>
                 ))}
               </Slider>
-            </div>
+            </div></>}
             <h2 className="productsHeading">Products</h2>
             <div className="products">
               {product && product.map((p) => (
@@ -158,7 +158,7 @@ const Products = () => {
               </Select>
             </div>
 
-{ (category) &&<div className="sortDropdown">
+{(category) &&<div className="sortDropdown">
 <Select value={subCategory}
 disabled={subCSuccess ? false :true}
     onChange={(e)=>handleSubCategoryChange(e.target.value)} displayEmpty style={{
